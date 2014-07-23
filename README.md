@@ -3,7 +3,7 @@ jchampionship
 
 jchampionship
 
-h1. Tecnologias utilizadas
+Tecnologias utilizadas
 - Java 7
 - Eclipse
 - Mysql
