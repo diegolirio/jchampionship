@@ -5,25 +5,27 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Campeonato {
+public class Grupo {
 	
 	@Id @GeneratedValue
-	private int id;
+	private long id;
 	
 	private String descricao;
 	
-	@OneToMany(mappedBy="campeonato")
-	private List<Edicao> edicoes;
+	@ManyToOne
+	private Grupo grupo;
 	
-	//private String dono;//usuario
+	@OneToMany(mappedBy="grupo")
+	private List<Jogo> jogos;
 	
-	public int getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public String getDescricao() {
@@ -32,13 +34,12 @@ public class Campeonato {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	public List<Edicao> getEdicoes() {
-		return edicoes;
+	public Grupo getGrupo() {
+		return grupo;
 	}
-	public void setEdicoes(List<Edicao> edicoes) {
-		this.edicoes = edicoes;
+	public void setGrupo(Grupo grupo) {
+		this.grupo = grupo;
 	}
-	
 	
 	
 
