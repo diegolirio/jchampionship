@@ -3,8 +3,8 @@
 <html>
 <head>
 	 <title>Home</title>
-	 <link href="/jchampionship/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-	 <link href="/jchampionship/static/bootstrap/css/bootstrap.css" rel="stylesheet">		
+	 <link href="${pageContext.request.contextPath}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	 <link href="${pageContext.request.contextPath}/static/bootstrap/css/bootstrap.css" rel="stylesheet">		
 </head>
 <body>
 	<div class="container">	
@@ -17,7 +17,7 @@
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://code.jquery.com/jquery.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/bootstrap/js/bootstrap.min.js"></script>
 
 </body>
 </html>

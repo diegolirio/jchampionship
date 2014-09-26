@@ -1,7 +1,6 @@
 package com.diegolirio.jchampionship.model;
 
 import java.util.Calendar;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,7 +15,8 @@ public class Jogo {
 	@Id @GeneratedValue
 	private long id;
 	
-	private String harbito;
+	@ManyToOne
+	private Harbito harbito;
 	
 	private Calendar dataHora;
 	
@@ -33,10 +33,11 @@ public class Jogo {
 	@OneToMany
 	private Grupo grupo;
 	
-	private String local;
-	
 	@ManyToOne
-	private List<JogadorEscalado> jogadoresEscalados;
+	private Local local;
+	
+	@OneToOne
+	private Escalacao escalacao;
 	
 	public long getId() {
 		return id;
@@ -44,10 +45,10 @@ public class Jogo {
 	public void setId(long id) {
 		this.id = id;
 	}
-	public String getHarbito() {
+	public Harbito getHarbito() {
 		return harbito;
 	}
-	public void setHarbito(String harbito) {
+	public void setHarbito(Harbito harbito) {
 		this.harbito = harbito;
 	}
 	public Calendar getDataHora() {
@@ -86,19 +87,19 @@ public class Jogo {
 	public void setResultadoB(int resultadoB) {
 		this.resultadoB = resultadoB;
 	}
-	public String getLocal() {
+	public Local getLocal() {
 		return local;
 	}
-	public void setLocal(String local) {
+	public void setLocal(Local local) {
 		this.local = local;
 	}
-	public List<JogadorEscalado> getEscalacoes() {
-		return jogadoresEscalados;
+	public Escalacao getEscalacao() {
+		return escalacao;
 	}
-	public void setEscalacoes(List<JogadorEscalado> jogadoresEscalados) {
-		this.jogadoresEscalados = jogadoresEscalados;
+	public void setEscalacao(Escalacao escalacao) {
+		this.escalacao = escalacao;
 	}
-	
+
 	
 	
 

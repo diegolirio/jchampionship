@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE xml>
+<persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence"> 
+	
+	<persistence-unit name="campeonato_quartashow"> 
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>com.diegolirio.jchampionship.model.Campeonato</class>
+		<class>com.diegolirio.jchampionship.model.Edicao</class>
+		<class>com.diegolirio.jchampionship.model.Grupo</class>
+		<class>com.diegolirio.jchampionship.model.Jogo</class>
+		<class>com.diegolirio.jchampionship.model.Local</class>
+		<class>com.diegolirio.jchampionship.model.Harbito</class>
+		<class>com.diegolirio.jchampionship.model.Time</class>
+		<class>com.diegolirio.jchampionship.model.Jogador</class>
+		<class>com.diegolirio.jchampionship.model.Escalacao</class>
+		<class>com.diegolirio.jchampionship.model.JogadorEscalado</class>
+		<class>com.diegolirio.jchampionship.model.Evento</class>
+		<class>com.diegolirio.jchampionship.model.Usuario</class>
+		<properties> 			
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />  
+			<property name="hibernate.hbm2ddl.auto" value="update" /> 
+			<property name="hibernate.show_sql" value="true" /> 
+			<property name="hibernate.format_sql" value="true" />              
+		</properties>
+	</persistence-unit> 	
+	
+</persistence>

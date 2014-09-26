@@ -5,17 +5,19 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
-public class Evento {
+public class Escalacao {
 
 	@Id @GeneratedValue
 	private long id;
 	
-	private String descricao;
+	@OneToOne
+	private Jogo jogo;
 	
-	@ManyToMany
+	@OneToMany(mappedBy="escalacao")
 	private List<JogadorEscalado> jogadoresEscalados;
 	
 	public long getId() {
@@ -24,11 +26,11 @@ public class Evento {
 	public void setId(long id) {
 		this.id = id;
 	}
-	public String getDescricao() {
-		return descricao;
+	public Jogo getJogo() {
+		return jogo;
 	}
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setJogo(Jogo jogo) {
+		this.jogo = jogo;
 	}
 	public List<JogadorEscalado> getJogadoresEscalados() {
 		return jogadoresEscalados;
@@ -36,6 +38,7 @@ public class Evento {
 	public void setJogadoresEscalados(List<JogadorEscalado> jogadoresEscalados) {
 		this.jogadoresEscalados = jogadoresEscalados;
 	}
+
 	
 	
 	
