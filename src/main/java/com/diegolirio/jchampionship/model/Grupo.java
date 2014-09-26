@@ -17,7 +17,7 @@ public class Grupo {
 	private String descricao;
 	
 	@ManyToOne
-	private Grupo grupo;
+	private Edicao edicao;
 	
 	@OneToMany(mappedBy="grupo")
 	private List<Jogo> jogos;
@@ -34,11 +34,11 @@ public class Grupo {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	public Grupo getGrupo() {
-		return grupo;
+	public Edicao getEdicao() {
+		return edicao;
 	}
-	public void setGrupo(Grupo grupo) {
-		this.grupo = grupo;
+	public void setEdicao(Edicao edicao) {
+		this.edicao = edicao;
 	}
 	
 	

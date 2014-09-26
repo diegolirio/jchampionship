@@ -17,6 +17,9 @@ public class Edicao {
 	private String nome;
 	
 	@ManyToOne
+	private Status status;
+	
+	@ManyToOne
 	private Campeonato campeonato;
 	
 	@OneToMany(mappedBy="edicao")
@@ -45,6 +48,12 @@ public class Edicao {
 	}
 	public void setGrupos(List<Grupo> grupos) {
 		this.grupos = grupos;
+	}
+	public Status getStatus() {
+		return status;
+	}
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 	
 	
