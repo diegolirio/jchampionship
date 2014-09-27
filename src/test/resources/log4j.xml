@@ -11,7 +11,7 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="com.diegolirio.jchampionship">
+	<logger name="com.quartashow.jchampionship">
 		<level value="info" />
 	</logger>
 	
