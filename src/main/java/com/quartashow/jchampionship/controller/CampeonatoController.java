@@ -30,17 +30,17 @@ public class CampeonatoController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/get")
+	@RequestMapping(value="/campeonato/get/list", produces="application/json")
 	public @ResponseBody List<Campeonato> getList() {
 		return this.campeonatoDao.getList(Campeonato.class);
 	}
-	
-	@RequestMapping(value="/save")
-	public @ResponseBody Campeonato save() {
-		Campeonato c = new Campeonato();
-		c.setDescricao("Quarta-Show");
-		this.campeonatoDao.save(c);
-		return c;
-	}
+//	
+//	@RequestMapping(value="/save")
+//	public @ResponseBody Campeonato save() {
+//		Campeonato c = new Campeonato();
+//		c.setDescricao("Quarta-Show");
+//		this.campeonatoDao.save(c);
+//		return c;
+//	}
 	
 }

@@ -1,6 +1,8 @@
 package com.quartashow.jchampionship.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
@@ -55,12 +57,25 @@ public class EdicaoControllerTest {
 	}
 	
 	@Test
-	public void testIndex() throws Exception {
+	public void paginaCadastrarNovaEdicaoDeveConterViewsAtributos() throws Exception {
 		mockMvc.perform(get("/edicao/system/nova"))
 			.andExpect(status().is(200))
 			.andExpect(view().name("_base"))
 			.andExpect(model().attributeExists("content_import"))
-			.andExpect(model().attribute("content_import", "edicao-system-form"));
+			.andExpect(model().attribute("content_import", "edicao-system-form"))
+			.andExpect(model().attributeExists("edicao"));
 	}	
+	
+	@Test
+	public void paginaCadastrarNovaEdicaoVerificaStatusCode201StatusBeanValidationSUCCESS() throws Exception {
+		mockMvc.perform(post("/edicao/system/nova"))
+			.andExpect(status().is(201))
+			.andExpect(content().contentType("application/json"));
+		//  TODO: status bean validation SUCESS
+	}	
+
+//	mockMvc.perform(get("/campeonato/get/list"))
+//	.andExpect(status().isOk())
+//	.andExpect(content().contentType("application/json"));	
 
 }

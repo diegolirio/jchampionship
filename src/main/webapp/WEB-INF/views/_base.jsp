@@ -32,6 +32,12 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <!-- jQuery Version 1.11.0 -->
+    <script src="${pageContext.request.contextPath}/static/sb/js/jquery-1.11.0.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+    <script src="${pageContext.request.contextPath}/static/sb/js/bootstrap.min.js"></script>
+
 </head>
 
 <body>
@@ -44,16 +50,18 @@
 
             <div class="container-fluid">
 			
-					<div class="row">
-							<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-							<!-- Aritgos de Esportes -->
-							<ins class="adsbygoogle"
-								 style="display:inline-block;width:728px;height:90px"
-								 data-ad-client="ca-pub-1041989301102612"
-								 data-ad-slot="4971716283"></ins>
-							<script>
-							(adsbygoogle = window.adsbygoogle || []).push({});
-							</script>						
+					<div class=" pull-right">
+
+						<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+						<!-- QuartaShowPage Header 230X100 -->
+						<ins class="adsbygoogle"
+							 style="display:inline-block;width:320px;height:100px"
+							 data-ad-client="ca-pub-1041989301102612"
+							 data-ad-slot="4832115487"></ins>
+						<script>
+						(adsbygoogle = window.adsbygoogle || []).push({});
+						</script>		
+													
 					</div>
 
  					<jsp:include page="${content_import}.jsp"></jsp:include>
@@ -66,12 +74,6 @@
 
     </div>
     <!-- /#wrapper -->
-
-    <!-- jQuery Version 1.11.0 -->
-    <script src="${pageContext.request.contextPath}/static/sb/js/jquery-1.11.0.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="${pageContext.request.contextPath}/static/sb/js/bootstrap.min.js"></script>
 
     <!-- Morris Charts JavaScript -->
     <script src="${pageContext.request.contextPath}/static/sb/js/plugins/morris/raphael.min.js"></script>

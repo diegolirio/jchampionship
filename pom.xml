@@ -180,7 +180,21 @@
 			<artifactId>mockito-all</artifactId>
 			<version>1.9.5</version>
 		</dependency>
-
+     
+		<!-- Bean Validation -->		            		
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>1.1.0.Final</version>
+		</dependency>        
+        
+		<!-- hibernate validator: Dependencia do Bean validation  -->
+		<dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-validator</artifactId>
+		    <version>4.3.0.Final</version>
+		</dependency>			
+		   
 	</dependencies>
 	<build>
 		<plugins>
