@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Edicao {
@@ -11,11 +13,13 @@ public class Edicao {
 	@Id @GeneratedValue
 	private long id;
 	
+	@NotNull @Size(min=4, max=25)
 	private String descricao;
 	
 	@ManyToOne
 	private Status status;
 	
+	@NotNull
 	@ManyToOne
 	private Campeonato campeonato;
 	

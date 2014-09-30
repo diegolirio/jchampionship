@@ -45,8 +45,12 @@ public class EdicaoController {
 	    	validationResponse.setErrorMessages(mapErros);
 	    } else {
 	    	validationResponse.setStatus("SUCCESS");
+	    	validationResponse.setKeyField("1");
 	    }
 		return validationResponse;
 	}
+	
+//	 TODO: 
+	// public ResponseEntity<Spring>  pageNovaEdicaoPOST(@Valid Edicao edicao, BindingResult result) {
 	
 }

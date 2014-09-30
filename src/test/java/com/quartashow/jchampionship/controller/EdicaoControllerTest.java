@@ -77,5 +77,15 @@ public class EdicaoControllerTest {
 //	mockMvc.perform(get("/campeonato/get/list"))
 //	.andExpect(status().isOk())
 //	.andExpect(content().contentType("application/json"));	
-
+	
+	@Test
+	public void paginaEditarGruposDeUmaEdicaoDeveConterViewsAtributos() throws Exception {
+		mockMvc.perform(get("edicao/system/1/grupos"))
+			.andExpect(status().is(200))
+			.andExpect(view().name("_base"))
+			.andExpect(model().attributeExists("content_import"))
+			.andExpect(model().attribute("content_import", "edicao-system-grupos"))
+			.andExpect(model().attributeExists("edicao"));
+	}	
+	
 }

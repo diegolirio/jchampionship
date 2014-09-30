@@ -42,18 +42,18 @@
 						<input type="hidden" name="id" value="${edicao.id}" >
 
 						<div class="form-group">
-							<label>Descrição da Edição do Campeonato <small	class="text-muted">Ex: 2014</small></label> 
+							<label>Descrição da Edição do Campeonato <small	class="text-muted">Ex: 2014</small></label> <span id="id_message_descricao"></span> 
 							<input class="form-control"	name="descricao">
 						</div>
 
 						<div class="form-group">
-							<label>Campeonato</label> 
+							<label>Campeonato</label> <span id="id_message_campeonatoId"></span>
 							<select class="form-control" id="id_campeonatos" name="campeonato.id">
 								<option value="">----</option>
 							</select>
 						</div>
 
-						<input type="submit" class="btn btn-success" value="Próximo" >
+						<input type="submit" class="btn btn-success btnFormEdicaoSave" value="Próximo" >
 
 					</form>
 				</div>
@@ -67,3 +67,4 @@
 <!-- /.row -->
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/quartashow/js/campeonato-controller.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/quartashow/js/edicao-controller.js"></script>
