@@ -10,6 +10,7 @@ Tecnologias utilizadas
 - Spring MVC
 - AngularJS
 - JPA
+- Bean Validation
 - TDD
 - Maven
 - Bootstrap
