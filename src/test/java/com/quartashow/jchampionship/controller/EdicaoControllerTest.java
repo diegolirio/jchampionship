@@ -11,49 +11,36 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import com.quartashow.jchampionship.dao.EdicaoDao;
+import com.quartashow.jchampionship.model.Edicao;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = { "classpath*:spring-context.xml" })
 public class EdicaoControllerTest {
-
+ 
 	@InjectMocks
 	private EdicaoController controller;
 
+	@Mock
+	private EdicaoDao edicaoDao;	
+	
 	private MockMvc mockMvc;
 
 	@Before
 	public void setUp() throws Exception {
-		// MainFilter filter = mock(MainFilter.class);
-		// HttpServletRequest request = mock(HttpServletRequest.class);
-		// HttpServletResponse response = mock(HttpServletResponse.class);
-		// FilterChain chain = mock(FilterChain.class);
-		//
-		//
-		// Connection connection = new
-		// TdvConnectionFactory().getConnection("192.168.9.101", "1526", "tdp",
-		// "tdvadm", "aged12");
-		// System.out.println( connection );
-		// request.getSession().setAttribute("connection", connection);
-		// request.setAttribute("usuario", "fgoes");
-		// request.setAttribute("rota", "021");
-		// filter.doFilter(request, response, chain);
-		//
-		// MockitoAnnotations.initMocks(this);
-		// StandaloneMockMvcBuilder standaloneSetup =
-		// MockMvcBuilders.standaloneSetup(controller);
-		// standaloneSetup.addFilter(filter, "*");
-		// mockMvc = standaloneSetup.build();
-
 		MockitoAnnotations.initMocks(this);
 		mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
-		// controller.setConnection( connection );
 	}
 	
 	@Test
@@ -65,27 +52,49 @@ public class EdicaoControllerTest {
 			.andExpect(model().attribute("content_import", "edicao-system-form"))
 			.andExpect(model().attributeExists("edicao"));
 	}	
-	
-	@Test
-	public void paginaCadastrarNovaEdicaoVerificaStatusCode201StatusBeanValidationSUCCESS() throws Exception {
-		mockMvc.perform(post("/edicao/system/nova"))
-			.andExpect(status().is(201))
-			.andExpect(content().contentType("application/json"));
-		//  TODO: status bean validation SUCESS
-	}	
 
-//	mockMvc.perform(get("/campeonato/get/list"))
-//	.andExpect(status().isOk())
-//	.andExpect(content().contentType("application/json"));	
+	@Test
+	public void testPostEdicaoRestFull() throws Exception {		
+		ResultActions resultActions = 
+			mockMvc.perform(post("/edicao/system/nova")
+					.param("descricao", "2014")
+					.param("campeonato.id", "1"))
+			 .andExpect(status().isCreated())
+			 .andExpect(content().contentType("application/json"));
+
+		String location = resultActions.andReturn().getResponse().getHeader("Location");			
+		mockMvc.perform(get(location)).andExpect(status().isOk());
+	}		
 	
 	@Test
-	public void paginaEditarGruposDeUmaEdicaoDeveConterViewsAtributos() throws Exception {
-		mockMvc.perform(get("edicao/system/1/grupos"))
+	public void testPostEdicaoRestDescricaoInvalido() throws Exception {		
+		mockMvc.perform(post("/edicao/system/nova")
+					.param("campeonato.id", "1"))
+			 .andExpect(status().isUnauthorized())
+			 .andExpect(content().contentType("application/json"))
+			 .andExpect(content().string("{\"status\":\"ERROR\",\"errorMessages\":{\"descricao\":\"may not be null\"}}"));
+	}		
+	
+	@Test
+	public void testPostEdicaoRestCampeonadoIdInvalido() throws Exception {		
+		mockMvc.perform(post("/edicao/system/nova")
+					.param("descricao", "2014"))
+			 .andExpect(status().isUnauthorized())
+			 .andExpect(content().contentType("application/json"))
+			 .andExpect(content().string("{\"status\":\"ERROR\",\"errorMessages\":{\"campeonato\":\"may not be null\"}}"));
+	}		
+	
+	@Test
+	public void paginaEditarGruposDeUmaEdicaoDeveConterViewsAtributos() throws Exception {	
+		Edicao edicao = Mockito.mock(Edicao.class);
+		Mockito.when(edicaoDao.get(Edicao.class, 1)).thenReturn(edicao);
+		
+		mockMvc.perform(get("/edicao/system/1/grupos"))
 			.andExpect(status().is(200))
 			.andExpect(view().name("_base"))
 			.andExpect(model().attributeExists("content_import"))
 			.andExpect(model().attribute("content_import", "edicao-system-grupos"))
 			.andExpect(model().attributeExists("edicao"));
-	}	
+	}		
 	
 }

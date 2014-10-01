@@ -10,8 +10,20 @@ public class Status {
 	@Id @GeneratedValue
 	private long id;
 	
-	private String nome; // Pendencia do Formulario | Andamento | Finalizado | 
+	private String descricao; // Pendencia do Formulario | Andamento | Finalizado | 
 
+	public Status() {}
+	
+	public Status(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public Status(long id, String descricao) {
+		this.id = id;
+		this.descricao = descricao;
+	}
+
+	
 	public long getId() {
 		return id;
 	}
@@ -20,12 +32,12 @@ public class Status {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getDescricao() {
+		return descricao;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setDescricao(String nome) {
+		this.descricao = nome;
 	}
 	
 	

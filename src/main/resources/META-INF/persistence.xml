@@ -5,6 +5,8 @@
 	<persistence-unit name="mysql_q"> 
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<class>com.quartashow.jchampionship.model.Campeonato</class>
+		<class>com.quartashow.jchampionship.model.Edicao</class>
+		<class>com.quartashow.jchampionship.model.Status</class>
 		<properties> 			
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />  
 			<property name="hibernate.hbm2ddl.auto" value="update" /> 

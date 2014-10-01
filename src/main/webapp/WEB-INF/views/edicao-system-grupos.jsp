@@ -3,7 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 
-<h1 class="page-header">Novo Campeonato</h1>
+<h1 class="page-header">Adicionar Grupos</h1>
 
 
 <!-- Page Heading -->
@@ -13,7 +13,7 @@
 
 		<ol class="breadcrumb">
 			<li><i class="fa fa-dashboard"></i> <a href="${pageContext.request.contextPath}">Campeonato</a></li>
-			<li class="active"><i class="fa fa-edit"></i> Edição</li>
+			<li><i class="fa fa-dashboard"></i> <a href="${pageContext.request.contextPath}/edicao/nova/${edicao.id}">Edição</a></li>
 			<li class="active"><i class="fa fa-edit"></i> Grupos</li>
 		</ol>
 	</div>
@@ -23,7 +23,7 @@
 <div class="row">
 	<div class="col-lg-12">
 
-		Edicao do Campeonato >>>> Grupos >>>>>> Jogos
+		Jogos
 		(Times/Jogador/Harbito/Local) >>>> Escalacao editar >>>> Salvar(Status
 		da Edicao para A)
 
@@ -54,7 +54,7 @@
 							</select>
 						</div>
 
-						<input type="submit" class="btn btn-success btnFormEdicaoSave" value="Próximo" >
+						<input type="submit" class="btn btn-success btnAddGrupo" value="Próximo" >
 
 					</form>
 				</div>

@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.quartashow.jchampionship.dao.CampeonatoDao;
+import com.quartashow.jchampionship.dao.StatusDao;
 import com.quartashow.jchampionship.model.Campeonato;
+import com.quartashow.jchampionship.model.Status;
 
 @Controller
 public class CampeonatoController {
@@ -21,6 +23,8 @@ public class CampeonatoController {
 	
 	@Autowired
 	private CampeonatoDao campeonatoDao;
+	@Autowired
+	private StatusDao statusDao;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView home() {
@@ -42,5 +46,15 @@ public class CampeonatoController {
 //		this.campeonatoDao.save(c);
 //		return c;
 //	}
+	
+	@RequestMapping(value="/initValues")
+	public void initValues() {
+		Status pendente = new Status("Pendente");
+		Status andamento = new Status("Em Andamento");
+		Status finalizado = new Status("Fianlizado");
+		this.statusDao.save(pendente);
+		this.statusDao.save(andamento);
+		this.statusDao.save(finalizado);
+	}
 	
 }

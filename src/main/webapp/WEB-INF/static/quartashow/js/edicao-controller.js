@@ -11,7 +11,7 @@ $(function() {
 
 	};
 
-	     $('.btnFormEdicaoSave').click(
+	$('.btnFormEdicaoSave').click(
 					function(e) {
 						
 						e.preventDefault();
@@ -23,15 +23,20 @@ $(function() {
 								  descricao : formEdicao.find("input[name='descricao']").val(),
 								 'campeonato.id' : formEdicao.find("select[name='campeonato.id']").val()
 								},
-								function(data) {
-									if (data.status == 'SUCCESS')
-										//alert(JSON.stringify(data));
-										window.location.href = '/jchampionship/edicao/system/'+data.keyField+'/grupos';
-									else {
-										$('#id_message_descricao').html(getHtmlErrorMessage(data.errorMessages.descricao));
-										$('#id_message_campeonatoId').html(getHtmlErrorMessage(data.errorMessages['campeonato.id']));
+								function(data, statusText, headers) {
+									//  ...
+								})
+								.fail(function(data, statusText, headers) {
+									if (data.status == 201) {
+										window.location.href = '/jchampionship'+ data.getResponseHeader("Location");
+									} else
+									if (data.status == 401) {
+										$('#id_message_descricao').html(getHtmlErrorMessage(data.responseJSON.errorMessages.descricao));
+										$('#id_message_campeonatoId').html(getHtmlErrorMessage(data.responseJSON.errorMessages['campeonato.id']));
 										$('form span.tooltips').tooltip('show');
+									} else {
+										alert("Erro: " + JSON.stringify(data));
 									}
 								});
-		 });
+	 });
 });

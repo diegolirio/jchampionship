@@ -6,7 +6,6 @@ public class ValidationResponse {
 
     private String status;
     private Map<String, String> errorMessages;
-    private String keyField;
     
     public String getStatus() {
             return status;
@@ -20,12 +19,6 @@ public class ValidationResponse {
     public void setErrorMessages(Map<String, String> errorMessages) {
             this.errorMessages = errorMessages;
     }
-	public String getKeyField() {
-		return keyField;
-	}
-	public void setKeyField(String keyField) {
-		this.keyField = keyField;
-	}
     
     
 	
