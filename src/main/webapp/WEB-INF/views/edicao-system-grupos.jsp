@@ -15,6 +15,9 @@
 			<li><i class="fa fa-dashboard"></i> <a href="${pageContext.request.contextPath}">Campeonato</a></li>
 			<li><i class="fa fa-dashboard"></i> <a href="${pageContext.request.contextPath}/edicao/nova/${edicao.id}">Edição</a></li>
 			<li class="active"><i class="fa fa-edit"></i> Grupos</li>
+			<li class="active"><i class="fa fa-edit"></i> Jogos</li>
+			<li class="active"><i class="fa fa-edit"></i> Escalação</li>
+			<li class="active"><i class="fa fa-edit"></i> Visão Geral</li>			
 		</ol>
 	</div>
 </div>
@@ -23,40 +26,46 @@
 <div class="row">
 	<div class="col-lg-12">
 
-		Jogos
-		(Times/Jogador/Harbito/Local) >>>> Escalacao editar >>>> Salvar(Status
-		da Edicao para A)
-
 		<div class="panel panel-primary">
 			<div class="panel-heading">
 				<h3 class="panel-title">
-					<i class="fa fa-edit"></i> Edição
+					<i class="fa fa-edit"></i> Grupos - ${edicao.campeonato.descricao} ${edicao.descricao}  
 				</h3>
 			</div>
 			<div class="panel-body">
 
 
-				<div class="col-lg-6">
+				<div class="col-lg-12">
 
 					<form id="id_form_edicao" method="POST">
 
-						<input type="hidden" name="id" value="${edicao.id}" >
+						<input type="hidden" name="id" value="${grupo.id}" >
+						
+						<input type="hidden" name="id" value="${grupo.edicao.id}" >
 
-						<div class="form-group">
-							<label>Descrição da Edição do Campeonato <small	class="text-muted">Ex: 2014</small></label> <span id="id_message_descricao"></span> 
+						<div class="form-group col-lg-6">
+							<label>Descrição <small	class="text-muted">Ex: A, B ou Serie A</small></label> <span id="id_message_descricao"></span> 
 							<input class="form-control"	name="descricao">
 						</div>
-
-						<div class="form-group">
-							<label>Campeonato</label> <span id="id_message_campeonatoId"></span>
-							<select class="form-control" id="id_campeonatos" name="campeonato.id">
-								<option value="">----</option>
-							</select>
-						</div>
-
-						<input type="submit" class="btn btn-success btnAddGrupo" value="Próximo" >
+						<br/>
+						<input type="submit" class="btn btn-success btnAddGrupo" value="Adicionar" >
 
 					</form>
+										
+				</div>
+				
+				<div class="col-lg-12">
+					<table class="table table-striped table-hover well">
+						<thead>
+							<tr>
+								<td title="ID">ID</td>
+								<td >Grupo</td>
+								<td title="Excluir">Excluir</td>
+							<tr>
+						</thead>
+						<tbody id="id_tbody">
+						</tbody>								
+					</table>       				
 				</div>
 
 

@@ -165,7 +165,7 @@
                     </li>
                     -->
                     <li>
-                        <a href="${pageContext.request.contextPath}/edicao/system/nova"><i class="fa fa-fw fa-file"></i> Criar novo Campeonato</a>
+                        <a href="${pageContext.request.contextPath}/edicao/system"><i class="fa fa-fw fa-file"></i> Criar novo Campeonato</a>
                     </li>                    
                 </ul>
             </div>

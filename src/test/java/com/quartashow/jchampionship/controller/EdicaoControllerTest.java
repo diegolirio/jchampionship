@@ -44,6 +44,15 @@ public class EdicaoControllerTest {
 	}
 	
 	@Test
+	public void paginaEdicoesPendetesDeveConterViewsAtributos() throws Exception {
+		mockMvc.perform(get("/edicao/system"))
+			.andExpect(status().is(200))
+			.andExpect(view().name("_base"))
+			.andExpect(model().attributeExists("content_import"))
+			.andExpect(model().attribute("content_import", "edicao-system-pendentes"));
+	}		
+	
+	@Test
 	public void paginaCadastrarNovaEdicaoDeveConterViewsAtributos() throws Exception {
 		mockMvc.perform(get("/edicao/system/nova"))
 			.andExpect(status().is(200))
@@ -52,7 +61,7 @@ public class EdicaoControllerTest {
 			.andExpect(model().attribute("content_import", "edicao-system-form"))
 			.andExpect(model().attributeExists("edicao"));
 	}	
-
+	
 	@Test
 	public void testPostEdicaoRestFull() throws Exception {		
 		ResultActions resultActions = 

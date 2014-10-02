@@ -10,6 +10,8 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.codehaus.jackson.annotate.JsonBackReference;
+
 @Entity
 public class Edicao {
 	
@@ -26,6 +28,7 @@ public class Edicao {
 	@ManyToOne
 	private Campeonato campeonato;
 	
+	@JsonBackReference
 	@OneToMany(mappedBy="edicao")
 	private List<Grupo> grupos;
 	

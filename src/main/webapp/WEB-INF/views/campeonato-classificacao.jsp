@@ -33,14 +33,16 @@
                                 <!--  Table -->
                                 
 								<table class="table table-striped table-hover well">
-									<tr style="font-size:18px;">
-										<td title="ID">ID</td>
-										<td >Descrição</td>
-										<td title="Campeonato">Campeonato</td>
-										<td title="Pendente">Pendente</td>
-										<td title="Concluir">#</td>
-									</tr>
-									<tbody id="id_tbdoy">
+									<thead>
+										<tr>
+											<td title="ID">ID</td>
+											<td >Descrição</td>
+											<td title="Campeonato">Campeonato</td>
+											<td title="Pendente">Pendente</td>
+											<td title="Concluir">#</td>
+										</tr>
+									</thead>
+									<tbody id="id_tbody">
 										<!--<center><img src="/media/images/load_32.gif"/></center>-->
 									</tbody>
 									<!--
@@ -117,3 +119,4 @@
                     </div>
                 </div>
                 <!-- /.row -->
+               

@@ -7,6 +7,7 @@
 		<class>com.quartashow.jchampionship.model.Campeonato</class>
 		<class>com.quartashow.jchampionship.model.Edicao</class>
 		<class>com.quartashow.jchampionship.model.Status</class>
+		<class>com.quartashow.jchampionship.model.Grupo</class>
 		<properties> 			
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />  
 			<property name="hibernate.hbm2ddl.auto" value="update" /> 

@@ -31,6 +31,13 @@ public class EdicaoController {
 	@Autowired
 	private EdicaoDao edicaoDao;
 	
+	@RequestMapping(value="/system", method=RequestMethod.GET)
+	public ModelAndView pageEdicoesPendentes() {
+		ModelAndView mv = new ModelAndView("_base");
+		mv.addObject("content_import", "edicao-system-pendentes");
+		return mv;
+	}	
+	
 	@RequestMapping(value="/system/nova", method=RequestMethod.GET)
 	public ModelAndView pageNovaEdicao(Edicao edicao) {
 		ModelAndView mv = new ModelAndView("_base");

@@ -15,6 +15,9 @@
 			<li><i class="fa fa-dashboard"></i> <a href="${pageContext.request.contextPath}">Campeonato</a></li>
 			<li class="active"><i class="fa fa-edit"></i> Edição</li>
 			<li class="active"><i class="fa fa-edit"></i> Grupos</li>
+			<li class="active"><i class="fa fa-edit"></i> Jogos</li>
+			<li class="active"><i class="fa fa-edit"></i> Escalação</li>
+			<li class="active"><i class="fa fa-edit"></i> Visão Geral</li>
 		</ol>
 	</div>
 </div>
@@ -22,10 +25,6 @@
 
 <div class="row">
 	<div class="col-lg-12">
-
-		Edicao do Campeonato >>>> Grupos >>>>>> Jogos
-		(Times/Jogador/Harbito/Local) >>>> Escalacao editar >>>> Salvar(Status
-		da Edicao para A)
 
 		<div class="panel panel-primary">
 			<div class="panel-heading">
