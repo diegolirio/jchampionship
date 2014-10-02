@@ -39,4 +39,18 @@ $(function() {
 									}
 								});
 	 });
+	
+	var getEdicoesPendentes = function() {
+		$.getJSON("jchmapionship/edicao/get/list/by/status/1", function(data) {
+			var tbdoy = "";
+			$.each(data, function(i, c) {
+				
+			});
+			$('#id_tbdoy').html(tbody);
+			
+		});
+//		<a href="jchampionship/edicao/system/2/grupos">Concluir</a>
+	};
+	
+	
 });

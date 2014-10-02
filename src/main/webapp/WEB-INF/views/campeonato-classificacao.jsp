@@ -34,19 +34,13 @@
                                 
 								<table class="table table-striped table-hover well">
 									<tr style="font-size:18px;">
-										<td title="Colocacao">Col.</td>
-										<td >Time</td>
-										<td title="Pontos">Pontos</td>
-										<td title="Jogos">J</td>
-										<td title="Vitorias">V</td>
-										<td title="Empate">E</td>
-										<td title="Derrota">D</td>
-										<td title="Gols Pro">GP</td>
-										<td title="Gols Contra">GC</td>
-										<td title="Saldo de Gols">SG</td>
-										<td title="% de aproveitamento">%</td>
+										<td title="ID">ID</td>
+										<td >Descrição</td>
+										<td title="Campeonato">Campeonato</td>
+										<td title="Pendente">Pendente</td>
+										<td title="Concluir">#</td>
 									</tr>
-									<tbody id="id_tbdoy_class">
+									<tbody id="id_tbdoy">
 										<!--<center><img src="/media/images/load_32.gif"/></center>-->
 									</tbody>
 									<!--

@@ -13,17 +13,20 @@ public class Status {
 	private String descricao; // Pendencia do Formulario | Andamento | Finalizado | 
 
 	public Status() {}
+
+	public Status(long id) {
+		this.id = id;
+	}
 	
 	public Status(String descricao) {
 		this.descricao = descricao;
 	}
 
 	public Status(long id, String descricao) {
-		this.id = id;
+		this(id);
 		this.descricao = descricao;
 	}
 
-	
 	public long getId() {
 		return id;
 	}

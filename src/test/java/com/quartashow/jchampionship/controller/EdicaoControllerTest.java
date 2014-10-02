@@ -96,5 +96,13 @@ public class EdicaoControllerTest {
 			.andExpect(model().attribute("content_import", "edicao-system-grupos"))
 			.andExpect(model().attributeExists("edicao"));
 	}		
+
+	@Test
+	public void buscaListaDeEdicoesPendentes() throws Exception {
+		mockMvc.perform(get("/edicao/get/list/by/status/1"))
+			.andExpect(status().isOk())
+			.andExpect(content().contentType("application/json"));
+	}
+	
 	
 }

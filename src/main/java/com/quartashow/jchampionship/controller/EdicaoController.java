@@ -1,6 +1,7 @@
 package com.quartashow.jchampionship.controller;
 
 import java.net.URI;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -13,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
@@ -64,5 +66,10 @@ public class EdicaoController {
 		mv.addObject("edicao", edicao);
 		return mv;
 	}	
-	
+
+
+	@RequestMapping(value="/get/list/by/status/{idStatus}", method=RequestMethod.GET,produces="application/json")
+	public @ResponseBody List<Edicao> getListByStatus(@PathVariable("idStatus") long idStatus) {
+		return this.edicaoDao.getListByStatus(new Status(idStatus));
+	}	
 }
