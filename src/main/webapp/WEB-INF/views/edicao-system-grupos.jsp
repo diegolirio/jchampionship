@@ -37,7 +37,7 @@
 
 				<div class="col-lg-12">
 
-					<form id="id_form_edicao" method="POST">
+					<form id="id_form_grupo" method="POST">
 
 						<input type="hidden" name="id" value="${grupo.id}" >
 						
@@ -48,7 +48,7 @@
 							<input class="form-control"	name="descricao">
 						</div>
 						<br/>
-						<input type="submit" class="btn btn-success btnAddGrupo" value="Adicionar" >
+						<input type="submit" class="btn btn-success addGrupo" value="Adicionar" >
 
 					</form>
 										
@@ -78,3 +78,4 @@
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/quartashow/js/campeonato-controller.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/quartashow/js/edicao-controller.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/quartashow/js/grupo-controller.js"></script>
