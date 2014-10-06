@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.quartashow.jchampionship.controller.common.ValidationResponse;
@@ -58,5 +59,20 @@ public class GrupoController {
 	public ResponseEntity<String> getGruposByEdicao(@PathVariable("edicaoId") long edicaoId) {
 		List<Grupo> list = this.grupoDao.getGruposByEdicao(new Edicao(edicaoId)); 
 		return new ResponseEntity<String>(this.gson.toJson(list), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/delete_confirm/{id}", method=RequestMethod.GET)
+	public ModelAndView deleteConfirm(@PathVariable("id") long id) {
+		ModelAndView mv = new ModelAndView("_base_simple");
+		mv.addObject("content", "grupo-system-confirm-delete");
+		Grupo grupo = this.grupoDao.get(Grupo.class, id);
+		mv.addObject("grupo", grupo); 
+		return mv; 
+	}
+	
+	@RequestMapping(value="/delete/{id}", method=RequestMethod.DELETE)
+	public ResponseEntity<String> delete(@PathVariable("id") long id) {
+		this.grupoDao.delete(Grupo.class, id);
+		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 }

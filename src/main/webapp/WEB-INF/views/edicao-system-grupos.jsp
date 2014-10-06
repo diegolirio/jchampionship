@@ -66,7 +66,7 @@
 								<tr>
 									<td>${g.id}</td>
 									<td>${g.descricao}</td>
-									<td><a href="${pageContext.request.contextPath}/grupo/delete/${g.id}">Excluir</a></td>
+									<td><a href="${pageContext.request.contextPath}/grupo/delete_confirm/${g.id}">Excluir</a></td>
 								</tr>
 							</c:forEach>
 						</tbody>								

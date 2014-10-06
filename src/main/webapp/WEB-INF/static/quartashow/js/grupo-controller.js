@@ -32,9 +32,9 @@ $(function() {
 		tbody += '<tr>';
 		tbody += '	<td title="ID">'+grupo.id+'</td>';
 		tbody += '	<td >'+grupo.descricao+'</td>';
-		tbody += '	<td title="Excluir"><a href="/jchampionship/grupo/delete/'+grupo.id+'">Excluir</a></td>';
+		tbody += '	<td title="Excluir"><a href="/jchampionship/grupo/delete_confirm/'+grupo.id+'">Excluir</a></td>';
 		tbody += '</tr>'; 
-		$('#id_tbody').html(tbody);		
+		$('#id_tbody').append(tbody);		
 		formGrupo.find('input[name=descricao]').val('');
 	};
 	

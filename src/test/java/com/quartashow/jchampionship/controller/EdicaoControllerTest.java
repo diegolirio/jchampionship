@@ -22,6 +22,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.quartashow.jchampionship.dao.EdicaoDao;
+import com.quartashow.jchampionship.dao.GrupoDao;
 import com.quartashow.jchampionship.model.Edicao;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -34,6 +35,9 @@ public class EdicaoControllerTest {
 
 	@Mock
 	private EdicaoDao edicaoDao;	
+	
+	@Mock
+	private GrupoDao grupoDao;
 	
 	private MockMvc mockMvc;
 
