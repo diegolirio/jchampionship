@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -40,7 +41,6 @@ public class GrupoControllerTest {
 		mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
 	}
 	
-	// TODO: Testar Url 
 	@Test
 	public void testPostGrupoRestFull() throws Exception {		
 		ResultActions resultActions = 
@@ -53,10 +53,17 @@ public class GrupoControllerTest {
 		mockMvc.perform(get(location)).andExpect(status().isOk());
 	}		
 	
-
+	@Test
+	public void deveRetornarGrupoEmJSON() throws Exception {
+		mockMvc.perform(get("/grupo/get/1"))
+			.andExpect(status().isOk())
+			.andExpect(content().contentType(MediaType.APPLICATION_JSON));
+	}
+	
 	@Test
 	public void deveBuscarListaDeGruposPorEdicao() throws Exception {
-		mockMvc.perform(get("grupo/post/list/by/edicao/1"))
+		long edicao = 1;
+		mockMvc.perform(get("/grupo/get/list/by/edicao/"+edicao))
 			.andExpect(status().isOk())
 			.andExpect(content().contentType("application/json"));
 	}	

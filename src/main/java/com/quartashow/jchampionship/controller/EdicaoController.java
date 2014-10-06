@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.quartashow.jchampionship.controller.common.ValidationResponse;
 import com.quartashow.jchampionship.dao.EdicaoDao;
+import com.quartashow.jchampionship.dao.GrupoDao;
 import com.quartashow.jchampionship.helper.ValidationResponseHelper;
 import com.quartashow.jchampionship.model.Edicao;
 import com.quartashow.jchampionship.model.Status;
@@ -30,6 +31,9 @@ public class EdicaoController {
 	
 	@Autowired
 	private EdicaoDao edicaoDao;
+	
+	@Autowired
+	private GrupoDao grupoDao;	
 	
 	@RequestMapping(value="/system", method=RequestMethod.GET)
 	public ModelAndView pageEdicoesPendentes() {
@@ -71,6 +75,7 @@ public class EdicaoController {
 		mv.addObject("content_import", "edicao-system-grupos");
 		Edicao edicao = this.edicaoDao.get(Edicao.class, idEdicao);
 		mv.addObject("edicao", edicao);
+		mv.addObject("grupos", grupoDao.getGruposByEdicao(edicao));
 		return mv;
 	}	
 

@@ -12,8 +12,8 @@
 	<div class="col-lg-12">
 
 		<ol class="breadcrumb">
-			<li><i class="fa fa-dashboard"></i> <a href="${pageContext.request.contextPath}">Campeonato</a></li>
-			<li class="active"><i class="fa fa-edit"></i> Edição</li>
+			<li><i class="glyphicon glyphicon-ok text-success"></i> <a href="${pageContext.request.contextPath}">Campeonato</a></li>
+			<li class="active"><i class="glyphicon glyphicon-star text-warning"></i> Edição</li>
 			<li class="active"><i class="fa fa-edit"></i> Grupos</li>
 			<li class="active"><i class="fa fa-edit"></i> Jogos</li>
 			<li class="active"><i class="fa fa-edit"></i> Escalação</li>
@@ -53,7 +53,7 @@
 							</select>
 						</div>
 
-						<input type="submit" class="btn btn-success btnFormEdicaoSave" value="Próximo" >
+						<input type="submit" class="btn btn-success btnFormEdicaoSave" value="Salvar" >
 
 					</form>
 				</div>
@@ -68,3 +68,4 @@
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/quartashow/js/campeonato-controller.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/quartashow/js/edicao-controller.js"></script>
+

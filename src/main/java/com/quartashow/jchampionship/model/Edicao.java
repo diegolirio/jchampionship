@@ -32,6 +32,12 @@ public class Edicao {
 	@OneToMany(mappedBy="edicao")
 	private List<Grupo> grupos;
 	
+	public Edicao() {}
+	
+	public Edicao(long id) {
+		this.id = id;
+	}
+	
 	public long getId() {
 		return id;
 	}

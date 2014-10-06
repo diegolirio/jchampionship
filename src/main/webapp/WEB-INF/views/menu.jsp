@@ -108,7 +108,7 @@
                     
                 </li>
                 
-                <!-- Perfil do usuario -->
+				<!-- TODO: Perfil do usuario --
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Diego Lírio <b class="caret"></b></a>
                     <ul class="dropdown-menu">
@@ -127,7 +127,7 @@
                         </li>
                     </ul>
                 </li>
-                
+                -->
                 
             </ul>
             
