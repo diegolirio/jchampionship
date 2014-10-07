@@ -13,7 +13,7 @@
 			<li><i class="glyphicon glyphicon-ok text-success"></i> <a href="${pageContext.request.contextPath}">Campeonato</a></li>
 			<li><i class="glyphicon glyphicon-ok text-success"></i> <a href="${pageContext.request.contextPath}/edicao/nova/${edicao.id}">Edição</a></li>
 			<li class="active"><i class="glyphicon glyphicon-ok text-success"></i> <a href="${pageContext.request.contextPath}/edicao/system/${edicao.id}/jogos">Grupos</a></li>
-			<li class="active"><i class="glyphicon glyphicon-star text-warning"></i> Jogos</li>
+			<li class="active"><i class="glyphicon glyphicon-star text-warning"></i> <b>Jogos</b></li>
 			<li class="active"><i class="fa fa-edit"></i> Escalação</li>
 			<li class="active"><i class="fa fa-edit"></i> Visão Geral</li>			
 		</ol>
@@ -83,5 +83,6 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/quartashow/js/campeonato-controller.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/quartashow/js/edicao-controller.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/quartashow/js/grupo-controller.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/quartashow/js/jogo-controller.js"></script>
 <script type="text/javascript" src="https://raw.githubusercontent.com/diegolirio/commons_js/master/window-common.js"></script>
  
