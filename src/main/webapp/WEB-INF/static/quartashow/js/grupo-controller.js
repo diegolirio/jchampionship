@@ -32,7 +32,7 @@ $(function() {
 		tbody += '<tr>';
 		tbody += '	<td title="ID">'+grupo.id+'</td>';
 		tbody += '	<td >'+grupo.descricao+'</td>';
-		tbody += '	<td title="Excluir"><a href="/jchampionship/grupo/delete_confirm/'+grupo.id+'">Excluir</a></td>';
+		tbody += '	<td title="Excluir"><a href="/jchampionship/grupo/delete_confirm/'+grupo.id+'" onclick="showWindowPopup(this.href); return false;">Excluir</a></td>';
 		tbody += '</tr>'; 
 		$('#id_tbody').append(tbody);		
 		formGrupo.find('input[name=descricao]').val('');
@@ -67,6 +67,32 @@ $(function() {
 		});
 		
 	});
+	
+	
+	$('#id_excluir_grupo').click(function() {
+		
+			$.ajax({
+				    url: $('#formDeleteGrupo').attr('action'),
+				    type: 'DELETE',
+				    success: function(data) {
+				    	//...
+				    	console.log(JSON.stringify(data));
+				    	alert('Grupo Excluido com sucesso!!!');
+				    	window.opener.location.reload();
+				    	window.close(); 
+				    }
+			});		
+	});
+	
+	$('#id_prox_gpos').click(function() {
+		if($('#id_tbody').html().trim() != '') 
+			return true;
+		else {
+			alert('Para prosseguir adicione pelo menos 1 grupo!');
+			return false;
+		}
+	});
+	
 	
 });
 

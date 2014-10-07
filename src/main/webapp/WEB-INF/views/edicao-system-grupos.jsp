@@ -75,7 +75,9 @@
  
 				<hr/>
 				 
-				<a href="${pageContext.request.contextPath}/edicao/system/${edicao.id}/jogos" class="btn btn-success pull-right">Cadastrar Jogos <i class="glyphicon glyphicon-share-alt"></i></a>
+				<a href="${pageContext.request.contextPath}/edicao/system/${edicao.id}/jogos" class="btn btn-success pull-right" id="id_prox_gpos">
+					Cadastrar Jogos <i class="glyphicon glyphicon-share-alt"></i>
+				</a>
 
 			</div>
 		</div>
