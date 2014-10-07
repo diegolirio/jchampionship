@@ -66,7 +66,7 @@
 								<tr>
 									<td>${g.id}</td>
 									<td>${g.descricao}</td>
-									<td><a href="${pageContext.request.contextPath}/grupo/delete_confirm/${g.id}">Excluir</a></td>
+									<td><a href="${pageContext.request.contextPath}/grupo/delete_confirm/${g.id}" onclick="showWindowPopup(this.href); return false;">Excluir</a></td>
 								</tr>
 							</c:forEach>
 						</tbody>								
@@ -87,4 +87,5 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/quartashow/js/campeonato-controller.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/quartashow/js/edicao-controller.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/quartashow/js/grupo-controller.js"></script>
-
+<script type="text/javascript" src="https://raw.githubusercontent.com/diegolirio/commons_js/master/window-common.js"></script>
+ 

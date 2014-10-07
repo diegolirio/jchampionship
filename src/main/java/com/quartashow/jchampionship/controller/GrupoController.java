@@ -64,7 +64,7 @@ public class GrupoController {
 	@RequestMapping(value="/delete_confirm/{id}", method=RequestMethod.GET)
 	public ModelAndView deleteConfirm(@PathVariable("id") long id) {
 		ModelAndView mv = new ModelAndView("_base_simple");
-		mv.addObject("content", "grupo-system-confirm-delete");
+		mv.addObject("content_import", "grupo-system-confirm-delete");
 		Grupo grupo = this.grupoDao.get(Grupo.class, id);
 		mv.addObject("grupo", grupo); 
 		return mv; 

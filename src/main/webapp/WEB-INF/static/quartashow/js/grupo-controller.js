@@ -41,12 +41,15 @@ $(function() {
 	$('.addGrupo').click(function(e) {
 		e.preventDefault();
 		
+		var edicao = formGrupo.find('input[name="edicao.id"]').val() ;
+		console.log(edicao);
+		
 		$.post(	formGrupo.attr('action'),
 				{ descricao:   formGrupo.find('input[name=descricao]').val(),
-				  'edicao.id': formGrupo.find('input[name="edicao.id"]').val() },
+				  'edicao.id': edicao },
 				function(data, statusText, response) {
 					if(response.status == 201) {
-						addTabelaGrupo(data); // data fake					
+						addTabelaGrupo(data);					
 					} else {
 						alert("Not 201 ===> " + JSON.stringify(response));
 					} 
