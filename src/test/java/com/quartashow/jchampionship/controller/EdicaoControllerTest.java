@@ -19,6 +19,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.quartashow.jchampionship.dao.EdicaoDao;
@@ -41,10 +42,15 @@ public class EdicaoControllerTest {
 	
 	private MockMvc mockMvc;
 
+	private Edicao edicao;
+	
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+		
+		edicao = Mockito.mock(Edicao.class);
+		Mockito.when(edicaoDao.get(Edicao.class, 1)).thenReturn(edicao);			
 	}
 	
 	@Test
@@ -95,20 +101,7 @@ public class EdicaoControllerTest {
 			 .andExpect(status().isUnauthorized())
 			 .andExpect(content().contentType("application/json"))
 			 .andExpect(content().string("{\"status\":\"ERROR\",\"errorMessages\":{\"campeonato\":\"may not be null\"}}"));
-	}		
-	
-	@Test
-	public void paginaEditarGruposDeUmaEdicaoDeveConterViewsAtributos() throws Exception {	
-		Edicao edicao = Mockito.mock(Edicao.class);
-		Mockito.when(edicaoDao.get(Edicao.class, 1)).thenReturn(edicao);
-		
-		mockMvc.perform(get("/edicao/system/1/grupos"))
-			.andExpect(status().is(200))
-			.andExpect(view().name("_base"))
-			.andExpect(model().attributeExists("content_import"))
-			.andExpect(model().attribute("content_import", "edicao-system-grupos"))
-			.andExpect(model().attributeExists("edicao"));
-	}		
+	}			
 
 	@Test
 	public void buscaListaDeEdicoesPendentes() throws Exception {
@@ -117,5 +110,27 @@ public class EdicaoControllerTest {
 			.andExpect(content().contentType("application/json"));
 	}
 	
+	
+	/*
+	 * Form Wizard Edicao (novo)
+	 */
+	@Test
+	public void paginaEditarGruposDeUmaEdicaoDeveConterViewsAtributos() throws Exception {			
+		mockMvc.perform(get("/edicao/system/1/grupos"))
+			.andExpect(status().is(200))
+			.andExpect(view().name("_base"))
+			.andExpect(model().attributeExists("content_import"))
+			.andExpect(model().attribute("content_import", "edicao-system-grupos"))
+			.andExpect(model().attributeExists("edicao"));
+	}		
+	
+	@Test
+	public void deveConterViewModelParaCadastrarJogos() throws Exception {
+		mockMvc.perform(get("/edicao/system/1/jogos")) 
+			.andExpect(status().isOk())
+			.andExpect(MockMvcResultMatchers.view().name("_base"))
+			.andExpect(MockMvcResultMatchers.model().attributeExists("content_import", "edicao"))
+			.andExpect(MockMvcResultMatchers.model().attribute("content_import", "edicao-system-jogos"));
+	}
 	
 }

@@ -88,7 +88,7 @@ public class GrupoControllerTest {
 		
 		mockMvc.perform(get("/grupo/delete_confirm/12"))
 			.andExpect(MockMvcResultMatchers.view().name("_base_simple"))
-			.andExpect(MockMvcResultMatchers.model().attributeExists("content", "grupo"))
+			.andExpect(MockMvcResultMatchers.model().attributeExists("content_import", "grupo"))
 			.andExpect(MockMvcResultMatchers.model().attribute("content", "grupo-system-confirm-delete"));
 	}
 	

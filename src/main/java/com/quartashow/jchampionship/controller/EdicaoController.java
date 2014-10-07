@@ -69,8 +69,14 @@ public class EdicaoController {
 	   return responseEntity;
 	 }
 	
+
+	@RequestMapping(value="/get/list/by/status/{idStatus}", method=RequestMethod.GET,produces="application/json")
+	public @ResponseBody List<Edicao> getListByStatus(@PathVariable("idStatus") long idStatus) {
+		return this.edicaoDao.getListByStatus(new Status(idStatus));
+	}		
+	
 	@RequestMapping(value="/system/{idEdicao}/grupos", method=RequestMethod.GET)
-	public ModelAndView pageNovaEdicao(@PathVariable("idEdicao") long idEdicao) {
+	public ModelAndView pageAddGrupos(@PathVariable("idEdicao") long idEdicao) {
 		ModelAndView mv = new ModelAndView("_base");
 		mv.addObject("content_import", "edicao-system-grupos");
 		Edicao edicao = this.edicaoDao.get(Edicao.class, idEdicao);
@@ -78,10 +84,12 @@ public class EdicaoController {
 		mv.addObject("grupos", grupoDao.getGruposByEdicao(edicao));
 		return mv;
 	}	
-
-
-	@RequestMapping(value="/get/list/by/status/{idStatus}", method=RequestMethod.GET,produces="application/json")
-	public @ResponseBody List<Edicao> getListByStatus(@PathVariable("idStatus") long idStatus) {
-		return this.edicaoDao.getListByStatus(new Status(idStatus));
-	}	
+	
+	@RequestMapping(value="/system/{idEdicao}/jogos", method=RequestMethod.GET) 
+	public ModelAndView pageAddJogos(@PathVariable("idEdicao") long idEdicao) {
+		ModelAndView mv = new ModelAndView("_base");
+		mv.addObject("content_import", "edicao-system-jogos");
+		mv.addObject("edicao", this.edicaoDao.get(Edicao.class, idEdicao));
+		return mv;
+	}
 }
