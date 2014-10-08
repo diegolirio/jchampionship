@@ -34,11 +34,11 @@
                                 
 								<table class="table table-striped table-hover well">
 									<thead>
-										<tr>
+										<tr class="text-danger">
 											<td title="ID">ID</td>
 											<td >Descrição</td>
 											<td title="Campeonato">Campeonato</td>
-											<td title="Pendente">Pendente</td>
+											<td title="Pendente">Status</td>
 											<td title="Concluir">#</td>
 										</tr>
 									<tbody id="id_tbody">

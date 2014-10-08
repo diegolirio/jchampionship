@@ -100,7 +100,7 @@
 				<div class="col-lg-12">
 					<table class="table table-striped table-hover well">
 						<thead>
-							<tr>
+							<tr class="text-danger">
 								<td>ID</td>
 								<td >Grupo</td>
 								<td >Time A</td>

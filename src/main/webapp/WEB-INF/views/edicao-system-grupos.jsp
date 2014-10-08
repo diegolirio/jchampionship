@@ -54,7 +54,7 @@
 				
 				<div class="col-lg-12">
 					<table class="table table-striped table-hover well">
-						<thead>
+						<thead class="text-danger">
 							<tr>
 								<td title="ID">ID</td>
 								<td >Grupo</td>
@@ -75,7 +75,7 @@
  
 				<hr/>
 				 
-				<a href="${pageContext.request.contextPath}/edicao/system/${edicao.id}/jogos" class="btn btn-success pull-right" id="id_prox_gpos">
+				<a href="${pageContext.request.contextPath}/edicao/system/${edicao.id}/times" class="btn btn-success pull-right" id="id_prox_gpos">
 					Cadastrar Jogos <i class="glyphicon glyphicon-share-alt"></i>
 				</a>
 

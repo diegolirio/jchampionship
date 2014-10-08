@@ -134,8 +134,18 @@ public class EdicaoControllerTest {
 		mockMvc.perform(get("/edicao/system/1/grupos"))
 			.andExpect(status().is(200))
 			.andExpect(view().name("_base"))
-			.andExpect(model().attributeExists("content_import"))
+			.andExpect(model().attributeExists("content_import", "grupos"))
 			.andExpect(model().attribute("content_import", "edicao-system-grupos"))
+			.andExpect(model().attributeExists("edicao"));
+	}		
+	
+	@Test
+	public void paginaEditarTimeDeUmaEdicaoDeveConterViewsAtributos() throws Exception {			
+		mockMvc.perform(get("/edicao/system/1/times"))
+			.andExpect(status().is(200))
+			.andExpect(view().name("_base"))
+			.andExpect(model().attributeExists("content_import", "times", "timesClassificacao"))
+			.andExpect(model().attribute("content_import", "edicao-system-times"))
 			.andExpect(model().attributeExists("edicao"));
 	}		
 	

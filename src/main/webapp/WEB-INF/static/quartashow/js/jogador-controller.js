@@ -3,7 +3,7 @@ $(function() {
 	
 	var form = $('#form');
 	
-	$('.savejogador').click(function(e) {
+	$('.saveJogador').click(function(e) {
 		e.preventDefault();		
 		var nome = form.find('input[name="nome"]').val();		
 		console.log(nome);		

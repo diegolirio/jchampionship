@@ -24,11 +24,13 @@ import com.quartashow.jchampionship.dao.GrupoDao;
 import com.quartashow.jchampionship.dao.HarbitoDao;
 import com.quartashow.jchampionship.dao.JogoDao;
 import com.quartashow.jchampionship.dao.LocalDao;
+import com.quartashow.jchampionship.dao.TimeDao;
 import com.quartashow.jchampionship.helper.ValidationResponseHelper;
 import com.quartashow.jchampionship.model.Edicao;
 import com.quartashow.jchampionship.model.Harbito;
 import com.quartashow.jchampionship.model.Local;
 import com.quartashow.jchampionship.model.Status;
+import com.quartashow.jchampionship.model.Time;
 
 @Controller
 @RequestMapping("/edicao")
@@ -47,7 +49,10 @@ public class EdicaoController {
 	private HarbitoDao harbitoDao;
 
 	@Autowired
-	private LocalDao localDao;	
+	private LocalDao localDao;
+
+	@Autowired
+	private TimeDao timeDao;	
 	
 	@RequestMapping(value="/system", method=RequestMethod.GET)
 	public ModelAndView pageEdicoesPendentes() {
@@ -98,6 +103,17 @@ public class EdicaoController {
 		mv.addObject("grupos", grupoDao.getGruposByEdicao(edicao));
 		return mv;
 	}	
+	
+	@RequestMapping(value="/system/{idEdicao}/times", method=RequestMethod.GET)
+	public ModelAndView pageAddTimes(@PathVariable("idEdicao") long idEdicao) {
+		ModelAndView mv = new ModelAndView("_base");
+		mv.addObject("content_import", "edicao-system-times");
+		Edicao edicao = this.edicaoDao.get(Edicao.class, idEdicao);
+		mv.addObject("edicao", edicao);
+		mv.addObject("times", this.timeDao.getList(Time.class));
+		mv.addObject("timesClassificacao", null);
+		return mv;
+	}		
 	
 	@RequestMapping(value="/system/{idEdicao}/jogos", method=RequestMethod.GET) 
 	public ModelAndView pageAddJogos(@PathVariable("idEdicao") long idEdicao) {
