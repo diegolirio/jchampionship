@@ -26,6 +26,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.quartashow.jchampionship.dao.EdicaoDao;
 import com.quartashow.jchampionship.dao.GrupoDao;
+import com.quartashow.jchampionship.dao.HarbitoDao;
 import com.quartashow.jchampionship.dao.JogoDao;
 import com.quartashow.jchampionship.model.Edicao;
 import com.quartashow.jchampionship.model.Jogo;
@@ -46,6 +47,9 @@ public class EdicaoControllerTest {
 
 	@Mock
 	private JogoDao jogoDao;
+	
+	@Mock
+	private HarbitoDao harbitoDao;
 	
 	private MockMvc mockMvc;
 
@@ -141,7 +145,7 @@ public class EdicaoControllerTest {
 		mockMvc.perform(get("/edicao/system/1/jogos")) 
 			.andExpect(status().isOk())
 			.andExpect(MockMvcResultMatchers.view().name("_base"))
-			.andExpect(MockMvcResultMatchers.model().attributeExists("content_import", "edicao", "jogos", "grupos"))
+			.andExpect(MockMvcResultMatchers.model().attributeExists("content_import", "edicao", "jogos", "grupos", "harbitos"))
 			.andExpect(MockMvcResultMatchers.model().attribute("content_import", "edicao-system-jogos"));
 	}
 	

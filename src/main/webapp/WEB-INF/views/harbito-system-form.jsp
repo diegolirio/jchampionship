@@ -10,7 +10,7 @@
 		<label>Nome </label> <span id="id_message_nome"></span>
 		<input class="form-control" type="text" name="nome">
 	</div>						
-
+ 
 	<br/>
 		
 	<a href="#" class="btn btn-default" onclick="window.close();">Cancelar</a>
@@ -19,6 +19,7 @@
 		
 	<br/><br/>
 </form>
-
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/quartashow/js/grupo-controller.js"></script>
+ 
 <script type="text/javascript" src="https://raw.githubusercontent.com/diegolirio/commons_js/master/window-common.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/quartashow/js/common-valid.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/quartashow/js/harbito-controller.js"></script>

@@ -51,15 +51,18 @@
 
 						<div class="form-group col-lg-4">
 							<label>Harbito </label> <span id="id_message_harbito"></span>
-							<a href="${pageContext.request.contextPath}/harbito/page/simple" onclick="showWindowPopup(this.href); return false;"><i class="glyphicon glyphicon-plus"></i></a> 
+							<a href="${pageContext.request.contextPath}/harbito/page/simple" onclick="showWindowPopup(this.href, 400, 600); return false;"><i class="glyphicon glyphicon-plus"></i></a> 
 							<select class="form-control" id="id_harbitos" name="harbito.id">
-								<option value="">Selecione o Harbito...</option>
+								<option value="" selected="selected">Selecione o Harbito...</option>
+								<c:forEach var="h" items="${harbitos}">
+									<option value="${h.id}">${h.nome}</option> 
+								</c:forEach>
 							</select>
 						</div>						
 						
 						<div class="form-group col-lg-4">
 							<label>Local </label> <span id="id_message_local"></span> 
-							<a href="#"><i class="glyphicon glyphicon-plus"></i></a>
+							<a href="${pageContext.request.contextPath}/local/page/simple" onclick="showWindowPopup(this.href, 400, 600); return false;"><i class="glyphicon glyphicon-plus"></i></a>
 							<select class="form-control" id="id_locais" name="local.id">
 								<option value="">Selecione o Local...</option>
 							</select>
