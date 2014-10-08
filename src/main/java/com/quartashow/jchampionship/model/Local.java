@@ -15,7 +15,7 @@ public class Local {
 	@Id @GeneratedValue
 	private long id;
 	
-	@NotNull @Size(min=2, max=2)
+	@NotNull @Size(min=2, max=20)
 	private String descricao;
 	
 	@OneToMany(mappedBy="local")

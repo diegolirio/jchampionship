@@ -23,9 +23,11 @@ import com.quartashow.jchampionship.dao.EdicaoDao;
 import com.quartashow.jchampionship.dao.GrupoDao;
 import com.quartashow.jchampionship.dao.HarbitoDao;
 import com.quartashow.jchampionship.dao.JogoDao;
+import com.quartashow.jchampionship.dao.LocalDao;
 import com.quartashow.jchampionship.helper.ValidationResponseHelper;
 import com.quartashow.jchampionship.model.Edicao;
 import com.quartashow.jchampionship.model.Harbito;
+import com.quartashow.jchampionship.model.Local;
 import com.quartashow.jchampionship.model.Status;
 
 @Controller
@@ -42,7 +44,10 @@ public class EdicaoController {
 	private JogoDao jogoDao;
 
 	@Autowired
-	private HarbitoDao harbitoDao;	
+	private HarbitoDao harbitoDao;
+
+	@Autowired
+	private LocalDao localDao;	
 	
 	@RequestMapping(value="/system", method=RequestMethod.GET)
 	public ModelAndView pageEdicoesPendentes() {
@@ -103,6 +108,7 @@ public class EdicaoController {
 		mv.addObject("jogos", this.jogoDao.getJogosByEdicao(edicao));
 		mv.addObject("grupos", this.grupoDao.getGruposByEdicao(edicao));
 		mv.addObject("harbitos", this.harbitoDao.getList(Harbito.class));
+		mv.addObject("locais", this.localDao.getList(Local.class));
 		return mv;
 	}
 }

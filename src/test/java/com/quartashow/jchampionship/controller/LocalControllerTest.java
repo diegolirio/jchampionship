@@ -2,8 +2,8 @@ package com.quartashow.jchampionship.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import org.junit.Before;
@@ -19,20 +19,20 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import com.quartashow.jchampionship.dao.HarbitoDao;
+import com.quartashow.jchampionship.dao.LocalDao;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = { "classpath*:spring-context.xml" })
-public class HarbitoControllerTest {
+public class LocalControllerTest {
 
 	@InjectMocks
-	private HarbitoController controller;
+	private LocalController controller;
 
 	private MockMvc mockMvc;
 	
 	@Mock
-	private HarbitoDao harbitoDao;
+	private LocalDao localDao;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -41,19 +41,19 @@ public class HarbitoControllerTest {
 	}
 
 	@Test
-	public void pageSimpleHarbitoParaCadastroRapidoDeveConterViewModels() throws Exception {
-		mockMvc.perform(get("/harbito/page/simple"))
+	public void pageSimpleLocalParaCadastroRapidoDeveConterViewModels() throws Exception {
+		mockMvc.perform(get("/local/page/simple"))
 			.andExpect(status().isOk())
 			.andExpect(view().name("_base_simple"))
 			.andExpect(model().attributeExists("content_import"))
-			.andExpect(model().attribute("content_import", "harbito-system-form"));
+			.andExpect(model().attribute("content_import", "local-system-form"));
 	}
 	
 	@Test
-	public void harbitoPost() throws Exception {
+	public void localPost() throws Exception {
 		ResultActions resultActions = 
-			mockMvc.perform(post("/harbito/post")
-				.param("nome", "Ladrao"))
+			mockMvc.perform(post("/local/post")
+				.param("descricao", "Club Poaense"))
 			 .andExpect(status().isCreated());
 		String uri = resultActions.andReturn().getResponse().getHeader("Location");		
 		mockMvc.perform(get(uri)).andExpect(status().isOk());
@@ -61,8 +61,8 @@ public class HarbitoControllerTest {
 	
 	@Test
 	public void harbitoPostNomeInvalido() throws Exception {
-			mockMvc.perform(post("/harbito/post")
-				.param("nome", "La"))
+			mockMvc.perform(post("/local/post")
+				.param("descricao", ""))
 			 .andExpect(status().isUnauthorized());
 	}	
 	

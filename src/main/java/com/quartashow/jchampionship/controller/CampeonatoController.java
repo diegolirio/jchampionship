@@ -14,7 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.quartashow.jchampionship.dao.CampeonatoDao;
 import com.quartashow.jchampionship.dao.StatusDao;
 import com.quartashow.jchampionship.model.Campeonato;
-import com.quartashow.jchampionship.model.Status;
 
 @Controller
 public class CampeonatoController {
@@ -30,7 +29,7 @@ public class CampeonatoController {
 	public ModelAndView home() {
 		logger.info("");
 		ModelAndView mv = new ModelAndView("_base");
-		mv.addObject("content_import", "campeonato-classificacao");
+		mv.addObject("content_import", "campeonato-classificacao-static");
 		return mv;
 	}
 	
@@ -38,23 +37,15 @@ public class CampeonatoController {
 	public @ResponseBody List<Campeonato> getList() {
 		return this.campeonatoDao.getList(Campeonato.class);
 	}
-//	
-//	@RequestMapping(value="/save")
-//	public @ResponseBody Campeonato save() {
-//		Campeonato c = new Campeonato();
-//		c.setDescricao("Quarta-Show");
-//		this.campeonatoDao.save(c);
-//		return c;
-//	}
 	
-	@RequestMapping(value="/initValues")
-	public void initValues() {
-		Status pendente = new Status("Pendente");
-		Status andamento = new Status("Em Andamento");
-		Status finalizado = new Status("Fianlizado");
-		this.statusDao.save(pendente);
-		this.statusDao.save(andamento);
-		this.statusDao.save(finalizado);
-	}
+//	@RequestMapping(value="/initValues")
+//	public void initValues() {
+//		Status pendente = new Status("Pendente");
+//		Status andamento = new Status("Em Andamento");
+//		Status finalizado = new Status("Fianlizado");
+//		this.statusDao.save(pendente);
+//		this.statusDao.save(andamento);
+//		this.statusDao.save(finalizado);
+//	}
 	
 }

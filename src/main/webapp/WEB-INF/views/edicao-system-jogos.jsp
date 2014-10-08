@@ -64,13 +64,16 @@
 							<label>Local </label> <span id="id_message_local"></span> 
 							<a href="${pageContext.request.contextPath}/local/page/simple" onclick="showWindowPopup(this.href, 400, 600); return false;"><i class="glyphicon glyphicon-plus"></i></a>
 							<select class="form-control" id="id_locais" name="local.id">
-								<option value="">Selecione o Local...</option>
+								<option value="" selected="selected">Selecione o Local...</option>
+								<c:forEach var="l" items="${locais}">
+									<option value="${l.id}">${l.descricao}</option>
+								</c:forEach>
 							</select>
 						</div>						
 
 						<div class="form-group col-lg-5">
 							<label>Time A </label> <span id="id_message_timea"></span>
-							<a href="${pageContext.request.contextPath}/time/page/simple"><i class="glyphicon glyphicon-plus"></i></a> 
+							<a href="${pageContext.request.contextPath}/time/page/simple?idSelected=id_timea" onclick="showWindowPopup(this.href, 750, 900); return false;"><i class="glyphicon glyphicon-plus"></i></a> 
 							<select class="form-control" id="id_timea" name="timeA.id">
 								<option value="">Selecione o Time A...</option>
 							</select>
@@ -78,7 +81,7 @@
 						<div class="form-group col-lg-2 text-center text-muted"><h1>X</h1></div>
 						<div class="form-group col-lg-5">
 							<label>Time B </label> <span id="id_message_timeb"></span> 
-							<a href="${pageContext.request.contextPath}/time/page/simple"><i class="glyphicon glyphicon-plus"></i></a>
+							<a href="${pageContext.request.contextPath}/time/page/simple?idSelected=id_timeb" onclick="showWindowPopup(this.href, 750, 900); return false;"><i class="glyphicon glyphicon-plus"></i></a>
 							<select class="form-control" id="id_timeb" name="timeB.id">
 								<option value="">Selecione o Time B...</option>
 							</select>

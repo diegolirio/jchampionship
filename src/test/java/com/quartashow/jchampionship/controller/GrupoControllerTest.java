@@ -58,6 +58,25 @@ public class GrupoControllerTest {
 	}		
 	
 	@Test
+	public void testPostGrupoDescricaoInvalida() throws Exception {		
+			mockMvc.perform(post("/grupo/post")
+					.param("descricao", "")
+					.param("edicao.id", "1"))
+			 .andExpect(status().isUnauthorized())
+			 .andExpect(content().contentType("application/json"));
+	}	
+	
+	@Test
+	public void testPostGrupoEdicaoInvalida() throws Exception {		
+			mockMvc.perform(post("/grupo/post")
+					.param("descricao", "")
+					//.param("edicao.id", "1")
+					)
+			 .andExpect(status().isUnauthorized())
+			 .andExpect(content().contentType("application/json"));
+	}			
+	
+	@Test
 	public void deveRetornarGrupoEmJSON() throws Exception {
 		mockMvc.perform(get("/grupo/get/1"))
 			.andExpect(status().isOk())
