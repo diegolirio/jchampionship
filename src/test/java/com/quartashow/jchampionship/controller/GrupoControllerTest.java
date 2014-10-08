@@ -25,7 +25,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.quartashow.jchampionship.dao.GrupoDao;
 import com.quartashow.jchampionship.model.Grupo;
 
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = { "classpath*:spring-context.xml" })

@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 
@@ -164,15 +165,13 @@
                         <a href="#blank-page.html"><i class="fa fa-fw fa-file"></i> Blank Page</a>
                     </li>
                     -->
-                    <li>
-                        <a href="${pageContext.request.contextPath}/edicao/system"><i class="fa fa-fw fa-file"></i> Criar novo Campeonato</a>
-                    </li>                    
+                    <c:if test="${acessoAdmin}">
+	                    <li>
+	                        <a href="${pageContext.request.contextPath}/edicao/system"><i class="fa fa-fw fa-file"></i> Criar novo Campeonato</a>
+	                    </li>         
+                    </c:if>           
                 </ul>
             </div>
-            
-            
-            
-            
             
             <!-- /.navbar-collapse -->
         </nav>
