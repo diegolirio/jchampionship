@@ -38,29 +38,88 @@
 					<form id="id_form_jogo" method="POST" action="${pageContext.request.contextPath}/jogo/post">
 
 						<input type="hidden" name="id" value="${jogo.id}" >
-						
-						<br/>
-						<input type="submit" class="btn btn-success addJogo" value="Adicionar" >
 
+						<div class="form-group col-lg-4">
+							<label>Grupo </label> <span id="id_message_grupo"></span> 
+							<select class="form-control" id="id_grupos" name="grupo.id">
+								<option value="">Selecione o Grupo...</option>
+								<c:forEach var="g" items="${grupos}">
+									<option value="${g.id}">${g.descricao}</option>
+								</c:forEach>
+							</select>
+						</div>
+
+						<div class="form-group col-lg-4">
+							<label>Harbito </label> <span id="id_message_harbito"></span>
+							<a href="${pageContext.request.contextPath}/harbito/page/simple" onclick="showWindowPopup(this.href); return false;"><i class="glyphicon glyphicon-plus"></i></a> 
+							<select class="form-control" id="id_harbitos" name="harbito.id">
+								<option value="">Selecione o Harbito...</option>
+							</select>
+						</div>						
+						
+						<div class="form-group col-lg-4">
+							<label>Local </label> <span id="id_message_local"></span> 
+							<a href="#"><i class="glyphicon glyphicon-plus"></i></a>
+							<select class="form-control" id="id_locais" name="local.id">
+								<option value="">Selecione o Local...</option>
+							</select>
+						</div>						
+
+						<div class="form-group col-lg-5">
+							<label>Time A </label> <span id="id_message_timea"></span>
+							<a href="${pageContext.request.contextPath}/time/page/simple"><i class="glyphicon glyphicon-plus"></i></a> 
+							<select class="form-control" id="id_timea" name="timeA.id">
+								<option value="">Selecione o Time A...</option>
+							</select>
+						</div>						
+						<div class="form-group col-lg-2 text-center text-muted"><h1>X</h1></div>
+						<div class="form-group col-lg-5">
+							<label>Time B </label> <span id="id_message_timeb"></span> 
+							<a href="${pageContext.request.contextPath}/time/page/simple"><i class="glyphicon glyphicon-plus"></i></a>
+							<select class="form-control" id="id_timeb" name="timeB.id">
+								<option value="">Selecione o Time B...</option>
+							</select>
+						</div>																														
+						
+						<div class="row">
+							<input type="submit" class="btn btn-success pull-right addJogo" value="Adicionar" >
+						</div>
+						
 					</form>
 										
 				</div>
+				
+				<br/><br/>
 				
 				<div class="col-lg-12">
 					<table class="table table-striped table-hover well">
 						<thead>
 							<tr>
-								<td title="ID">ID</td>
+								<td>ID</td>
 								<td >Grupo</td>
+								<td >Time A</td>
+								<td ></td>
+								<td class="text-center text-muted">X</td>
+								<td ></td>
+								<td >Time B</td>
+								<td >Local</td>
+								<td >Harbito</td>
 								<td title="Excluir">Excluir</td>
 							<tr>
 						</thead>
 						<tbody id="id_tbody">
 							<c:forEach var="j" items="${jogos}">
 								<tr>
-									<td>${j.id}</td>
-									<td>${j.descricao}</td>
-									<td><a href="${pageContext.request.contextPath}/grupo/delete_confirm/${j.id}" onclick="showWindowPopup(this.href); return false;">Excluir</a></td>
+								<td>${j.id}</td>
+								<td >${j.grupo.descricao}</td>
+								<td >${j.timeA.nome}</td>
+								<td >${j.resultadoA}</td>
+								<td class="text-center text-muted">X</td>
+								<td >${j.resultadoB}</td>
+								<td >${j.timeB.nome}</td>
+								<td >${j.local.descricao}</td>
+								<td >${j.harbito.nome}</td>
+								<td><a href="${pageContext.request.contextPath}/grupo/delete_confirm/${j.id}" onclick="showWindowPopup(this.href); return false;">Excluir</a></td>
 								</tr>
 							</c:forEach>
 						</tbody>								

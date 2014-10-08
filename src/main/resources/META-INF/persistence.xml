@@ -8,6 +8,10 @@
 		<class>com.quartashow.jchampionship.model.Edicao</class>
 		<class>com.quartashow.jchampionship.model.Status</class>
 		<class>com.quartashow.jchampionship.model.Grupo</class>
+		<class>com.quartashow.jchampionship.model.Jogo</class>
+		<class>com.quartashow.jchampionship.model.Time</class>
+		<class>com.quartashow.jchampionship.model.Harbito</class>
+		<class>com.quartashow.jchampionship.model.Local</class>
 		<properties> 			
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />  
 			<property name="hibernate.hbm2ddl.auto" value="update" /> 

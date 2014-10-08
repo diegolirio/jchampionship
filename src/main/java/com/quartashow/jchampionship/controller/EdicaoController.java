@@ -21,19 +21,23 @@ import com.google.gson.Gson;
 import com.quartashow.jchampionship.controller.common.ValidationResponse;
 import com.quartashow.jchampionship.dao.EdicaoDao;
 import com.quartashow.jchampionship.dao.GrupoDao;
+import com.quartashow.jchampionship.dao.JogoDao;
 import com.quartashow.jchampionship.helper.ValidationResponseHelper;
 import com.quartashow.jchampionship.model.Edicao;
 import com.quartashow.jchampionship.model.Status;
 
 @Controller
 @RequestMapping("/edicao")
-public class EdicaoController {
+public class EdicaoController { 
 	
 	@Autowired
 	private EdicaoDao edicaoDao;
 	
 	@Autowired
-	private GrupoDao grupoDao;	
+	private GrupoDao grupoDao;
+
+	@Autowired
+	private JogoDao jogoDao;	
 	
 	@RequestMapping(value="/system", method=RequestMethod.GET)
 	public ModelAndView pageEdicoesPendentes() {
@@ -89,7 +93,10 @@ public class EdicaoController {
 	public ModelAndView pageAddJogos(@PathVariable("idEdicao") long idEdicao) {
 		ModelAndView mv = new ModelAndView("_base");
 		mv.addObject("content_import", "edicao-system-jogos");
-		mv.addObject("edicao", this.edicaoDao.get(Edicao.class, idEdicao));
+		Edicao edicao = this.edicaoDao.get(Edicao.class, idEdicao);
+		mv.addObject("edicao", edicao);
+		mv.addObject("jogos", this.jogoDao.getJogosByEdicao(edicao));
+		mv.addObject("grupos", this.grupoDao.getGruposByEdicao(edicao));
 		return mv;
 	}
 }

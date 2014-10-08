@@ -7,6 +7,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,7 +26,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.quartashow.jchampionship.dao.EdicaoDao;
 import com.quartashow.jchampionship.dao.GrupoDao;
+import com.quartashow.jchampionship.dao.JogoDao;
 import com.quartashow.jchampionship.model.Edicao;
+import com.quartashow.jchampionship.model.Jogo;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -39,6 +43,9 @@ public class EdicaoControllerTest {
 	
 	@Mock
 	private GrupoDao grupoDao;
+
+	@Mock
+	private JogoDao jogoDao;
 	
 	private MockMvc mockMvc;
 
@@ -126,10 +133,15 @@ public class EdicaoControllerTest {
 	
 	@Test
 	public void deveConterViewModelParaCadastrarJogos() throws Exception {
+		
+		@SuppressWarnings("unchecked")
+		List<Jogo> jogos = Mockito.mock(List.class);
+		Mockito.when(this.jogoDao.getJogosByEdicao(edicao)).thenReturn(jogos);
+		
 		mockMvc.perform(get("/edicao/system/1/jogos")) 
 			.andExpect(status().isOk())
 			.andExpect(MockMvcResultMatchers.view().name("_base"))
-			.andExpect(MockMvcResultMatchers.model().attributeExists("content_import", "edicao"))
+			.andExpect(MockMvcResultMatchers.model().attributeExists("content_import", "edicao", "jogos", "grupos"))
 			.andExpect(MockMvcResultMatchers.model().attribute("content_import", "edicao-system-jogos"));
 	}
 	
