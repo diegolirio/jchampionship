@@ -16,4 +16,4 @@
 </form>
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/quartashow/js/grupo-controller.js"></script>
-<script type="text/javascript" src="https://raw.githubusercontent.com/diegolirio/commons_js/master/window-common.js"></script>
+<script type="text/javascript" src="https://raw.githubusercontent.com/diegolirio/commons_js/master/ui-common.js"></script>

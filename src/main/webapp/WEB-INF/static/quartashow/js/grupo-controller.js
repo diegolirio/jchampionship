@@ -1,18 +1,4 @@
 
-//function getGrupos(edicaoId) {
-//	$.getJSON('/jchampionship/grupo/get/list/by/edicao/'+edicaoId, function(data) {
-//		var tbody = "";
-//		$.each(data, function(i, g) {
-//			tbody += '<tr>';
-//			tbody += '   <td title="ID">'+g.id+'</td>';
-//			tbody += '   <td >'+g.descricao+'</td>';
-//			tbody += '	 <td title="Excluir"><a href="/jchampionship/grupo/delete/'+g.id+'">Excluir</a></td>';
-//			tbody += '</tr>';			
-//		});
-//		$('#id_tbody').html(tbody);
-//	});
-//}
-
 $(function() {
 	
 	var formGrupo = $('#id_form_grupo');

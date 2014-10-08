@@ -42,8 +42,6 @@
 
 <body>
 
-    <div id="wrapper">
-
         <div id="page-wrapper">
 
             <div class="container">
@@ -56,8 +54,6 @@
         </div>
         <!-- /#page-wrapper -->
 
-    </div>
-    <!-- /#wrapper -->
 
     <!-- Morris Charts JavaScript -->
     <script src="${pageContext.request.contextPath}/static/sb/js/plugins/morris/raphael.min.js"></script>

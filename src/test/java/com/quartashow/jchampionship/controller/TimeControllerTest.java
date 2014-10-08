@@ -19,20 +19,20 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import com.quartashow.jchampionship.dao.LocalDao;
+import com.quartashow.jchampionship.dao.TimeDao;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = { "classpath*:spring-context.xml" })
-public class LocalControllerTest {
+public class TimeControllerTest {
 
 	@InjectMocks
-	private LocalController controller;
+	private TimeController controller;
 
 	private MockMvc mockMvc;
 	
 	@Mock
-	private LocalDao localDao;
+	private TimeDao timeDao;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -41,28 +41,28 @@ public class LocalControllerTest {
 	}
 
 	@Test
-	public void pageSimpleLocalParaCadastroRapidoDeveConterViewModels() throws Exception {
-		mockMvc.perform(get("/local/page/simple"))
+	public void pageSimpleTimeParaCadastroRapidoDeveConterViewModels() throws Exception {
+		mockMvc.perform(get("/time/page/simple"))
 			.andExpect(status().isOk())
 			.andExpect(view().name("_base_simple"))
 			.andExpect(model().attributeExists("content_import"))
-			.andExpect(model().attribute("content_import", "local-system-form"));
+			.andExpect(model().attribute("content_import", "time-system-form"));
 	}
 	
 	@Test
-	public void localPost() throws Exception {
+	public void timePost() throws Exception {
 		ResultActions resultActions = 
-			mockMvc.perform(post("/local/post")
-				.param("descricao", "Club Poaense"))
+			mockMvc.perform(post("/time/post")
+				.param("nome", "Treze"))
 			 .andExpect(status().isCreated());
 		String uri = resultActions.andReturn().getResponse().getHeader("Location");		
 		mockMvc.perform(get(uri)).andExpect(status().isOk());
 	}
 	
 	@Test
-	public void localPostNomeInvalido() throws Exception {
-			mockMvc.perform(post("/local/post")
-				.param("descricao", ""))
+	public void timePostNomeInvalido() throws Exception {
+			mockMvc.perform(post("/time/post")
+				.param("nome", ""))
 			 .andExpect(status().isUnauthorized());
 	}	
 	
