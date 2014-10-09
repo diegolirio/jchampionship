@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.quartashow.jchampionship.controller.common.ValidationResponse;
+import com.quartashow.jchampionship.dao.ClassificacaoDao;
 import com.quartashow.jchampionship.dao.EdicaoDao;
 import com.quartashow.jchampionship.dao.GrupoDao;
 import com.quartashow.jchampionship.dao.HarbitoDao;
@@ -27,6 +28,7 @@ import com.quartashow.jchampionship.dao.LocalDao;
 import com.quartashow.jchampionship.dao.TimeDao;
 import com.quartashow.jchampionship.helper.ValidationResponseHelper;
 import com.quartashow.jchampionship.model.Edicao;
+import com.quartashow.jchampionship.model.Grupo;
 import com.quartashow.jchampionship.model.Harbito;
 import com.quartashow.jchampionship.model.Local;
 import com.quartashow.jchampionship.model.Status;
@@ -52,7 +54,10 @@ public class EdicaoController {
 	private LocalDao localDao;
 
 	@Autowired
-	private TimeDao timeDao;	
+	private TimeDao timeDao;
+
+	@Autowired
+	private ClassificacaoDao classificacaoDao;	
 	
 	@RequestMapping(value="/system", method=RequestMethod.GET)
 	public ModelAndView pageEdicoesPendentes() {
@@ -111,7 +116,10 @@ public class EdicaoController {
 		Edicao edicao = this.edicaoDao.get(Edicao.class, idEdicao);
 		mv.addObject("edicao", edicao);
 		mv.addObject("times", this.timeDao.getList(Time.class));
-		mv.addObject("timesClassificacao", null);
+		List<Grupo> grupos = this.grupoDao.getGruposByEdicao(edicao);
+		for (Grupo grupo : grupos) 
+			grupo.setClassificacoes(this.classificacaoDao.getClassificacoesByGrupo(grupo));
+		mv.addObject("grupos", grupos); 
 		return mv;
 	}		
 	

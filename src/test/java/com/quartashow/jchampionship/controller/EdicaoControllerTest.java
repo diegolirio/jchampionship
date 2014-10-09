@@ -24,11 +24,13 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import com.quartashow.jchampionship.dao.ClassificacaoDao;
 import com.quartashow.jchampionship.dao.EdicaoDao;
 import com.quartashow.jchampionship.dao.GrupoDao;
 import com.quartashow.jchampionship.dao.HarbitoDao;
 import com.quartashow.jchampionship.dao.JogoDao;
 import com.quartashow.jchampionship.dao.LocalDao;
+import com.quartashow.jchampionship.dao.TimeDao;
 import com.quartashow.jchampionship.model.Edicao;
 import com.quartashow.jchampionship.model.Jogo;
 
@@ -54,6 +56,12 @@ public class EdicaoControllerTest {
 	
 	@Mock
 	private HarbitoDao harbitoDao;
+
+	@Mock
+	private TimeDao timeDao;		
+	
+	@Mock
+	private ClassificacaoDao classificacaoDao;	
 	
 	private MockMvc mockMvc;
 
@@ -144,7 +152,7 @@ public class EdicaoControllerTest {
 		mockMvc.perform(get("/edicao/system/1/times"))
 			.andExpect(status().is(200))
 			.andExpect(view().name("_base"))
-			.andExpect(model().attributeExists("content_import", "times", "timesClassificacao"))
+			.andExpect(model().attributeExists("content_import", "times", "grupos"))
 			.andExpect(model().attribute("content_import", "edicao-system-times"))
 			.andExpect(model().attributeExists("edicao"));
 	}		

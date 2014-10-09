@@ -38,14 +38,26 @@ public class CampeonatoController {
 		return this.campeonatoDao.getList(Campeonato.class);
 	}
 	
-//	@RequestMapping(value="/initValues")
-//	public void initValues() {
+//	@RequestMapping(value="/pre_cadastro", method=RequestMethod.GET, produces="application/json")
+//	public ResponseEntity<String> initValues() {
 //		Status pendente = new Status("Pendente");
 //		Status andamento = new Status("Em Andamento");
 //		Status finalizado = new Status("Fianlizado");
 //		this.statusDao.save(pendente);
 //		this.statusDao.save(andamento);
 //		this.statusDao.save(finalizado);
+//
+//		Campeonato quartashow = new Campeonato();
+//		quartashow.setDescricao("Quarta Show");
+//		this.campeonatoDao.save(quartashow);
+//		
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("Status pendente", pendente);
+//		map.put("Status andamento", andamento);
+//		map.put("Status finalizado", finalizado);
+//		map.put("Quarta Show", quartashow);
+//
+//		return new ResponseEntity<String>(new Gson().toJson(map), HttpStatus.OK);
 //	}
 	
 }

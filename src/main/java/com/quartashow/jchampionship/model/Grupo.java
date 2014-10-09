@@ -1,9 +1,12 @@
 package com.quartashow.jchampionship.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -19,6 +22,9 @@ public class Grupo {
 	@NotNull
 	@ManyToOne
 	private Edicao edicao;
+	
+	@OneToMany(mappedBy="grupo")
+	private List<Classificacao> classificacoes;
 
 	public long getId() {
 		return id;
@@ -42,6 +48,14 @@ public class Grupo {
 
 	public void setEdicao(Edicao edicao) {
 		this.edicao = edicao;
+	}
+
+	public List<Classificacao> getClassificacoes() {
+		return classificacoes;
+	}
+
+	public void setClassificacoes(List<Classificacao> classificacoes) {
+		this.classificacoes = classificacoes;
 	}
 
 	@Override

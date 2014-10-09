@@ -67,7 +67,7 @@ public class CampeonatoControllerTest {
 				.andExpect(status().is(200))
 				.andExpect(view().name("_base"))
 				.andExpect(model().attributeExists("content_import"))
-				.andExpect(model().attribute("content_import", "campeonato-classificacao"));
+				.andExpect(model().attribute("content_import", "campeonato-classificacao-static"));
 	}
 
 	@Test
