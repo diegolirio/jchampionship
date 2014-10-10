@@ -3,14 +3,12 @@ $(function() {
 
 	var idComponent = "id_times";
 	
-	var init = function() {
-		idComponent = _GET("idSelected");
-		
-		if (idComponent == undefined || idComponent == '')
-			idComponent = "id_times";
-		
-		$('#id_tabelaJ').hide();
-	};
+	idComponent = _GET("idSelected");
+	
+	if (idComponent == undefined || idComponent == '')
+		idComponent = "id_times";
+	
+	$('#id_tabelaJ').hide();
 	 
 	
 	var form = $('#form');
@@ -37,10 +35,8 @@ $(function() {
 						console.log(JSON.stringify(response.responseJSON));
 						form.find('input[name="id"]').val(response.responseJSON.id);
 						$('#id_view').html(response.responseJSON.id);
-						alert('Time Criado com sucesso');
 						$('#id_tabelaJ').show();
-						// TODO: Retira closeWindowPopupStatusNormal(response.status, 'Time Criado com sucesso', response.responseJSON.id, response.responseJSON.nome, idComponent);
-						// TODO: Popula Tabela
+						closeWindowPopupStatusNormal(response.status, 'Time Criado com sucesso', response.responseJSON.id, response.responseJSON.nome, idComponent);
 					} else {
 						alert("Not 201 ===> " + JSON.stringify(response));
 					} 
@@ -57,7 +53,6 @@ $(function() {
 		});		
 	});
 	
-	init();
 	
 });
 

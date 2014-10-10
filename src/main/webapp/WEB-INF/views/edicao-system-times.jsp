@@ -39,8 +39,8 @@
 
 						<div class="form-group col-lg-4">
 							<label>Time </label> <span id="id_message_time"></span>
-							<a href="${pageContext.request.contextPath}/time/form/" ><i class="glyphicon glyphicon-plus"></i></a> 
-							<select class="form-control" id="id_time" name="time.id">
+							<a href="${pageContext.request.contextPath}/time/page/simple?idSelected=id_times" onclick="showWindowPopup(this.href, 750, 900); return false;"><i class="glyphicon glyphicon-plus"></i></a> 
+							<select class="form-control" id="id_times" name="time.id">
 								<option value="">Selecione o Time...</option>
 								<c:forEach var="t" items="${times}">
 									<option value="${t.id}">${t.nome}</option>

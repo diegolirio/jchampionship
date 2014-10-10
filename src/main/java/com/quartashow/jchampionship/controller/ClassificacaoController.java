@@ -36,7 +36,9 @@ public class ClassificacaoController {
 		this.classficacaoDao.save(classificacao);
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(URI.create("/classificacao/get/"+classificacao.getId()));
-		return new ResponseEntity<String>(new Gson().toJson(classificacao), headers , HttpStatus.CREATED);
+		classificacao = this.classficacaoDao.get(Classificacao.class, classificacao.getId());
+		String json = new Gson().toJson(classificacao);
+		return new ResponseEntity<String>(json, headers , HttpStatus.CREATED);
 	}
 	 
 	@RequestMapping(value="/get/{id}", method=RequestMethod.GET, produces="application/json")
