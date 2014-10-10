@@ -9,6 +9,8 @@ import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.codehaus.jackson.annotate.JsonBackReference;
+
 @Entity
 public class Time {
 
@@ -18,6 +20,7 @@ public class Time {
 	@NotNull @Size(min=3, max=25)
 	private String nome;
 
+	@JsonBackReference
 	@ManyToMany(mappedBy="times")
 	private List<Jogador> jogadores;
 	

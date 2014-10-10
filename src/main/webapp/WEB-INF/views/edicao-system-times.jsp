@@ -96,7 +96,7 @@
 											<td >${c.empates}</td>
 											<td >${c.derrotas}</td>
 											<td >${c.pontos}</td>											
-											<td><a href="${pageContext.request.contextPath}/time/delete_confirm/${c.id}" onclick="showWindowPopup(this.href); return false;">Excluir</a></td>
+											<td><a href="${pageContext.request.contextPath}/classificacao/delete_confirm/${c.id}" onclick="showWindowPopup(this.href); return false;">Excluir</a></td>
 										</tr>
 									</c:forEach>
 								</tbody>								

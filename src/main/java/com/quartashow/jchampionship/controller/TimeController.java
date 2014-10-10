@@ -52,4 +52,5 @@ public class TimeController {
 		Time time = this.timeDao.get(Time.class, id);
 		return new ResponseEntity<String>(new Gson().toJson(time), HttpStatus.OK);
 	}
+	
 }

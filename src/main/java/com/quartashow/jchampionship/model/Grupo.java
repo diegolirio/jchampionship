@@ -10,6 +10,8 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.codehaus.jackson.annotate.JsonBackReference;
+
 @Entity
 public class Grupo {
 
@@ -23,6 +25,7 @@ public class Grupo {
 	@ManyToOne
 	private Edicao edicao;
 	
+	@JsonBackReference
 	@OneToMany(mappedBy="grupo")
 	private List<Classificacao> classificacoes;
 
