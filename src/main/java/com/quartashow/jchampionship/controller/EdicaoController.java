@@ -133,6 +133,7 @@ public class EdicaoController {
 		mv.addObject("grupos", this.grupoDao.getGruposByEdicao(edicao));
 		mv.addObject("harbitos", this.harbitoDao.getList(Harbito.class));
 		mv.addObject("locais", this.localDao.getList(Local.class));
+		mv.addObject("times", this.timeDao.getTimesByEdicaoClassificacao(edicao));
 		return mv;
 	}
 }

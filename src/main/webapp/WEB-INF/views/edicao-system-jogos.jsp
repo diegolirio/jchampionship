@@ -10,12 +10,14 @@
 	<div class="col-lg-12">
 
 		<ol class="breadcrumb">
+		
 			<li><i class="glyphicon glyphicon-ok text-success"></i> <a href="${pageContext.request.contextPath}">Campeonato</a></li>
 			<li><i class="glyphicon glyphicon-ok text-success"></i> <a href="${pageContext.request.contextPath}/edicao/nova/${edicao.id}">Edição</a></li>
-			<li class="active"><i class="glyphicon glyphicon-ok text-success"></i> <a href="${pageContext.request.contextPath}/edicao/system/${edicao.id}/jogos">Grupos</a></li>
-			<li class="active"><i class="glyphicon glyphicon-star text-warning"></i> <b>Jogos</b></li>
+			<li><i class="glyphicon glyphicon-ok text-success"></i> <a href="${pageContext.request.contextPath}/edicao/system/${edicao.id}/grupos">Grupos</a></li>
+			<li><i class="glyphicon glyphicon-ok text-success"></i> <a href="${pageContext.request.contextPath}/edicao/system/${edicao.id}/times">Times</a> </li>
+			<li class="active"><i class="glyphicon glyphicon-star text-warning"></i> Jogos</li>
 			<li class="active"><i class="fa fa-edit"></i> Escalação</li>
-			<li class="active"><i class="fa fa-edit"></i> Visão Geral</li>			
+			<li class="active"><i class="fa fa-edit"></i> Visão Geral</li>		
 		</ol>
 	</div>
 </div>
@@ -73,17 +75,23 @@
 
 						<div class="form-group col-lg-5">
 							<label>Time A </label> <span id="id_message_timea"></span>
-							<a href="${pageContext.request.contextPath}/time/page/simple?idSelected=id_timea" onclick="showWindowPopup(this.href, 750, 900); return false;"><i class="glyphicon glyphicon-plus"></i></a> 
+<%-- 							<a href="${pageContext.request.contextPath}/time/page/simple?idSelected=id_timea" onclick="showWindowPopup(this.href, 750, 900); return false;"><i class="glyphicon glyphicon-plus"></i></a>  --%>
 							<select class="form-control" id="id_timea" name="timeA.id">
-								<option value="">Selecione o Time A...</option>
+								<option value="" selected="selected">Selecione o Time A...</option>
+								<c:forEach var="t" items="${times}">
+									<option value="${t.id}">${t.nome}</option>
+								</c:forEach>
 							</select>
 						</div>						
 						<div class="form-group col-lg-2 text-center text-muted"><h1>X</h1></div>
 						<div class="form-group col-lg-5">
 							<label>Time B </label> <span id="id_message_timeb"></span> 
-							<a href="${pageContext.request.contextPath}/time/page/simple?idSelected=id_timeb" onclick="showWindowPopup(this.href, 750, 900); return false;"><i class="glyphicon glyphicon-plus"></i></a>
+<%-- 							<a href="${pageContext.request.contextPath}/time/page/simple?idSelected=id_timeb" onclick="showWindowPopup(this.href, 750, 900); return false;"><i class="glyphicon glyphicon-plus"></i></a> --%>
 							<select class="form-control" id="id_timeb" name="timeB.id">
-								<option value="">Selecione o Time B...</option>
+								<option value="" selected="selected">Selecione o Time B...</option>
+								<c:forEach var="t" items="${times}">
+									<option value="${t.id}">${t.nome}</option>
+								</c:forEach>
 							</select>
 						</div>																														
 						

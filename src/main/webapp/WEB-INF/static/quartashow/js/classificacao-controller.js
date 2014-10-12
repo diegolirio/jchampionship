@@ -6,8 +6,8 @@ $(function() {
 	var addTabelaClassificacao = function(classificacao) {
 		var tbody = "";
 		tbody += '<tr>';
-		tbody += '	<td title="ID" class="text-muted">'+classificacao.id+'</td>';
-		tbody += '	<td title="Colocação" class="text-info">'+classificacao.colocacao+'</td>';
+//		tbody += '	<td title="ID" class="text-muted">'+classificacao.id+'</td>';
+		tbody += '	<td title="Colocação" class="text-info">'+classificacao.colocacao+'º</td>';
 		tbody += '	<td >'+classificacao.time.nome+'</td>';
 		tbody += '	<td >'+classificacao.jogos+'</td>';
 		tbody += '	<td >'+classificacao.vitorias+'</td>';

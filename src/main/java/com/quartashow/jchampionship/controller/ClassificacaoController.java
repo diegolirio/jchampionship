@@ -64,5 +64,11 @@ public class ClassificacaoController {
 		return mv;
 	}		
 	
+	@RequestMapping(value="/delete/{id}", method=RequestMethod.DELETE)
+	public ResponseEntity<String> delete(@PathVariable("id") long id) {
+		this.classficacaoDao.delete(Classificacao.class, id);
+		return new ResponseEntity<String>(HttpStatus.OK);
+	}
+	
 }
  

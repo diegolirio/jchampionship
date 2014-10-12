@@ -165,11 +165,11 @@
                         <a href="#blank-page.html"><i class="fa fa-fw fa-file"></i> Blank Page</a>
                     </li>
                     -->
-                    <c:if test="${acessoAdmin}">
+<%--                     <c:if test="${acessoAdmin}"> --%>
 	                    <li>
 	                        <a href="${pageContext.request.contextPath}/edicao/system"><i class="fa fa-fw fa-file"></i> Criar novo Campeonato</a>
 	                    </li>         
-                    </c:if>           
+<%--                     </c:if>            --%>
                 </ul>
             </div>
             

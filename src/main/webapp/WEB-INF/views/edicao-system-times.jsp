@@ -74,7 +74,7 @@
 							<table class="table table-striped table-hover well">
 								<thead class="text-danger">
 									<tr>
-										<td title="ID">ID</td>
+<!-- 										<td title="ID">ID</td> -->
 										<td >Col</td>
 										<td >Time</td>
 										<td >J</td>
@@ -88,7 +88,7 @@
 								<tbody id="id_tbody_${g.id}">
 									<c:forEach var="c" items="${g.classificacoes}">
 										<tr>
-											<td>${c.id}</td>
+<%-- 											<td>${c.id}</td> --%>
 											<td title="Colocacao" class="text-info">${c.colocacao}º</td>
 											<td >${c.time.nome}</td>
 											<td >${c.jogos}</td>
