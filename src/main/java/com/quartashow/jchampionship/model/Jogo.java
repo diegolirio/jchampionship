@@ -32,6 +32,7 @@ public class Jogo {
 	@ManyToOne
 	private Local local;
 	
+	@NotNull
 	@ManyToOne
 	private Harbito harbito;
 

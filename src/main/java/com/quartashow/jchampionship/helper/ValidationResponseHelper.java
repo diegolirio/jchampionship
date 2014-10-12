@@ -16,6 +16,9 @@ public class ValidationResponseHelper {
 	    List<FieldError> fieldErrors = result.getFieldErrors(); 
 	    for (FieldError fieldError : fieldErrors) {
 	    	mapErros.put(fieldError.getField(), fieldError.getDefaultMessage());
+	    	System.out.println("-----------------------");
+	    	System.out.println(fieldError.getField() + ": " + fieldError.getDefaultMessage());
+	    	System.out.println("-----------------------");
 	    }               
 	    validationResponse.setStatus("ERROR");
 	    validationResponse.setErrorMessages(mapErros);

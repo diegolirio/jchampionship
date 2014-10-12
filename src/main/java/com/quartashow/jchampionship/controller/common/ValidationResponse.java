@@ -1,6 +1,11 @@
 package com.quartashow.jchampionship.controller.common;
 
+import java.io.IOException;
 import java.util.Map;
+
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 
 public class ValidationResponse {
 
@@ -20,6 +25,8 @@ public class ValidationResponse {
             this.errorMessages = errorMessages;
     }
     
-    
+    public String toJSON() throws JsonGenerationException, JsonMappingException, IOException {
+    	return new ObjectMapper().writeValueAsString(this);
+    }
 	
 }

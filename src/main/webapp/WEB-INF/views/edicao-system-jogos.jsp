@@ -124,16 +124,16 @@
 						<tbody id="id_tbody">
 							<c:forEach var="j" items="${jogos}">
 								<tr>
-								<td>${j.id}</td>
-								<td >${j.grupo.descricao}</td>
-								<td >${j.timeA.nome}</td>
-								<td >${j.resultadoA}</td>
-								<td class="text-center text-muted">X</td>
-								<td >${j.resultadoB}</td>
-								<td >${j.timeB.nome}</td>
-								<td >${j.local.descricao}</td>
-								<td >${j.harbito.nome}</td>
-								<td><a href="${pageContext.request.contextPath}/grupo/delete_confirm/${j.id}" onclick="showWindowPopup(this.href); return false;">Excluir</a></td>
+									<td>${j.id}</td>
+									<td >${j.grupo.descricao}</td>
+									<td >${j.timeA.nome}</td>
+									<td >${j.resultadoA}</td>
+									<td class="text-center text-muted">X</td>
+									<td >${j.resultadoB}</td>
+									<td >${j.timeB.nome}</td>
+									<td >${j.local.descricao}</td>
+									<td >${j.harbito.nome}</td>
+									<td><a href="${pageContext.request.contextPath}/grupo/delete_confirm/${j.id}" onclick="showWindowPopup(this.href); return false;">Excluir</a></td>
 								</tr>
 							</c:forEach>
 						</tbody>								
@@ -158,4 +158,5 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/quartashow/js/grupo-controller.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/quartashow/js/jogo-controller.js"></script>
 <script type="text/javascript" src="https://raw.githubusercontent.com/diegolirio/commons_js/master/ui-common.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/quartashow/js/common-valid.js"></script>
  
