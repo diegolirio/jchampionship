@@ -10,6 +10,8 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.codehaus.jackson.annotate.JsonBackReference;
+
 @Entity
 public class Local {
 
@@ -20,6 +22,7 @@ public class Local {
 	@Column(length=20)
 	private String descricao;
 	
+	@JsonBackReference
 	@OneToMany(mappedBy="local")
 	private List<Jogo> jogos;
 

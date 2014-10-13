@@ -39,7 +39,7 @@
 
 					<form id="id_form_jogo" method="POST" action="${pageContext.request.contextPath}/jogo/post">
 
-						<input type="hidden" name="id" value="${jogo.id}" >
+<%-- 						<input type="hidden" name="id" value="${jogo.id}" > --%>
 
 						<div class="form-group col-lg-4">
 							<label>Grupo </label> <span id="id_message_grupo"></span> 
@@ -96,7 +96,7 @@
 						</div>																														
 						
 						<div class="row">
-							<input type="submit" class="btn btn-success pull-right addJogo" value="Adicionar" >
+							<input type="submit" class="btn btn-success addJogo" value="Adicionar" >
 						</div>
 						
 					</form>
@@ -133,7 +133,7 @@
 									<td >${j.timeB.nome}</td>
 									<td >${j.local.descricao}</td>
 									<td >${j.harbito.nome}</td>
-									<td><a href="${pageContext.request.contextPath}/grupo/delete_confirm/${j.id}" onclick="showWindowPopup(this.href); return false;">Excluir</a></td>
+									<td><a href="${pageContext.request.contextPath}/jogo/delete_confirm/${j.id}" onclick="showWindowPopup(this.href); return false;">Excluir</a></td>
 								</tr>
 							</c:forEach>
 						</tbody>								
