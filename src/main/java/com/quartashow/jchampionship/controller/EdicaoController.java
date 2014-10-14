@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -136,4 +137,50 @@ public class EdicaoController {
 		mv.addObject("times", this.timeDao.getTimesByEdicaoClassificacao(edicao));
 		return mv;
 	}
+	
+	@RequestMapping(value="/system/{idEdicao}/confirmacao", method=RequestMethod.GET)
+	public ModelAndView pageConfirmacaoEdicao(@PathVariable("idEdicao") long idEdicao) {
+		ModelAndView mv = new ModelAndView("_base");
+		mv.addObject("content_import", "edicao-system-confirmacao");
+		Edicao edicao = this.edicaoDao.get(Edicao.class, idEdicao);
+		edicao.setGrupos(this.grupoDao.getGruposByEdicao(edicao));
+		for (Grupo g : edicao.getGrupos()) {
+			edicao.getGrupos().get(edicao.getGrupos().indexOf(g)).setClassificacoes(this.classificacaoDao.getClassificacoesByGrupo(g));
+			edicao.getGrupos().get(edicao.getGrupos().indexOf(g)).setJogos(this.jogoDao.getJogosByGrupo(g));
+		}
+		mv.addObject("edicao", edicao); 
+		return mv;
+	}		
+
+	@RequestMapping(value="/system/{edicaoId}/set/status/{statusId}", method=RequestMethod.POST, produces="application/json")
+    public ResponseEntity<String> setStatus(@PathVariable("edicaoId") long edicaoId, @PathVariable("statusId") long statusId) {
+		try {
+			Edicao edicao = this.edicaoDao.get(Edicao.class, edicaoId);
+			edicao.setStatus(new Status(statusId)); 
+			this.edicaoDao.update(edicao);
+			HttpHeaders headers = new HttpHeaders();
+			headers.setLocation(URI.create("edicao/"+edicaoId));
+			String json = new ObjectMapper().writeValueAsString(edicao);
+			return new ResponseEntity<String>(json, headers , HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	 }	
+	
+	@RequestMapping(value="/{id}")
+	public ModelAndView pagePublicEdicao(@PathVariable("id") long id) {
+		ModelAndView mv = new ModelAndView("_base2");
+		mv.addObject("content_import", "edicao-page");
+		Edicao edicao = this.edicaoDao.get(Edicao.class, id);
+		edicao.setGrupos(this.grupoDao.getGruposByEdicao(edicao));
+		for (Grupo g : edicao.getGrupos()) {
+			edicao.getGrupos().get(edicao.getGrupos().indexOf(g)).setClassificacoes(this.classificacaoDao.getClassificacoesByGrupo(g));
+			edicao.getGrupos().get(edicao.getGrupos().indexOf(g)).setJogos(this.jogoDao.getJogosByGrupo(g));
+		}		
+		mv.addObject("edicao", edicao);
+		return mv;
+	}
+	
 }

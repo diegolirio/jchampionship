@@ -7,6 +7,7 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 
 import com.quartashow.jchampionship.model.Edicao;
+import com.quartashow.jchampionship.model.Grupo;
 import com.quartashow.jchampionship.model.Jogo;
 
 @Repository("jogoDao")
@@ -16,6 +17,13 @@ public class JogoDao extends AbstractGenericDAO<Jogo> {
 	public List<Jogo> getJogosByEdicao(Edicao edicao) {
 		Query createQuery = super.manager.createQuery("Select j from Jogo j where j.grupo.edicao.id = :edicaoId");
 		createQuery.setParameter("edicaoId", edicao.getId());
+		return (List<Jogo>) createQuery.getResultList();  
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Jogo> getJogosByGrupo(Grupo grupo) {
+		Query createQuery = super.manager.createQuery("Select j from Jogo j where j.grupo.id = :grupoId");
+		createQuery.setParameter("grupoId", grupo.getId());
 		return (List<Jogo>) createQuery.getResultList();  
 	}
 	

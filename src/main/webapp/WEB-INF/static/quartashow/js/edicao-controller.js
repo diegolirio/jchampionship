@@ -56,5 +56,19 @@ $(function() {
 						});
 	 });
 	
+	
+	$('#id_concluir_edicao').click(function() {
+		
+		$.post( $('#id_concluir_edicao').attr('href').replace('#', ''),
+				function(data, statusText, response) {
+					alert(JSON.stringify(response));
+					window.location.href = '/jchampionship/'+response.getResponseHeader('Location');
+		}).fail(function(data) {
+			alert(JSON.stringify(data));
+			return false;
+		});		
+		
+	});
+	
 });
 

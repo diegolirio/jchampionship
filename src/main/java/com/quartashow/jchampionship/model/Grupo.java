@@ -28,6 +28,10 @@ public class Grupo {
 	@JsonBackReference
 	@OneToMany(mappedBy="grupo")
 	private List<Classificacao> classificacoes;
+	
+	@JsonBackReference
+	@OneToMany(mappedBy="grupo")
+	private List<Jogo> jogos;
 
 	public long getId() {
 		return id;
@@ -61,11 +65,18 @@ public class Grupo {
 		this.classificacoes = classificacoes;
 	}
 
+	public List<Jogo> getJogos() {
+		return jogos;
+	}
+
+	public void setJogos(List<Jogo> jogos) {
+		this.jogos = jogos;
+	}
+
 	@Override
 	public String toString() {
 		return "Grupo [id=" + id + ", descricao=" + descricao + ", edicao="	+ edicao + "]";
 	}
-	
 	
 	
 	

@@ -31,8 +31,10 @@ import com.quartashow.jchampionship.dao.HarbitoDao;
 import com.quartashow.jchampionship.dao.JogoDao;
 import com.quartashow.jchampionship.dao.LocalDao;
 import com.quartashow.jchampionship.dao.TimeDao;
+import com.quartashow.jchampionship.model.Campeonato;
 import com.quartashow.jchampionship.model.Edicao;
 import com.quartashow.jchampionship.model.Jogo;
+import com.quartashow.jchampionship.model.Status;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -171,4 +173,39 @@ public class EdicaoControllerTest {
 			.andExpect(MockMvcResultMatchers.model().attribute("content_import", "edicao-system-jogos"));
 	}
 	
+	@Test
+	public void paginaConfirmacaoDeUmaEdicaoDeveConterViewsAtributos() throws Exception {			
+		mockMvc.perform(get("/edicao/system/1/confirmacao"))
+			.andExpect(status().isOk())
+			.andExpect(view().name("_base"))
+			.andExpect(model().attributeExists("content_import", "edicao"))
+			.andExpect(model().attribute("content_import", "edicao-system-confirmacao"));
+	}	
+	
+	@Test
+	public void testDeveAlterarStatusDaEdicao() throws Exception {
+		long edicaoId = 1l;
+		long statusId = 2l;
+		
+		Edicao edicao = new Edicao();
+		edicao.setId(1l);
+		Campeonato campeonato = new Campeonato();
+		campeonato.setId(1);
+		campeonato.setDescricao("Camp Teste");
+		edicao.setCampeonato(campeonato);
+		edicao.setStatus(new Status(1l));
+		Mockito.when(this.edicaoDao.get(Edicao.class, edicaoId)).thenReturn(edicao);		
+		
+		mockMvc.perform(post("/edicao/system/"+edicaoId+"/set/status/"+statusId))
+			.andExpect(status().isOk());
+	}
+	
+	@Test
+	public void paginaPublicaEdicao() throws Exception {			
+		mockMvc.perform(get("/edicao/1"))
+			.andExpect(status().isOk())
+			.andExpect(view().name("_base"))
+			.andExpect(model().attributeExists("content_import", "edicao"))
+			.andExpect(model().attribute("content_import", "edicao-page"));
+	}		
 }
