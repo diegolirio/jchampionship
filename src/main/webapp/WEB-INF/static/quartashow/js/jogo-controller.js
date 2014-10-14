@@ -14,12 +14,12 @@ $(function() {
 		html += "<td >"+jogo.timeB.nome+"</td>";
 		html += "<td >"+jogo.local.descricao+"</td>";
 		html += "<td >"+jogo.harbito.nome+"</td>";
-		html += "<td><a href='/jchampionship/jogo/delete_confirm/"+jogo.id+" onclick='showWindowPopup(this.href); return false;'>Excluir</a></td>";
+		html += "<td><a href='/jchampionship/jogo/delete_confirm/"+jogo.id+"' onclick='showWindowPopup(this.href); return false;'>Excluir</a></td>";
 		html += "</tr>";		
 		$('#id_tbody').append(html);
 	};
 	
-	$('.addJogo').click(function(e) {
+	$('#id_form_jogo').submit(function(e) {
 		
 		e.preventDefault();
 		
@@ -66,10 +66,12 @@ $(function() {
 	});
 	
 	
-	$('#id_excluir_grupo').click(function() {
+	$('#formDelete').submit(function(e) {
+		
+			e.preventDefault();
 		
 			$.ajax({
-				    url: formJogo.attr('action'),
+				    url: $('#formDelete').attr('action'),
 				    type: 'DELETE',
 				    success: function(data) {
 				    	//...
@@ -77,7 +79,10 @@ $(function() {
 				    	alert('Jogo Excluido com sucesso!!!');
 				    	window.opener.location.reload();
 				    	window.close(); 
-				    }
+				    },
+				    error: function(XMLHttpRequest, textStatus, errorThrown) { 
+				        alert("Status: " + textStatus + "\n\nError: " + errorThrown); 
+				    }       				    
 			});		
 	});
 	

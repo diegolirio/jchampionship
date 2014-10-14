@@ -16,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.quartashow.jchampionship.controller.common.ValidationResponse;
 import com.quartashow.jchampionship.dao.JogoDao;
@@ -53,6 +54,25 @@ public class JogoController {
 	public ResponseEntity<String> get(@PathVariable("id") long id) throws JsonGenerationException, JsonMappingException, IOException {
 		Jogo jogo = this.jogoDao.get(Jogo.class, id);
 		return new ResponseEntity<String>(new ObjectMapper().writeValueAsString(jogo), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/delete_confirm/{id}", method=RequestMethod.GET)
+	public ModelAndView pageDeleteConfirm(@PathVariable("id") long id) {
+		ModelAndView mv = new ModelAndView("_base_simple");
+		mv.addObject("content_import", "jogo-system-confirm-delete");
+		Jogo jogo = this.jogoDao.get(Jogo.class, id);
+		mv.addObject("jogo", jogo);
+		return mv;
+	}
+	
+	@RequestMapping(value="/delete/{id}", method=RequestMethod.DELETE, produces="application/json")
+	public ResponseEntity<String> delete(@PathVariable("id") long id) {
+		try {
+			this.jogoDao.delete(Jogo.class, id);
+		} catch(Exception e) {
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 	
 }

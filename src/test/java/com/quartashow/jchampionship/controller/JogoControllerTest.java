@@ -62,10 +62,17 @@ public class JogoControllerTest {
 		Mockito.when(jogoDao.get(Jogo.class, 1)).thenReturn(jogo);		
 		
 		mockMvc.perform(get("/jogo/delete_confirm/1"))
+			.andExpect(MockMvcResultMatchers.status().isOk())
 			.andExpect(MockMvcResultMatchers.view().name("_base_simple"))
 			.andExpect(MockMvcResultMatchers.model().attributeExists("content_import", "jogo"))
 			.andExpect(MockMvcResultMatchers.model().attribute("content_import", "jogo-system-confirm-delete"));
 	}	
+	
+	@Test
+	public void testDeveExcluirJogo() throws Exception { 
+		mockMvc.perform(MockMvcRequestBuilders.delete("/jogo/delete/1"))
+			.andExpect(MockMvcResultMatchers.status().isOk());
+	}
 	
 	
 }

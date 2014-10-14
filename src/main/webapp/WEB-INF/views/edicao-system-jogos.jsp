@@ -95,13 +95,14 @@
 							</select>
 						</div>																														
 						
-						<div class="row">
-							<input type="submit" class="btn btn-success addJogo" value="Adicionar" >
-						</div>
+						<br/>
 						
+						<input type="submit" class="btn btn-success pull-right" value="Adicionar Jogo" >
+													
 					</form>
 										
 				</div>
+				
 				
 				<br/><br/>
 				
@@ -142,7 +143,7 @@
  
 				<hr/>
 				 
-				<a href="${pageContext.request.contextPath}/edicao/system/${edicao.id}/finalizar" class="btn btn-success pull-right" id="id_prox_jogos">
+				<a href="${pageContext.request.contextPath}/edicao/system/${edicao.id}/finalizar" class="btn btn-info pull-right" id="id_prox_jogos">
 					Próximo <i class="glyphicon glyphicon-share-alt"></i>
 				</a>
 
