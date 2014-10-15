@@ -204,7 +204,7 @@ public class EdicaoControllerTest {
 	public void paginaPublicaEdicao() throws Exception {			
 		mockMvc.perform(get("/edicao/1"))
 			.andExpect(status().isOk())
-			.andExpect(view().name("_base"))
+			.andExpect(view().name("_base2"))
 			.andExpect(model().attributeExists("content_import", "edicao"))
 			.andExpect(model().attribute("content_import", "edicao-page"));
 	}		

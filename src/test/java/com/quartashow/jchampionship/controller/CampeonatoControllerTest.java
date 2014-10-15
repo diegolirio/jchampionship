@@ -19,20 +19,24 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.quartashow.jchampionship.dao.CampeonatoDao;
+import com.quartashow.jchampionship.dao.EdicaoDao;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = { "classpath*:spring-context.xml" })
 public class CampeonatoControllerTest {
 
-	@Mock
-	private CampeonatoDao campeonatoDao;
-
 	@InjectMocks
 	private CampeonatoController controller;
 
 	private MockMvc mockMvc;
 
+	@Mock
+	private CampeonatoDao campeonatoDao;
+	
+	@Mock
+	private EdicaoDao edicaoDao;	
+	
 	@Before
 	public void setUp() throws Exception {
 		// MainFilter filter = mock(MainFilter.class);
@@ -65,9 +69,9 @@ public class CampeonatoControllerTest {
 	public void verificaInformacoesParaPaginaRoot() throws Exception {
 		mockMvc.perform(get("/"))
 				.andExpect(status().is(200))
-				.andExpect(view().name("_base"))
-				.andExpect(model().attributeExists("content_import"))
-				.andExpect(model().attribute("content_import", "campeonato-classificacao-static"));
+				.andExpect(view().name("_base2"))
+				.andExpect(model().attributeExists("content_import", "edicoes"))
+				.andExpect(model().attribute("content_import", "campeonato-classificacao"));
 	}
 
 	@Test

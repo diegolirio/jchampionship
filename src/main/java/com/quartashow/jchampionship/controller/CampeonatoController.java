@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.quartashow.jchampionship.dao.CampeonatoDao;
+import com.quartashow.jchampionship.dao.EdicaoDao;
 import com.quartashow.jchampionship.dao.StatusDao;
 import com.quartashow.jchampionship.model.Campeonato;
+import com.quartashow.jchampionship.model.Edicao;
 import com.quartashow.jchampionship.model.Status;
 
 @Controller
@@ -27,14 +29,20 @@ public class CampeonatoController {
 	
 	@Autowired
 	private CampeonatoDao campeonatoDao;
+	
+	@Autowired
+	private EdicaoDao edicaoDao;	
+	
 	@Autowired
 	private StatusDao statusDao;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView home() {
 		logger.info("");
-		ModelAndView mv = new ModelAndView("_base");
-		mv.addObject("content_import", "campeonato-classificacao-static");
+		ModelAndView mv = new ModelAndView("_base2");
+		mv.addObject("content_import", "campeonato-classificacao");
+		List<Edicao> listByStatus = this.edicaoDao.getListByStatus(new Status(2));
+		mv.addObject("edicoes", listByStatus);
 		return mv;
 	}
 	

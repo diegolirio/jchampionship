@@ -1,3 +1,5 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
    <!-- Navigation -->
     <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">
@@ -7,9 +9,10 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.html">SB Admin v2.0</a>
+            <a class="navbar-brand" href="http://quartashow.com">QuartaShow.com</a>
         </div>
         <!-- /.navbar-header -->
+
 
         <ul class="nav navbar-top-links navbar-right">
             <li class="dropdown">
@@ -319,6 +322,11 @@
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>
+                    <c:if test="${true}">
+	                    <li>
+	                        <a href="${pageContext.request.contextPath}/edicao/system"><i class="fa fa-fw fa-file"></i> Criar novo Campeonato</a>
+	                    </li>         
+                    </c:if>                                 
                 </ul>
             </div>
             <!-- /.sidebar-collapse -->
