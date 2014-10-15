@@ -1,6 +1,9 @@
 package com.quartashow.jchampionship.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -74,5 +77,14 @@ public class JogoControllerTest {
 			.andExpect(MockMvcResultMatchers.status().isOk());
 	}
 	
+	@Test
+	public void testDeveRetornarPaginaPublicaDoJogo() throws Exception {		
+		Jogo jogo = Mockito.mock(Jogo.class);
+		Mockito.when(this.jogoDao.get(Jogo.class, 1l)).thenReturn(jogo);		
+		mockMvc.perform(get("/jogo/1"))
+			.andExpect(status().isOk())
+			.andExpect(view().name("_base2"))
+			.andExpect(model().attributeExists("content_import", "jogo", "edicao"));
+	}
 	
 }

@@ -26,6 +26,7 @@
 									<td >D</td>
 									<td >Pontos</td>
 								</tr>
+							</thead>
 							<tbody id="id_tbody">
 								<c:forEach var="c" items="${g.classificacoes}">
 									<tr class="">

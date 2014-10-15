@@ -75,4 +75,14 @@ public class JogoController {
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/{id}", method=RequestMethod.GET)
+	public ModelAndView pageJogo(@PathVariable("id") long id) {
+		ModelAndView mv = new ModelAndView("_base2");
+		mv.addObject("content_import", "jogo-page");
+		Jogo jogo = this.jogoDao.get(Jogo.class, id);
+		mv.addObject("jogo", jogo);
+		mv.addObject("edicao", jogo.getGrupo().getEdicao());
+		return mv ;
+	}
+	
 }

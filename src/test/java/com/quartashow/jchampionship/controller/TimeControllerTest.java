@@ -66,5 +66,11 @@ public class TimeControllerTest {
 			 .andExpect(status().isUnauthorized());
 	}	
 	
+	@Test
+	public void testDeveRetornarPaginaPublicaDeTimeViewModels() throws Exception {
+		mockMvc.perform(get("/times/by/edicao/1"))
+			.andExpect(status().isOk())
+			.andExpect(view().name("_base2"));
+	}
 	
 }
