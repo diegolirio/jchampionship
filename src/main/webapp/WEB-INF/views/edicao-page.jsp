@@ -31,7 +31,7 @@
 								<c:forEach var="c" items="${g.classificacoes}">
 									<tr class="">
 										<td title="Colocacao" class="text-info">${c.colocacao}º</td>
-										<td >${c.time.nome}</td>
+										<td ><a href="${pageContext.request.contextPath}/time/${c.time.id}">${c.time.nome}</a></td>
 										<td >${c.jogos}</td>
 										<td >${c.vitorias}</td>
 										<td >${c.empates}</td>

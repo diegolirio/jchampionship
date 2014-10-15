@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.quartashow.jchampionship.controller.common.ValidationResponse;
+import com.quartashow.jchampionship.dao.JogadorDao;
 import com.quartashow.jchampionship.dao.TimeDao;
 import com.quartashow.jchampionship.helper.ValidationResponseHelper;
 import com.quartashow.jchampionship.model.Time;
@@ -27,6 +28,9 @@ public class TimeController {
 
 	@Autowired
 	private TimeDao timeDao;
+	
+	@Autowired
+	private JogadorDao jogadorDao;
 
 	@RequestMapping(value="/page/simple")
 	public ModelAndView pageSimple() {
@@ -51,6 +55,15 @@ public class TimeController {
 	public ResponseEntity<String> get(@PathVariable("id") long id) {
 		Time time = this.timeDao.get(Time.class, id);
 		return new ResponseEntity<String>(new Gson().toJson(time), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/{id}")
+	public ModelAndView pageTime(@PathVariable("id") long id) {
+		ModelAndView mv = new ModelAndView("_base2");
+		mv.addObject("content_import", "time-page");
+		Time time = this.timeDao.get(Time.class, id);
+		mv.addObject("time", time);
+		return mv;
 	}
 	
 }

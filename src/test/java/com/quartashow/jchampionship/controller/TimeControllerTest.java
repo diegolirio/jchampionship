@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -19,7 +20,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import com.quartashow.jchampionship.dao.JogadorDao;
 import com.quartashow.jchampionship.dao.TimeDao;
+import com.quartashow.jchampionship.model.Time;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -33,6 +36,9 @@ public class TimeControllerTest {
 	
 	@Mock
 	private TimeDao timeDao;
+
+	@Mock
+	private JogadorDao jogadorDao;	
 	
 	@Before
 	public void setUp() throws Exception {
@@ -67,10 +73,17 @@ public class TimeControllerTest {
 	}	
 	
 	@Test
-	public void testDeveRetornarPaginaPublicaDeTimeViewModels() throws Exception {
-		mockMvc.perform(get("/times/by/edicao/1"))
+	public void testDeveRetornarPaginaDeUmTimeViewModels() throws Exception {
+		
+		Time time = Mockito.mock(Time.class);
+		Mockito.when(this.timeDao.get(Time.class, 1)).thenReturn(time);
+		
+		mockMvc.perform(get("/time/1"))
 			.andExpect(status().isOk())
-			.andExpect(view().name("_base2"));
+			.andExpect(view().name("_base2"))
+			.andExpect(model().attributeExists("content_import", "time"));
 	}
+	
+	
 	
 }
