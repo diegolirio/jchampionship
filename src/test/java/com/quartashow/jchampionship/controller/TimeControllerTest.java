@@ -6,6 +6,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+import java.util.ArrayList;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,6 +24,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.quartashow.jchampionship.dao.JogadorDao;
 import com.quartashow.jchampionship.dao.TimeDao;
+import com.quartashow.jchampionship.model.Jogador;
 import com.quartashow.jchampionship.model.Time;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -82,6 +85,37 @@ public class TimeControllerTest {
 			.andExpect(status().isOk())
 			.andExpect(view().name("_base2"))
 			.andExpect(model().attributeExists("content_import", "time"));
+	}
+	
+	@Test
+	public void testDeveRetornarPaginaDeCadastroDoTime() throws Exception {
+		
+		Time time = Mockito.mock(Time.class);
+		Mockito.when(this.timeDao.get(Time.class, 1)).thenReturn(time);		
+		
+		mockMvc.perform(get("/time/system/1"))
+			.andExpect(status().isOk())
+			.andExpect(view().name("_base2"))
+			.andExpect(model().attributeExists("content_import", "time", "jogadoresAll"))
+			.andExpect(model().attribute("content_import", "time-form"));
+	}
+	
+	@Test
+	public void testDeveAdicionarJogadorNoTime() throws Exception {
+		long timeId = 1;
+		long jogadorId = 1;
+		
+		Time time = new Time();
+		time.setId(timeId);
+		time.setJogadores(new ArrayList<Jogador>());
+		Mockito.when(this.timeDao.get(Time.class, 1)).thenReturn(time);			
+		
+		Jogador jogador = new Jogador();
+		jogador.setId(jogadorId);
+		Mockito.when(this.jogadorDao.get(Jogador.class, jogadorId)).thenReturn(jogador);
+		
+		mockMvc.perform(post("/time/system/"+timeId+"/post/add/jogador/"+jogadorId))
+			.andExpect(status().isCreated());
 	}
 	
 	

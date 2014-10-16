@@ -31,6 +31,9 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <!-- jQuery Version 1.11.0 -->
+    <script src="${pageContext.request.contextPath}/static/sb2/js/jquery-1.11.0.js"></script>
+
 </head>
 
 <body>
@@ -57,9 +60,6 @@
 
     </div>
     <!-- /#wrapper -->
-
-    <!-- jQuery Version 1.11.0 -->
-    <script src="${pageContext.request.contextPath}/static/sb2/js/jquery-1.11.0.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="${pageContext.request.contextPath}/static/sb2/js/bootstrap.min.js"></script>

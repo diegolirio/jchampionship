@@ -1,14 +1,7 @@
 
 $(function() {
-
-	var idComponent = "id_times";
 	
-	idComponent = _GET("idSelected");
-	
-	if (idComponent == undefined || idComponent == '')
-		idComponent = "id_times";
-	
-	$('#id_tabelaJ').hide();
+	//$('#id_tabelaJ').hide();
 	 
 	
 	var form = $('#form');
@@ -24,19 +17,36 @@ $(function() {
 //		form.find('input[name=descricao]').val('');
 //	};	
 	
+	function _GET(urlFull, paramName) {
+		var url = urlFull.substring(urlFull.indexOf('?')+1, urlFull.length);
+		var itens = url.split("&");
+		for(n in itens) 
+			if( itens[n].match(paramName) ) 
+				return decodeURIComponent(itens[n].replace(paramName+"=", ""));
+		return null;
+	}	
+	
 	$('.saveTime').click(function(e) {
 		e.preventDefault();		
-		var pNome = form.find('input[name="nome"]').val();		
+		var pNome = form.find('input[name="nome"]').val();
+		var pId = form.find('input[name="id"]').val();
 		console.log(pNome);		
 		$.post(	form.attr('action'),
-				{ nome: pNome },
+				{ nome: pNome, id: pId },
 				function(data, statusText, response) {
 					if(response.status == 201) {
 						console.log(JSON.stringify(response.responseJSON));
 						form.find('input[name="id"]').val(response.responseJSON.id);
 						$('#id_view').html(response.responseJSON.id);
 						$('#id_tabelaJ').show();
-						closeWindowPopupStatusNormal(response.status, 'Time Criado com sucesso', response.responseJSON.id, response.responseJSON.nome, idComponent);
+						//alert(form.attr('action'));
+						var paramPage = _GET(form.attr('action'), 'page');
+						//alert(paramPage);
+						if(paramPage == 'N') { // N=Normal
+							window.location.reload();
+						} else { // P=Page
+							closeWindowPopupStatusNormal(response.status, 'Time Criado com sucesso', response.responseJSON.id, response.responseJSON.nome, 'id_times');
+						}
 					} else {
 						alert("Not 201 ===> " + JSON.stringify(response));
 					} 
@@ -51,6 +61,23 @@ $(function() {
 				alert("Not 401 ===> " + JSON.stringify(data));
 			}
 		});		
+	});
+	
+	$('.addJogador').click(function() {
+		
+		var timeId = form.find('input[name="id"]').val();
+		var jogadorId = $('#id_jogadores').val();
+		
+		$.post(	'/jchampionship/time/system/'+timeId+'/post/add/jogador/'+jogadorId,
+				function(data, statusText, response) {
+					
+					alert('Time: ' + timeId + '\nJogador: ' + jogadorId);
+					alert('Add jogador tabela!!!');
+			
+		}).fail(function(data) {
+			alert(JSON.stringify(data));
+		});
+		
 	});
 	
 	

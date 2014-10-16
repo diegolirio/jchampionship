@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 		
 				
-	<h1 class="page-header">Corinthians</h1>
+	<h1 class="page-header">${time.nome}</h1>
 	
 	<div class="col-lg-10">
 		<div class="panel panel-primary">
@@ -31,6 +32,9 @@
 									<td></td>
 								</tr>
 							</c:forEach>
+							<c:if test="${fn:length(time.jogadores) <= 0 && true}"> <!-- TODO: if user admin -->
+								<h3>Não há jogadores para este time, <a href="${pageContext.request.contextPath}/time/system/${time.id}">cadastre agora</a></h3>
+							</c:if>
 						</tbody>
 					</table>
 				</div>

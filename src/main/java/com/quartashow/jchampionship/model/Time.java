@@ -3,6 +3,7 @@ package com.quartashow.jchampionship.model;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -21,10 +22,10 @@ public class Time {
 	private String nome;
 
 	@JsonBackReference
-	@ManyToMany(mappedBy="times")
+	@ManyToMany(fetch=FetchType.EAGER)
 	private List<Jogador> jogadores;
 	
-	public long getId() {
+	public long getId() { 
 		return id;
 	}
 
