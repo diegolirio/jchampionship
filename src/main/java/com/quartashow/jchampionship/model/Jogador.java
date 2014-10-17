@@ -24,6 +24,13 @@ public class Jogador {
 	@ManyToMany(mappedBy="jogadores")
 	private List<Time> times;
 
+	public Jogador() {}
+	
+	public Jogador(long id, String nome) {
+		this.id = id;
+		this.nome = nome;
+	}
+
 	public long getId() {
 		return id;
 	}

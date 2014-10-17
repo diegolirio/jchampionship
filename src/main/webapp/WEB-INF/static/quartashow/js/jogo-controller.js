@@ -86,6 +86,7 @@ $(function() {
 			});		
 	});
 	
+	
 	$('#id_prox_jogos').click(function() {
 		if($('#id_tbody').html().trim() != '') 
 			return true;
@@ -95,6 +96,26 @@ $(function() {
 		}
 	});
 	
+	
+	/********************************************************************
+	 * Adiciona informacoes da partida (Escalacao) 
+	 ********************************************************************/
+	$('#id_add_escalacao_jogo').click(function(e) {
+		
+		e.preventDefault();
+		
+		var ok = confirm("Deseja realmente adicinar as informacoes a partida ?\nPartida recebera uma escalacao com jogadores de ambos os times.");
+		if(ok == true) {
+			$.post( $(this).attr('href'),
+					function(data, statusText, response) {
+						console.log(JSON.stringify(response));
+						window.location.href = response.getResponseHeader('Location');
+			}).fail(function(data) {
+				alert(data);
+			});
+		}
+		
+	});
 	
 });
 

@@ -3,6 +3,7 @@ package com.quartashow.jchampionship.model;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -12,13 +13,13 @@ import javax.persistence.OneToOne;
 public class Escalacao {
 
 	@Id @GeneratedValue
-	private long id;
+	private long id; 
 	
 	@OneToOne
 	private Jogo jogo;
 	
-	@OneToMany(mappedBy="escalacao")
-	private List<JogadorEscalado> jogadorEscalado;
+	@OneToMany(mappedBy="escalacao", fetch=FetchType.EAGER)
+	private List<JogadorEscalado> jogadoresEscalados;
 
 	public long getId() {
 		return id;
@@ -36,12 +37,12 @@ public class Escalacao {
 		this.jogo = jogo;
 	}
 
-	public List<JogadorEscalado> getJogadorEscalado() {
-		return jogadorEscalado;
+	public List<JogadorEscalado> getJogadoresEscalados() {
+		return jogadoresEscalados;
 	}
 
-	public void setJogadorEscalado(List<JogadorEscalado> jogadorEscalado) {
-		this.jogadorEscalado = jogadorEscalado;
+	public void setJogadoresEscalados(List<JogadorEscalado> jogadoresEscalados) {
+		this.jogadoresEscalados = jogadoresEscalados;
 	}
 	
 	
