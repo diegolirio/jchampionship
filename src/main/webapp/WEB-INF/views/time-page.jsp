@@ -5,7 +5,14 @@
 
 		
 				
-	<h1 class="page-header">${time.nome}</h1>
+	<h1 class="page-header">
+		${time.nome} 
+		<c:if test="${true}"> <!-- TODO: if user admin -->
+    		<a href="${pageContext.request.contextPath}/time/system/${time.id}">
+   				<span class="glyphicon glyphicon-pencil text-muted"></span>
+   			</a>
+   		</c:if>
+	</h1>
 	
 	<div class="col-lg-10">
 		<div class="panel panel-primary">

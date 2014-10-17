@@ -21,6 +21,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.quartashow.jchampionship.dao.JogoDao;
+import com.quartashow.jchampionship.model.Edicao;
+import com.quartashow.jchampionship.model.Grupo;
 import com.quartashow.jchampionship.model.Jogo;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -79,12 +81,19 @@ public class JogoControllerTest {
 	
 	@Test
 	public void testDeveRetornarPaginaPublicaDoJogo() throws Exception {		
+		Edicao edicao = Mockito.mock(Edicao.class);
+		Grupo grupo = Mockito.mock(Grupo.class);
 		Jogo jogo = Mockito.mock(Jogo.class);
-		Mockito.when(this.jogoDao.get(Jogo.class, 1l)).thenReturn(jogo);		
+
+		jogo.setGrupo(grupo);
+		jogo.getGrupo().setEdicao(edicao);
+		
+		Mockito.when(this.jogoDao.get(Jogo.class, 1l)).thenReturn(jogo);	
+		
 		mockMvc.perform(get("/jogo/1"))
 			.andExpect(status().isOk())
 			.andExpect(view().name("_base2"))
-			.andExpect(model().attributeExists("content_import", "jogo", "edicao"));
+			.andExpect(model().attributeExists("content_import", "jogo", "edicao", "escalacao"));
 	}
 	
 }
