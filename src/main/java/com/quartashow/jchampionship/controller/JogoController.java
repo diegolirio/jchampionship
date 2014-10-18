@@ -1,7 +1,6 @@
 package com.quartashow.jchampionship.controller;
 
 import java.io.IOException;
-import java.net.URI;
 
 import javax.validation.Valid;
 
@@ -24,9 +23,6 @@ import com.quartashow.jchampionship.dao.EscalacaoDao;
 import com.quartashow.jchampionship.dao.JogadorEscaladoDao;
 import com.quartashow.jchampionship.dao.JogoDao;
 import com.quartashow.jchampionship.helper.ValidationResponseHelper;
-import com.quartashow.jchampionship.model.Escalacao;
-import com.quartashow.jchampionship.model.Jogador;
-import com.quartashow.jchampionship.model.JogadorEscalado;
 import com.quartashow.jchampionship.model.Jogo;
 
 @Controller
@@ -98,38 +94,14 @@ public class JogoController {
 		return mv ;
 	}
 	
-	@RequestMapping(value="/{jogoId}/add/escalacao", method=RequestMethod.POST)
-	public ResponseEntity<String> addEscalacao(@PathVariable("jogoId") long jogoId) {
-		try {
-			Jogo jogo = this.jogoDao.get(Jogo.class, jogoId);
-			
-			Escalacao escalacao = new Escalacao();
-			escalacao.setJogo(jogo);
-			this.escalacaoDao.save(escalacao);
-			
-			for (Jogador j : jogo.getTimeA().getJogadores()) {
-				JogadorEscalado jeA = new JogadorEscalado();
-				jeA.setEscalacao(escalacao);			
-				jeA.setTime(jogo.getTimeA());
-				jeA.setJogador(j);
-				this.jogadorEscaladoDao.save(jeA); 
-			}
-	
-			for (Jogador j : jogo.getTimeB().getJogadores()) {
-				JogadorEscalado jeB = new JogadorEscalado();
-				jeB.setEscalacao(escalacao);			
-				jeB.setTime(jogo.getTimeB());
-				jeB.setJogador(j);
-				this.jogadorEscaladoDao.save(jeB);
-			}		
-			
-			HttpHeaders headers = new HttpHeaders();
-			headers.setLocation(URI.create("/jogo/system/"+jogo .getId()));
-			return new ResponseEntity<String>(headers, HttpStatus.CREATED);
-		} catch(Exception e) {
-			e.printStackTrace();
-			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+	@RequestMapping(value="/system/{id}", method=RequestMethod.GET)
+	public ModelAndView pageSystemJogo(@PathVariable("id") long id) {
+		ModelAndView mv = new ModelAndView("_base2");
+		mv.addObject("content_import", "jogo-system");
+		Jogo jogo = jogoDao.get(Jogo.class, id);
+		mv.addObject("jogo", jogo);
+		mv.addObject("escalacao", this.escalacaoDao.get(jogo));
+		return mv;
 	}
 	
 }
