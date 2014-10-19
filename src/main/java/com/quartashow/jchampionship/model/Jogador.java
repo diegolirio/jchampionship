@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -23,6 +24,10 @@ public class Jogador {
 	@JsonBackReference
 	@ManyToMany(mappedBy="jogadores")
 	private List<Time> times;
+	
+	@NotNull
+	@ManyToOne
+	private Posicao posicao;
 
 	public Jogador() {}
 	
@@ -53,6 +58,14 @@ public class Jogador {
 
 	public void setTimes(List<Time> times) {
 		this.times = times;
+	}
+
+	public Posicao getPosicao() {
+		return posicao;
+	}
+
+	public void setPosicao(Posicao posicao) {
+		this.posicao = posicao;
 	}
 	
 	

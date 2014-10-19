@@ -24,18 +24,18 @@
 					<table class="table table-striped table-bordered table-hover">
 						<thead class="text-danger">
 							<tr>
-								<th>#</th>
-								<th>Nome</th>
+								<th class="text-muted">#</th>
 								<th></th>
+								<th>Nome</th>
 								<th></th>
 							</tr>
 						</thead>
 						<tbody>
 							<c:forEach var="j" items="${time.jogadores}">
 								<tr>
-									<td>${j.id}</td>
+									<td class="text-muted" title="${j.id}"></td>
+									<td>${j.posicao.descricao}</td>
 									<td>${j.nome}</td>
-									<td></td>
 									<td></td>
 								</tr>
 							</c:forEach>

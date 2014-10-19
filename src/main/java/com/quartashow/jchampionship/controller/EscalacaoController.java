@@ -76,8 +76,11 @@ public class EscalacaoController {
 	public ModelAndView pagePopupAddEvento(@PathVariable("jogoId") long jogoId, @PathVariable("eventoId") long eventoId) {
 		ModelAndView mv = new ModelAndView("_base_simple");
 		mv.addObject("content_import", "escalacao-evento");
-		mv.addObject("jogo", this.jogoDao.get(Jogo.class, jogoId));
+		Jogo jogo = this.jogoDao.get(Jogo.class, jogoId);
+		mv.addObject("jogo", jogo);
 		mv.addObject("evento", this.eventoDao.get(Evento.class, eventoId));
+		Escalacao escalacao = this.escalacaoDao.get(jogo);
+		mv.addObject("jogadoresEscalados", escalacao.getJogadoresEscalados());
 		return mv;
 	}
 }

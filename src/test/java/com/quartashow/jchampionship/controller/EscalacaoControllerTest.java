@@ -2,9 +2,9 @@ package com.quartashow.jchampionship.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +26,7 @@ import com.quartashow.jchampionship.dao.EscalacaoDao;
 import com.quartashow.jchampionship.dao.EventoDao;
 import com.quartashow.jchampionship.dao.JogadorEscaladoDao;
 import com.quartashow.jchampionship.dao.JogoDao;
+import com.quartashow.jchampionship.model.Escalacao;
 import com.quartashow.jchampionship.model.Evento;
 import com.quartashow.jchampionship.model.Jogador;
 import com.quartashow.jchampionship.model.Jogo;
@@ -97,11 +98,26 @@ public class EscalacaoControllerTest {
 		Evento evento = Mockito.mock(Evento.class);
 		Mockito.when(this.eventoDao.get(Evento.class, 3)).thenReturn(evento);
 
+		Escalacao escalacao = Mockito.mock(Escalacao.class);
+		Mockito.when(this.escalacaoDao.get(jogo)).thenReturn(escalacao);
+		
 		mockMvc.perform(get("/escalacao/system/"+jogoId +"/add/evento/3"))
 			.andExpect(status().isOk())
 			.andExpect(view().name("_base_simple"))
-			.andExpect(model().attributeExists("content_import", "jogo", "evento"))
+			.andExpect(model().attributeExists("content_import", "jogo", "evento", "jogadoresEscalados"))
 			.andExpect(model().attribute("content_import", "escalacao-evento"));
+	}
+	
+	@Test
+	public void testDeveSalvarEventoDoJogadorEscalado() throws Exception {
+		
+		Evento evento = new Evento();
+		evento.setDescricao("GOL");
+		evento.setId(1l);
+		
+		mockMvc.perform(post("/escalacao/add/evento/"+evento.getId())
+				.param("jogadorEscalado.id", "1"))
+			.andExpect(status().isCreated());
 	}
 	
 }

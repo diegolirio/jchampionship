@@ -70,7 +70,7 @@
 	                    	</div>
 						</c:if>
 						<c:if test="${escalacao == null && true}"> <!-- TODO: user admin -->
-							<a type="button" href="${pageContext.request.contextPath}/jogo/${jogo.id}/add/escalacao" class="btn btn-outline btn-success btn-lg btn-block" id="id_add_escalacao_jogo">Adicionar informações da Partida</a>
+							<a type="button" href="${pageContext.request.contextPath}/escalacao/post/jogo/${jogo.id}" class="btn btn-outline btn-success btn-lg btn-block" id="id_add_escalacao_jogo">Adicionar informações da Partida</a>
 						</c:if>
 						
 	                </div>

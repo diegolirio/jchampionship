@@ -5,10 +5,12 @@ $(function() {
 	
 	$('.saveJogador').click(function(e) {
 		e.preventDefault();		
-		var nome = form.find('input[name="nome"]').val();		
+		var nome = form.find('input[name="nome"]').val();	
+		var posicaoId = form.find('select[name="posicao.id"]').val();
 		console.log(nome);		
 		$.post(	form.attr('action'),
-				{ nome: nome },
+				{ nome: nome,
+				  'posicao.id': posicaoId },
 				function(data, statusText, response) {
 					if(response.status == 201) {
 						console.log(JSON.stringify(response.responseJSON));
@@ -21,6 +23,7 @@ $(function() {
 			if(data.status == 401) { 
 				console.log(JSON.stringify(data));
 				$('#id_message_nome').html(getHtmlTooltipsErrorMessage(data.responseJSON.errorMessages.nome));
+				$('#id_message_posicao').html(getHtmlTooltipsErrorMessage(data.responseJSON.errorMessages['posicao.id']));
 				$('form span.tooltips').tooltip('show');				
 			} 
 			else {

@@ -18,8 +18,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.quartashow.jchampionship.controller.common.ValidationResponse;
 import com.quartashow.jchampionship.dao.JogadorDao;
+import com.quartashow.jchampionship.dao.PosicaoDao;
 import com.quartashow.jchampionship.helper.ValidationResponseHelper;
 import com.quartashow.jchampionship.model.Jogador;
+import com.quartashow.jchampionship.model.Posicao;
 
 @Controller
 @RequestMapping("jogador")
@@ -27,11 +29,15 @@ public class JogadorController {
 
 	@Autowired
 	private JogadorDao jogadorDao;
+	
+	@Autowired
+	private PosicaoDao posicaoDao;
 
 	@RequestMapping(value="/page/simple")
 	public ModelAndView pageSimple() {
 		ModelAndView mv = new ModelAndView("_base_simple");
 		mv.addObject("content_import", "jogador-system-form");
+		mv.addObject("posicoes", this.posicaoDao.getList(Posicao.class));
 		return mv ;
 	}
 	

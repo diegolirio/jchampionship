@@ -17,9 +17,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.quartashow.jchampionship.dao.CampeonatoDao;
 import com.quartashow.jchampionship.dao.EdicaoDao;
+import com.quartashow.jchampionship.dao.EventoDao;
+import com.quartashow.jchampionship.dao.PosicaoDao;
 import com.quartashow.jchampionship.dao.StatusDao;
 import com.quartashow.jchampionship.model.Campeonato;
 import com.quartashow.jchampionship.model.Edicao;
+import com.quartashow.jchampionship.model.Evento;
+import com.quartashow.jchampionship.model.Posicao;
 import com.quartashow.jchampionship.model.Status;
 
 @Controller
@@ -35,6 +39,12 @@ public class CampeonatoController {
 	
 	@Autowired
 	private StatusDao statusDao;
+
+	@Autowired
+	private EventoDao eventoDao;
+
+	@Autowired
+	private PosicaoDao posicaoDao;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView home() {
@@ -64,11 +74,35 @@ public class CampeonatoController {
 		quartashow.setDescricao("Quarta Show");
 		this.campeonatoDao.save(quartashow);
 		
+		Posicao gk = new Posicao();
+		gk.setDescricao("Goleiro");
+		gk.setSigla("GK");
+		this.posicaoDao.save(gk);
+		
+		Posicao at = new Posicao();
+		at.setDescricao("Linha");
+		at.setSigla("AT");
+		this.posicaoDao.save(at);	
+		
+		Evento gol = new Evento();
+		gol.setDescricao("Gol");
+		this.eventoDao.save(gol);
+
+		Evento ca = new Evento();
+		ca.setDescricao("Cartão Amarelo");
+		this.eventoDao.save(ca);
+
+		Evento cv = new Evento();
+		cv.setDescricao("Cartão Vermelho");
+		this.eventoDao.save(cv);
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("Status pendente", pendente);
 		map.put("Status andamento", andamento);
 		map.put("Status finalizado", finalizado);
 		map.put("Quarta Show", quartashow);
+		
+		
 
 		return new ResponseEntity<String>("OK", HttpStatus.OK);
 	}

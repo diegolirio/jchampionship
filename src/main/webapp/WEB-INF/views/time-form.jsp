@@ -54,16 +54,16 @@
 						<table class="table table-striped table-hover well">
 							<thead>
 								<tr>
-									<td title="ID">ID</td>
+									<td></td>
 									<td >Nome</td>
 									<td title="Excluir">#</td>
 								</tr>
 							<tbody id="id_tbody">
 								<c:forEach var="j" items="${time.jogadores}">
 									<tr>
-										<td >${j.id}</td>
-										<td >${j.nome}</td>
-										<td title="Excluir">Excluir</td>
+										<td>${j.posicao.descricao}</td>
+										<td>${j.nome}</td>
+										<td>Excluir</td>
 									</tr>									
 								</c:forEach>
 							</tbody>								

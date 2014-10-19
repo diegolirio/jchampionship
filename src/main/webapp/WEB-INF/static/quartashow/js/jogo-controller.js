@@ -111,7 +111,7 @@ $(function() {
 						console.log(JSON.stringify(response));
 						window.location.href = response.getResponseHeader('Location');
 			}).fail(function(data) {
-				alert(data);
+				alert(JSON.stringify(data));
 			});
 		}
 		
