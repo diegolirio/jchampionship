@@ -87,9 +87,19 @@ public class EscalacaoController {
 	@RequestMapping(value="/add/evento/{eventoId}", method=RequestMethod.POST)
 	public ResponseEntity<String> addEventoJogadorEscalado(@PathVariable("eventoId") long eventoId, long jogadorEscaladoId) {
 		JogadorEscalado jogadorEscaladoAtach = this.jogadorEscaladoDao.get(JogadorEscalado.class, jogadorEscaladoId);
-		//Evento evento = this.eventoDao.get(Evento.class, eventoId);
-		//jogadorEscaladoAtach.getEventos().add(evento);
-		this.jogadorEscaladoDao.save(jogadorEscaladoAtach);
+		Evento evento = this.eventoDao.get(Evento.class, eventoId);
+		jogadorEscaladoAtach.getEventos().add(evento);
+		this.jogadorEscaladoDao.update(jogadorEscaladoAtach);
+		Jogo jogo = this.jogoDao.get(Jogo.class, jogadorEscaladoAtach.getEscalacao().getJogo().getId());
+		if(eventoId == 1) {
+			System.out.println("GOL: (" + jogadorEscaladoAtach.getTime().getId() + ") " + jogadorEscaladoAtach.getTime().getNome());
+			if(jogadorEscaladoAtach.getTime().getId() == jogo.getTimeA().getId()) {
+				jogo.setResultadoA(jogo.getResultadoA()+1);
+			} else if(jogadorEscaladoAtach.getTime().getId() == jogo.getTimeB().getId()) {
+				jogo.setResultadoB(jogo.getResultadoB()+1);
+			}
+		}
+		this.jogoDao.update(jogo);
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(URI.create("/jogo/system/"+jogadorEscaladoAtach.getEscalacao().getJogo().getId()));
 		return new ResponseEntity<String>(headers , HttpStatus.CREATED);

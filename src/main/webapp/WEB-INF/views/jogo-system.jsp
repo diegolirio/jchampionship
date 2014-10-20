@@ -33,14 +33,22 @@
 								<table class="table">
 									<thead class="text-warning">
 										<tr>
+											<td></td>
 											<td class="text-center">${escalacao.jogo.timeA.nome}</td>
+											<td></td>
 										</tr> 
 									</thead>								
 									<tbody id="id_tbody">
 										<c:forEach var="je" items="${escalacao.jogadoresEscalados}">
 											<c:if test="${escalacao.jogo.timeA.id == je.time.id}">
 												<tr>
+													<td>${je.jogador.posicao.descricao}</td>
 													<td class="text-center jogador${je.id}">${je.jogador.nome}</td>
+													<td> 
+														<c:forEach var="e" items="${je.eventos}">
+															${e.descricao}
+														</c:forEach> 
+													</td>
 												</tr>
 											</c:if>
 										</c:forEach>
@@ -53,14 +61,22 @@
 								<table class="table">
 									<thead class="text-warning">
 										<tr>
+											<td></td>
 											<td class="text-center">${escalacao.jogo.timeB.nome}</td>
+											<td></td>
 										</tr> 
 									</thead>								
 									<tbody id="id_tbody">
 										<c:forEach var="je" items="${escalacao.jogadoresEscalados}">
 											<c:if test="${escalacao.jogo.timeB.id == je.time.id}">
 												<tr>
+													<td>${je.jogador.posicao.descricao}</td>
 													<td class="text-center jogador${je.id}">${je.jogador.nome}</td>
+													<td> 
+														<c:forEach var="e" items="${je.eventos}">
+															${e.descricao}
+														</c:forEach> 
+													</td>													
 												</tr>
 											</c:if>
 										</c:forEach>
