@@ -67,6 +67,12 @@ public class Jogador {
 	public void setPosicao(Posicao posicao) {
 		this.posicao = posicao;
 	}
+
+	@Override
+	public String toString() {
+		return "Jogador [id=" + id + ", nome=" + nome
+				+ ", posicao=" + posicao + "]";
+	}
 	
 	
 	

@@ -3,6 +3,7 @@ package com.quartashow.jchampionship.model;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -23,7 +24,7 @@ public class JogadorEscalado {
 	@ManyToOne
 	private Time time;
 
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	private List<Evento> eventos;
 	
 	public long getId() {
@@ -64,6 +65,12 @@ public class JogadorEscalado {
 
 	public void setEventos(List<Evento> eventos) {
 		this.eventos = eventos;
+	}
+
+	@Override
+	public String toString() {
+		return "JogadorEscalado [id=" + id + ", escalacao=" + escalacao
+				+ ", jogador=" + jogador + ", time=" + time + "]";
 	}
 	
 	

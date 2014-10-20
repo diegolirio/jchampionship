@@ -83,4 +83,15 @@ public class EscalacaoController {
 		mv.addObject("jogadoresEscalados", escalacao.getJogadoresEscalados());
 		return mv;
 	}
+	
+	@RequestMapping(value="/add/evento/{eventoId}", method=RequestMethod.POST)
+	public ResponseEntity<String> addEventoJogadorEscalado(@PathVariable("eventoId") long eventoId, long jogadorEscaladoId) {
+		JogadorEscalado jogadorEscaladoAtach = this.jogadorEscaladoDao.get(JogadorEscalado.class, jogadorEscaladoId);
+		//Evento evento = this.eventoDao.get(Evento.class, eventoId);
+		//jogadorEscaladoAtach.getEventos().add(evento);
+		this.jogadorEscaladoDao.save(jogadorEscaladoAtach);
+		HttpHeaders headers = new HttpHeaders();
+		headers.setLocation(URI.create("/jogo/system/"+jogadorEscaladoAtach.getEscalacao().getJogo().getId()));
+		return new ResponseEntity<String>(headers , HttpStatus.CREATED);
+	}
 }

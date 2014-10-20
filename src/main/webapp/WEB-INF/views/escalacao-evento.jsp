@@ -1,6 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-	<form id="formJE" action="${pageContext.request.contextPath}/escalacao/" method="post">
+	<form id="formJE" action="${pageContext.request.contextPath}/escalacao/add/evento/${evento.id}" method="post">
 
 		<h1>Adicionar ${evento.descricao}</h1>
 		

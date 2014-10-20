@@ -10,7 +10,7 @@ $(function() {
 			return false;
 		}
 		$.post( $(form).attr('action'), 
-				{'jogadorEscalado.id': jogadorEscalado },
+				{ jogadorEscaladoId: jogadorEscalado },
 				function(data) {
 					alert(JSON.stringify(data));
 				}

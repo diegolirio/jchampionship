@@ -44,6 +44,11 @@ public class Escalacao {
 	public void setJogadoresEscalados(List<JogadorEscalado> jogadoresEscalados) {
 		this.jogadoresEscalados = jogadoresEscalados;
 	}
+
+	@Override
+	public String toString() {
+		return "Escalacao [id=" + id + ", jogo=" + jogo + "]";
+	}
 	
 	
 }
