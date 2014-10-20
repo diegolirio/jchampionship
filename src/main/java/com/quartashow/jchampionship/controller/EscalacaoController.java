@@ -92,7 +92,6 @@ public class EscalacaoController {
 		this.jogadorEscaladoDao.update(jogadorEscaladoAtach);
 		Jogo jogo = this.jogoDao.get(Jogo.class, jogadorEscaladoAtach.getEscalacao().getJogo().getId());
 		if(eventoId == 1) {
-			System.out.println("GOL: (" + jogadorEscaladoAtach.getTime().getId() + ") " + jogadorEscaladoAtach.getTime().getNome());
 			if(jogadorEscaladoAtach.getTime().getId() == jogo.getTimeA().getId()) {
 				jogo.setResultadoA(jogo.getResultadoA()+1);
 			} else if(jogadorEscaladoAtach.getTime().getId() == jogo.getTimeB().getId()) {

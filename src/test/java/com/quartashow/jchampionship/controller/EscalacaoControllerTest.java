@@ -29,6 +29,7 @@ import com.quartashow.jchampionship.dao.JogoDao;
 import com.quartashow.jchampionship.model.Escalacao;
 import com.quartashow.jchampionship.model.Evento;
 import com.quartashow.jchampionship.model.Jogador;
+import com.quartashow.jchampionship.model.JogadorEscalado;
 import com.quartashow.jchampionship.model.Jogo;
 import com.quartashow.jchampionship.model.Time;
 
@@ -115,8 +116,30 @@ public class EscalacaoControllerTest {
 		evento.setDescricao("GOL");
 		evento.setId(1l);
 		
+		JogadorEscalado jogadorEscaladoAtach = Mockito.mock(JogadorEscalado.class); 
+		Mockito.when(this.jogadorEscaladoDao.get(JogadorEscalado.class, 1l)).thenReturn(jogadorEscaladoAtach);
+		
+		List<Evento> eventos = new ArrayList<Evento>();
+		Mockito.when(jogadorEscaladoAtach.getEventos()).thenReturn(eventos);
+		
+		Escalacao escalacao = Mockito.mock(Escalacao.class); 
+		Mockito.when(jogadorEscaladoAtach.getEscalacao()).thenReturn(escalacao);
+		
+		Jogo jogo = Mockito.mock(Jogo.class);
+		Mockito.when(jogadorEscaladoAtach.getEscalacao().getJogo()).thenReturn(jogo);
+		Mockito.when(this.jogoDao.get(Jogo.class, jogadorEscaladoAtach.getEscalacao().getJogo().getId())).thenReturn(jogo);
+		
+		Time time = Mockito.mock(Time.class);
+		Mockito.when(jogadorEscaladoAtach.getTime()).thenReturn(time);
+
+		Time timeA = Mockito.mock(Time.class);
+		Mockito.when(jogo.getTimeA()).thenReturn(timeA);		
+
+		Time timeB = Mockito.mock(Time.class);
+		Mockito.when(jogo.getTimeB()).thenReturn(timeB);		
+		
 		mockMvc.perform(post("/escalacao/add/evento/"+evento.getId())
-				.param("jogadorEscalado.id", "1"))
+				.param("jogadorEscaladoId", "1"))
 			.andExpect(status().isCreated());
 	}
 	
