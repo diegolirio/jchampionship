@@ -11,11 +11,14 @@ $(function() {
 		}
 		$.post( $(form).attr('action'), 
 				{ jogadorEscaladoId: jogadorEscalado },
-				function(data) {
-					alert(JSON.stringify(data));
+				function() {
+					//alert(JSON.stringify(data));
+					window.opener.location.reload();
+					window.close();
 				}
 		).fail(function(data) {
-			alert(JSON.stringify(data));
+			//console.log(data.responseText);
+			alert(data.responseText); 
 		});
 	});
 	

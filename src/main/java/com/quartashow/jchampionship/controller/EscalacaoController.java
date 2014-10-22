@@ -12,15 +12,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.quartashow.jchampionship.dao.CollectionEventosDao;
 import com.quartashow.jchampionship.dao.EscalacaoDao;
 import com.quartashow.jchampionship.dao.EventoDao;
 import com.quartashow.jchampionship.dao.JogadorEscaladoDao;
 import com.quartashow.jchampionship.dao.JogoDao;
+import com.quartashow.jchampionship.model.CollectionEventos;
 import com.quartashow.jchampionship.model.Escalacao;
 import com.quartashow.jchampionship.model.Evento;
 import com.quartashow.jchampionship.model.Jogador;
 import com.quartashow.jchampionship.model.JogadorEscalado;
 import com.quartashow.jchampionship.model.Jogo;
+import com.quartashow.jchampionship.model.Status;
 
 @Controller
 @RequestMapping("/escalacao")
@@ -38,10 +41,20 @@ public class EscalacaoController {
 	@Autowired
 	private EventoDao eventoDao;
 
+	@Autowired
+	private CollectionEventosDao collectionEventoDao;
+
 	@RequestMapping(value="/post/jogo/{jogoId}", method=RequestMethod.POST)
 	public ResponseEntity<String> addEscalacao(@PathVariable("jogoId") long jogoId) {
 		try {
 			Jogo jogo = this.jogoDao.get(Jogo.class, jogoId);
+			
+			if(jogo.getTimeA().getJogadores().size() < 1) {
+				throw new RuntimeException(jogo.getTimeA().getNome() + " nao ha jogadores cadastrados, por favor cadastre ao menos Um.");
+			}
+			if(jogo.getTimeB().getJogadores().size() < 1) {
+				throw new RuntimeException(jogo.getTimeB().getNome() + " nao ha jogadores cadastrados, por favor cadastre ao menos Um.");
+			}
 			
 			Escalacao escalacao = new Escalacao();
 			escalacao.setJogo(jogo);
@@ -62,9 +75,11 @@ public class EscalacaoController {
 				jeB.setJogador(j);
 				this.jogadorEscaladoDao.save(jeB);
 			}		
+			jogo.setStatus(new Status(2)); // set em andamento
+			this.jogoDao.update(jogo);
 			
 			HttpHeaders headers = new HttpHeaders();
-			headers.setLocation(URI.create("/jogo/system/"+jogo .getId()));
+			headers.setLocation(URI.create("/jogo/"+jogo .getId()));
 			return new ResponseEntity<String>(headers, HttpStatus.CREATED);
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -85,22 +100,26 @@ public class EscalacaoController {
 	}
 	
 	@RequestMapping(value="/add/evento/{eventoId}", method=RequestMethod.POST)
-	public ResponseEntity<String> addEventoJogadorEscalado(@PathVariable("eventoId") long eventoId, long jogadorEscaladoId) {
-		JogadorEscalado jogadorEscaladoAtach = this.jogadorEscaladoDao.get(JogadorEscalado.class, jogadorEscaladoId);
+	public ResponseEntity<String> addEventoJogadorEscalado(long jogadorEscaladoId, @PathVariable("eventoId") long eventoId) {
+		JogadorEscalado jogadorEscalado = this.jogadorEscaladoDao.get(JogadorEscalado.class, jogadorEscaladoId);
 		Evento evento = this.eventoDao.get(Evento.class, eventoId);
-		jogadorEscaladoAtach.getEventos().add(evento);
-		this.jogadorEscaladoDao.update(jogadorEscaladoAtach);
-		Jogo jogo = this.jogoDao.get(Jogo.class, jogadorEscaladoAtach.getEscalacao().getJogo().getId());
+		
+		CollectionEventos eventos = new CollectionEventos();
+		eventos.setEvento(evento);
+		eventos.setJogadorEscalado(jogadorEscalado);
+		this.collectionEventoDao.save(eventos);
+		//this.jogadorEscaladoDao.update(jogadorEscalado);
+		Jogo jogo = this.jogoDao.get(Jogo.class, jogadorEscalado.getEscalacao().getJogo().getId());
 		if(eventoId == 1) {
-			if(jogadorEscaladoAtach.getTime().getId() == jogo.getTimeA().getId()) {
+			if(jogadorEscalado.getTime().getId() == jogo.getTimeA().getId()) {
 				jogo.setResultadoA(jogo.getResultadoA()+1);
-			} else if(jogadorEscaladoAtach.getTime().getId() == jogo.getTimeB().getId()) {
+			} else if(jogadorEscalado.getTime().getId() == jogo.getTimeB().getId()) {
 				jogo.setResultadoB(jogo.getResultadoB()+1);
 			}
 		}
 		this.jogoDao.update(jogo);
 		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(URI.create("/jogo/system/"+jogadorEscaladoAtach.getEscalacao().getJogo().getId()));
+		headers.setLocation(URI.create("/jogo/system/"+jogadorEscalado.getEscalacao().getJogo().getId()));
 		return new ResponseEntity<String>(headers , HttpStatus.CREATED);
 	}
 }

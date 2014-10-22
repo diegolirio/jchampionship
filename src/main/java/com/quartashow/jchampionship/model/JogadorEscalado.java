@@ -6,8 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class JogadorEscalado {
@@ -24,8 +24,11 @@ public class JogadorEscalado {
 	@ManyToOne
 	private Time time;
 
-	@ManyToMany(fetch=FetchType.EAGER)
-	private List<Evento> eventos;
+	//@ManyToMany(fetch=FetchType.EAGER)
+	//private List<Evento> eventos;
+	
+	@OneToMany(mappedBy="jogadorEscalado", fetch=FetchType.EAGER)
+	private List<CollectionEventos> eventos;
 	
 	public long getId() {
 		return id;
@@ -58,12 +61,12 @@ public class JogadorEscalado {
 	public void setTime(Time time) {
 		this.time = time;
 	}
-
-	public List<Evento> getEventos() {
+	
+	public List<CollectionEventos> getEventos() {
 		return eventos;
 	}
 
-	public void setEventos(List<Evento> eventos) {
+	public void setEventos(List<CollectionEventos> eventos) {
 		this.eventos = eventos;
 	}
 

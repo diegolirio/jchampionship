@@ -23,7 +23,9 @@ import com.quartashow.jchampionship.dao.EscalacaoDao;
 import com.quartashow.jchampionship.dao.JogadorEscaladoDao;
 import com.quartashow.jchampionship.dao.JogoDao;
 import com.quartashow.jchampionship.helper.ValidationResponseHelper;
+import com.quartashow.jchampionship.model.Escalacao;
 import com.quartashow.jchampionship.model.Jogo;
+import com.quartashow.jchampionship.model.Status;
 
 @Controller
 @RequestMapping("/jogo")
@@ -47,6 +49,7 @@ public class JogoController {
 				ValidationResponse validationResponse = new ValidationResponseHelper().fieldsErrorsToValidationResponse(result);
 				return new ResponseEntity<String>(validationResponse.toJSON(), HttpStatus.UNAUTHORIZED);
 			}
+			jogo.setStatus(new Status(1));
 			this.jogoDao.save(jogo);
 			jogo = this.jogoDao.get(Jogo.class, jogo.getId());
 			//headers.setLocation(URI.create("/jogo/get/"+jogo.getId()));
@@ -86,7 +89,7 @@ public class JogoController {
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public ModelAndView pageJogo(@PathVariable("id") long id) {
 		ModelAndView mv = new ModelAndView("_base2");
-		mv.addObject("content_import", "jogo-page");
+		mv.addObject("content_import", "jogo-page-system");
 		Jogo jogo = this.jogoDao.get(Jogo.class, id);
 		mv.addObject("jogo", jogo);
 		mv.addObject("escalacao", this.escalacaoDao.get(jogo));
@@ -97,10 +100,11 @@ public class JogoController {
 	@RequestMapping(value="/system/{id}", method=RequestMethod.GET)
 	public ModelAndView pageSystemJogo(@PathVariable("id") long id) {
 		ModelAndView mv = new ModelAndView("_base2");
-		mv.addObject("content_import", "jogo-system");
+		mv.addObject("content_import", "jogo-page-system");
 		Jogo jogo = jogoDao.get(Jogo.class, id);
 		mv.addObject("jogo", jogo);
-		mv.addObject("escalacao", this.escalacaoDao.get(jogo));
+		Escalacao escalacao = this.escalacaoDao.get(jogo);
+		mv.addObject("escalacao", escalacao);
 		return mv;
 	}
 	

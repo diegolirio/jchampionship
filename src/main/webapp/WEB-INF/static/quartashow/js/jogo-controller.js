@@ -109,12 +109,17 @@ $(function() {
 			$.post( $(this).attr('href'),
 					function(data, statusText, response) {
 						console.log(JSON.stringify(response));
-						window.location.href = response.getResponseHeader('Location');
+						window.location.href = '/jchampionship' + response.getResponseHeader('Location');
 			}).fail(function(data) {
-				alert(JSON.stringify(data));
+				//console(JSON.stringify(data));
+				alert(data.responseText);
 			});
 		}
 		
+	});
+	
+	$('#id_finalizar_jogo').click(function() {
+		alert('Finalizar devera Setar o jogo para finalizado, e calcular a classificacao e artilharia!!!!');
 	});
 	
 });

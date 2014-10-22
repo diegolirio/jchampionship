@@ -22,6 +22,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import com.quartashow.jchampionship.dao.CollectionEventosDao;
 import com.quartashow.jchampionship.dao.EscalacaoDao;
 import com.quartashow.jchampionship.dao.EventoDao;
 import com.quartashow.jchampionship.dao.JogadorEscaladoDao;
@@ -55,6 +56,8 @@ public class EscalacaoControllerTest {
 	@Mock
 	private EventoDao eventoDao;
 	
+	@Mock
+	private CollectionEventosDao collectionEventosDao;	
 
 	@Before
 	public void setUp() throws Exception {
@@ -118,9 +121,9 @@ public class EscalacaoControllerTest {
 		
 		JogadorEscalado jogadorEscaladoAtach = Mockito.mock(JogadorEscalado.class); 
 		Mockito.when(this.jogadorEscaladoDao.get(JogadorEscalado.class, 1l)).thenReturn(jogadorEscaladoAtach);
-		
-		List<Evento> eventos = new ArrayList<Evento>();
-		Mockito.when(jogadorEscaladoAtach.getEventos()).thenReturn(eventos);
+	
+		//List<Evento> eventos = new ArrayList<Evento>();
+		//Mockito.when(jogadorEscaladoAtach.getEventos()).thenReturn(eventos);
 		
 		Escalacao escalacao = Mockito.mock(Escalacao.class); 
 		Mockito.when(jogadorEscaladoAtach.getEscalacao()).thenReturn(escalacao);

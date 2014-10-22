@@ -35,6 +35,9 @@ public class Jogo {
 	@NotNull
 	@ManyToOne
 	private Harbito harbito;
+	
+	@ManyToOne
+	private Status status;
 
 	public long getId() {
 		return id;
@@ -98,6 +101,14 @@ public class Jogo {
 
 	public void setHarbito(Harbito harbito) {
 		this.harbito = harbito;
+	}
+	
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 
 	@Override

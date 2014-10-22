@@ -5,7 +5,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Evento {
@@ -15,8 +15,11 @@ public class Evento {
 	
 	private String descricao;
 	
-	@ManyToMany(mappedBy="eventos")
-	private List<JogadorEscalado> jogadoresEscalados;
+	//@ManyToMany(mappedBy="eventos")
+	//private List<JogadorEscalado> jogadoresEscalados;
+	
+	@OneToMany(mappedBy="evento")
+	private List<CollectionEventos> collectionEventos;
 
 	public long getId() {
 		return id;
@@ -34,14 +37,13 @@ public class Evento {
 		this.descricao = descricao;
 	}
 
-	public List<JogadorEscalado> getJogadoresEscalados() {
-		return jogadoresEscalados;
+	public List<CollectionEventos> getCollectionEventos() {
+		return collectionEventos;
 	}
 
-	public void setJogadoresEscalados(List<JogadorEscalado> jogadoresEscalados) {
-		this.jogadoresEscalados = jogadoresEscalados;
-	}
-	
+	public void setCollectionEventos(List<CollectionEventos> collectionEventos) {
+		this.collectionEventos = collectionEventos;
+	}	
 	
 	
 }
