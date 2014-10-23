@@ -118,8 +118,17 @@ $(function() {
 		
 	});
 	
-	$('#id_finalizar_jogo').click(function() {
+	$('#id_finalizar_jogo').click(function(e) {
+		e.preventDefault();
 		alert('Finalizar devera Setar o jogo para finalizado, e calcular a classificacao e artilharia!!!!');
+		$.post( $(this).attr('href'),
+				function(data, statusText, response) {
+					console.log(JSON.stringify(response));
+					alert(JSON.stringify(response));
+		}).fail(function(data) {
+			console.log(JSON.stringify(data));
+			alert(JSON.stringify(data));
+		});
 	});
 	
 });

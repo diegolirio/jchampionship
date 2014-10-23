@@ -28,10 +28,23 @@ public class Classificacao {
 	
 	private int jogos = 0;
 	
+	private int golsPro = 0;
+	
+	private int golsContra = 0;
+	
 	@NotNull
 	@ManyToOne
 	private Grupo grupo; 
 
+	private String observacao;
+	
+	public Classificacao() {}
+	
+	public Classificacao(long id, Time time) {
+		this.id = id;
+		this.time = time;
+	}
+	
 	public long getId() {
 		return id;
 	}
@@ -104,15 +117,37 @@ public class Classificacao {
 		this.jogos = jogos;
 	}
 
+	public int getGolsPro() {
+		return golsPro;
+	}
+
+	public void setGolsPro(int golsPro) {
+		this.golsPro = golsPro;
+	}
+
+	public int getGolsContra() {
+		return golsContra;
+	}
+
+	public void setGolsContra(int golsContra) {
+		this.golsContra = golsContra;
+	}
+
+	public String getObservacao() {
+		return observacao;
+	}
+
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
+	}
+
 	@Override
 	public String toString() {
 		return "Classificacao [id=" + id + ", time=" + time + ", colocacao="
 				+ colocacao + ", pontos=" + pontos + ", vitorias=" + vitorias
 				+ ", derrotas=" + derrotas + ", empates=" + empates
-				+ ", jogos=" + jogos + ", grupo=" + grupo + "]";
+				+ ", jogos=" + jogos + ", golsPro=" + golsPro + ", golsContra="
+				+ golsContra + ", grupo=" + grupo + "]";
 	}
-
-
-
 	
 }

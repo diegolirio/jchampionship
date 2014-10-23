@@ -25,6 +25,13 @@ public class Time {
 	@ManyToMany(fetch=FetchType.EAGER)
 	private List<Jogador> jogadores;
 	
+	public Time() {}
+	
+	public Time(long id, String nome) {
+		this.id = id;
+		this.nome = nome;
+	}
+
 	public long getId() { 
 		return id;
 	}

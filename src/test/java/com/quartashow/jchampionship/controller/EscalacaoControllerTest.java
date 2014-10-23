@@ -80,7 +80,11 @@ public class EscalacaoControllerTest {
 		Mockito.when(jogo.getTimeA().getJogadores()).thenReturn(jogadoresA);
 		
 		Time timeB = Mockito.mock(Time.class);
-		Mockito.when(jogo.getTimeB()).thenReturn(timeB);		
+		Mockito.when(jogo.getTimeB()).thenReturn(timeB);	
+		
+		List<Jogador> jogadoresB = new ArrayList<Jogador>();
+		jogadoresB.add(new Jogador(2, "Guarrincha"));		
+		Mockito.when(jogo.getTimeB().getJogadores()).thenReturn(jogadoresB);		
 		
 		mockMvc.perform(post("/escalacao/post/jogo/"+jogoId))
 			.andExpect(status().isCreated());

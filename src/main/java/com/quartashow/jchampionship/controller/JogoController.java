@@ -1,6 +1,7 @@
 package com.quartashow.jchampionship.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -19,11 +20,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.quartashow.jchampionship.controller.common.ValidationResponse;
+import com.quartashow.jchampionship.dao.ClassificacaoDao;
 import com.quartashow.jchampionship.dao.EscalacaoDao;
 import com.quartashow.jchampionship.dao.JogadorEscaladoDao;
 import com.quartashow.jchampionship.dao.JogoDao;
 import com.quartashow.jchampionship.helper.ValidationResponseHelper;
-import com.quartashow.jchampionship.model.Escalacao;
+import com.quartashow.jchampionship.model.Classificacao;
 import com.quartashow.jchampionship.model.Jogo;
 import com.quartashow.jchampionship.model.Status;
 
@@ -39,6 +41,9 @@ public class JogoController {
 
 	@Autowired
 	private JogadorEscaladoDao jogadorEscaladoDao;
+
+	@Autowired
+	private ClassificacaoDao classificacaoDao;
 
 	@RequestMapping(value="/post", method=RequestMethod.POST, produces="application/json")
 	public ResponseEntity<String> post(@Valid Jogo jogo, BindingResult result) {
@@ -97,15 +102,106 @@ public class JogoController {
 		return mv ;
 	}
 	
-	@RequestMapping(value="/system/{id}", method=RequestMethod.GET)
-	public ModelAndView pageSystemJogo(@PathVariable("id") long id) {
-		ModelAndView mv = new ModelAndView("_base2");
-		mv.addObject("content_import", "jogo-page-system");
-		Jogo jogo = jogoDao.get(Jogo.class, id);
-		mv.addObject("jogo", jogo);
-		Escalacao escalacao = this.escalacaoDao.get(jogo);
-		mv.addObject("escalacao", escalacao);
-		return mv;
+//	@RequestMapping(value="/system/{id}", method=RequestMethod.GET)
+//	public ModelAndView pageSystemJogo(@PathVariable("id") long id) {
+//		ModelAndView mv = new ModelAndView("_base2");
+//		mv.addObject("content_import", "jogo-page-system");
+//		Jogo jogo = jogoDao.get(Jogo.class, id);
+//		mv.addObject("jogo", jogo);
+//		Escalacao escalacao = this.escalacaoDao.get(jogo);
+//		mv.addObject("escalacao", escalacao);
+//		return mv;
+//	}
+	
+	private void calculaClassificacao(Jogo jogo) {
+		List<Classificacao> classificacoes = this.classificacaoDao.getClassificacoesByGrupo(jogo.getGrupo());
+		char vencedor = 'E';
+		if(jogo.getResultadoA() > jogo.getResultadoB()) 
+			vencedor = 'A';
+		else if (jogo.getResultadoA() < jogo.getResultadoB())
+			vencedor = 'B';
+		for (Classificacao classTime : classificacoes) {
+			// calcula classificacao time A
+			if(classTime.getTime().getId() == jogo.getTimeA().getId()) {
+				classTime.setJogos(classTime.getJogos()+1);
+				classTime.setGolsPro(classTime.getGolsPro()+jogo.getResultadoA());
+				classTime.setGolsContra(classTime.getGolsContra()+jogo.getResultadoB());
+				if(vencedor == 'A') {
+					classTime.setVitorias(classTime.getVitorias()+1);
+					classTime.setPontos(classTime.getPontos()+3);
+				} 
+				else if (vencedor == 'E') {
+					classTime.setEmpates(classTime.getEmpates()+1);
+					classTime.setPontos(classTime.getPontos()+1);
+				} else if(vencedor == 'B') {
+					classTime.setDerrotas(classTime.getDerrotas());
+				}
+				this.classificacaoDao.update(classTime);
+			} // Calcula classificacao Time B 
+			else if(classTime.getTime().getId() == jogo.getTimeB().getId()) {
+				classTime.setJogos(classTime.getJogos()+1);
+				classTime.setGolsPro(classTime.getGolsPro()+jogo.getResultadoA());
+				classTime.setGolsContra(classTime.getGolsContra()+jogo.getResultadoB());
+				if(vencedor == 'A') {
+					classTime.setDerrotas(classTime.getDerrotas()+1);
+				} else if(vencedor == 'E') {
+					classTime.setEmpates(classTime.getEmpates()+1);
+					classTime.setPontos(classTime.getPontos()+1);					
+				} else if(vencedor == 'B') {
+					classTime.setVitorias(classTime.getVitorias()+1);
+					classTime.setPontos(classTime.getPontos()+3);
+				}
+				this.classificacaoDao.update(classTime);
+			}
+		}
+	}
+	
+	private void ordenaClassificacao(Jogo jogo) {
+		List<Classificacao> classificacoes = this.classificacaoDao.getClassificacoesByGrupo(jogo.getGrupo());
+		int pontosAnt = -1;
+		int posReal = 0;
+		for(int posicao = 0; posicao <= classificacoes.size()-1; posicao++) {
+			Classificacao cS = null;
+			// seleciona 1 ainda nao seleionado
+			for (Classificacao classificacao : classificacoes) {
+				if(!"S".equals(classificacao.getObservacao())) {
+					cS = classificacao;
+				}
+			}
+			// Pega o com maior pontos sg 
+			for (Classificacao classificacao : classificacoes) {
+				if(!"S".equals(classificacao.getObservacao())) {
+					if(classificacao.getPontos() > cS.getPontos()) {
+						cS = classificacao;
+					} else if(classificacao.getPontos() == cS.getPontos() && 
+							  classificacao.getGolsPro() - classificacao.getGolsContra() > cS.getGolsPro() - cS.getGolsContra()) {
+						cS = classificacao;
+					}
+				}
+			}
+			
+			if(pontosAnt > cS.getPontos() || posReal == 0) {
+				posReal = posicao+1;
+			}
+			cS.setColocacao(posReal);
+			cS.setObservacao("S");
+		}
+		for (Classificacao classificacao : classificacoes) {
+			Classificacao csave = this.classificacaoDao.get(Classificacao.class, classificacao.getId());
+			csave.setObservacao("N");
+			csave.setColocacao(classificacao.getColocacao());
+			this.classificacaoDao.save(csave);
+		}
+	}
+	
+	@RequestMapping(value="/finalizar/{id}", method=RequestMethod.POST, produces="application/json")
+	public ResponseEntity<String> finalizar(@PathVariable("id") long id) {
+		Jogo jogo = this.jogoDao.get(Jogo.class, id);
+		this.calculaClassificacao(jogo);
+		this.ordenaClassificacao(jogo);
+		jogo.setStatus(new Status(3));
+		this.jogoDao.update(jogo);		
+		return new ResponseEntity<String>(HttpStatus.CREATED);
 	}
 	
 }

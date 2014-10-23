@@ -33,6 +33,13 @@ public class Grupo {
 	@OneToMany(mappedBy="grupo")
 	private List<Jogo> jogos;
 
+	public Grupo() {}
+	
+	public Grupo(long id, List<Classificacao> classificacoes) {
+		this.id = id;
+		this.classificacoes = classificacoes;
+	}
+	
 	public long getId() {
 		return id;
 	}
