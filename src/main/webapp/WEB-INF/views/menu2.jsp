@@ -247,7 +247,7 @@
 	                        <a href="${pageContext.request.contextPath}/times/by/edicao/${edicao.id}"><i class="fa fa-dashboard fa-fw"></i> Times</a>
 	                    </li>
 	                    <li>
-	                        <a href="${pageContext.request.contextPath}/artilharia/by/edicao/${edicao.id}"><i class="fa fa-dashboard fa-fw"></i> Artilharia</a>
+	                        <a href="${pageContext.request.contextPath}/jogadorInfoEdicao/artilharia/by/edicao/${edicao.id}"><i class="fa fa-dashboard fa-fw"></i> Artilharia</a>
 	                    </li>
                     </c:if>                    
                     

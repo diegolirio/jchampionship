@@ -22,6 +22,8 @@ public class JogadorInfoEdicao {
 	private int cartaAmarelo = 0;
 	
 	private int cartaoVermelho = 0;
+	
+	private int jogos = 0;
 
 	public JogadorInfoEdicao() {}
 	
@@ -76,6 +78,13 @@ public class JogadorInfoEdicao {
 
 	public void setCartaoVermelho(int cartaoVermelho) {
 		this.cartaoVermelho = cartaoVermelho;
+	}
+	public int getJogos() {
+		return jogos;
+	}
+
+	public void setJogos(int jogos) {
+		this.jogos = jogos;
 	}
 
 	@Override

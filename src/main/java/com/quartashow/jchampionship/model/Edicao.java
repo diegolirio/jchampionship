@@ -32,6 +32,9 @@ public class Edicao {
 	@OneToMany(mappedBy="edicao")
 	private List<Grupo> grupos;
 	
+	@OneToMany(mappedBy="edicao")
+	private List<JogadorInfoEdicao> jogadoresInfoEdicao;
+	
 	public Edicao() {}
 	
 	public Edicao(long id) {
@@ -68,12 +71,18 @@ public class Edicao {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
+	public List<JogadorInfoEdicao> getJogadoresInfoEdicao() {
+		return jogadoresInfoEdicao;
+	}
+
+	public void setJogadoresInfoEdicao(List<JogadorInfoEdicao> jogadoresInfoEdicao) {
+		this.jogadoresInfoEdicao = jogadoresInfoEdicao;
+	}
+
 	@Override
 	public String toString() {
 		return "Edicao [id=" + id + ", descricao=" + descricao + ", status="
 				+ status + ", campeonato=" + campeonato + "]";
-	}
-
-	
+	}	
 	
 }

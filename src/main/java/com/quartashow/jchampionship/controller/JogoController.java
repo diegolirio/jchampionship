@@ -24,9 +24,14 @@ import com.quartashow.jchampionship.controller.common.ValidationResponse;
 import com.quartashow.jchampionship.dao.ClassificacaoDao;
 import com.quartashow.jchampionship.dao.EscalacaoDao;
 import com.quartashow.jchampionship.dao.JogadorEscaladoDao;
+import com.quartashow.jchampionship.dao.JogadorInfoEdicaoDao;
 import com.quartashow.jchampionship.dao.JogoDao;
 import com.quartashow.jchampionship.helper.ValidationResponseHelper;
 import com.quartashow.jchampionship.model.Classificacao;
+import com.quartashow.jchampionship.model.CollectionEventos;
+import com.quartashow.jchampionship.model.Escalacao;
+import com.quartashow.jchampionship.model.JogadorEscalado;
+import com.quartashow.jchampionship.model.JogadorInfoEdicao;
 import com.quartashow.jchampionship.model.Jogo;
 import com.quartashow.jchampionship.model.Status;
 
@@ -45,6 +50,9 @@ public class JogoController {
 
 	@Autowired
 	private ClassificacaoDao classificacaoDao;
+
+	@Autowired
+	private JogadorInfoEdicaoDao jogadorInfoEdicaoDao;
 
 	@RequestMapping(value="/post", method=RequestMethod.POST, produces="application/json")
 	public ResponseEntity<String> post(@Valid Jogo jogo, BindingResult result) {
@@ -206,6 +214,7 @@ public class JogoController {
 			this.calculaClassificacao(jogo);
 			List<Classificacao> classificacoes = this.ordenaClassificacao(jogo);
 			jogo.setStatus(new Status(3));
+			this.atualizaJogadorinfoEdicao(jogo);
 			this.jogoDao.update(jogo);		
 			HttpHeaders headers = new HttpHeaders();
 			headers.setLocation(URI.create("/edicao/"+jogo.getGrupo().getEdicao().getId()));
@@ -214,6 +223,36 @@ public class JogoController {
 			e.printStackTrace();
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+
+	private void atualizaJogadorinfoEdicao(Jogo jogo) {
+		Escalacao escalacao = this.escalacaoDao.get(jogo);
+		List<JogadorInfoEdicao> jogadoresInfoEdicao = this.jogadorInfoEdicaoDao.getList(JogadorInfoEdicao.class);
+		for (JogadorInfoEdicao jogadorInfoEdicao : jogadoresInfoEdicao) { // jogadores Info
+		
+			List<JogadorEscalado> jogadoresEscalados = escalacao.getJogadoresEscalados();
+			for (JogadorEscalado jogadorEscalado : jogadoresEscalados) { // Jogadores Escalados
+				
+				if(jogadorEscalado.getId() == jogadorInfoEdicao.getId()) { // se jogadorEscalado == jogadorInfoEdicao -> atualiza
+					
+					jogadorInfoEdicao.setJogos(jogadorInfoEdicao.getJogos()+1);
+					for (CollectionEventos evento : jogadorEscalado.getEventos()) {
+
+						if(evento.getEvento().getId() == 1) // 1 = Gol
+							jogadorInfoEdicao.setCartaAmarelo(jogadorInfoEdicao.getCartaAmarelo()+1);
+						else
+						if(evento.getEvento().getId() == 2) // 2 = Cartao Amarelo
+							jogadorInfoEdicao.setCartaAmarelo(jogadorInfoEdicao.getCartaAmarelo()+1);
+						else 
+						if (evento.getEvento().getId() == 3) // 3 = Cartao Vermelho
+							jogadorInfoEdicao.setCartaAmarelo(jogadorInfoEdicao.getCartaoVermelho()+1);
+					}
+					this.jogadorInfoEdicaoDao.update(jogadorInfoEdicao);					
+				}
+			}
+			
+		}
+		
 	}
 	
 }

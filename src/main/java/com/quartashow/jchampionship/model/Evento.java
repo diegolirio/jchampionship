@@ -21,6 +21,12 @@ public class Evento {
 	@OneToMany(mappedBy="evento")
 	private List<CollectionEventos> collectionEventos;
 
+	public Evento() {}
+	
+	public Evento(long id) {
+		this.id = id;
+	}
+
 	public long getId() {
 		return id;
 	}
