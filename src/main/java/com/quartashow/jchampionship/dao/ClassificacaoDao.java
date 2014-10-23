@@ -13,7 +13,7 @@ import com.quartashow.jchampionship.model.Grupo;
 public class ClassificacaoDao extends AbstractGenericDAO<Classificacao> {
 
 	public List<Classificacao> getClassificacoesByGrupo(Grupo grupo) {
-		Query query = this.manager.createQuery("Select c from Classificacao c where c.grupo.id = :idGrupo");
+		Query query = this.manager.createQuery("Select c from Classificacao c where c.grupo.id = :idGrupo order by c.colocacao");
 		query.setParameter("idGrupo", grupo.getId());
 		@SuppressWarnings("unchecked")
 		List<Classificacao> list = query.getResultList();

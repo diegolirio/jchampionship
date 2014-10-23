@@ -124,7 +124,8 @@ $(function() {
 		$.post( $(this).attr('href'),
 				function(data, statusText, response) {
 					console.log(JSON.stringify(response));
-					alert(JSON.stringify(response));
+					//alert(JSON.stringify(response));
+					window.location.href = '/jchampionship' + response.getResponseHeader('Location');
 		}).fail(function(data) {
 			console.log(JSON.stringify(data));
 			alert(JSON.stringify(data));

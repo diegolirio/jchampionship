@@ -24,6 +24,9 @@
 									<td >V</td>
 									<td >E</td>
 									<td >D</td>
+									<td >GP</td>
+									<td >GC</td>
+									<td >SG</td>
 									<td >Pontos</td>
 								</tr>
 							</thead>
@@ -36,6 +39,9 @@
 										<td >${c.vitorias}</td>
 										<td >${c.empates}</td>
 										<td >${c.derrotas}</td>
+										<td >${c.golsPro}</td>
+										<td >${c.golsContra}</td>
+										<td >${c.golsPro - c.golsContra}</td>										
 										<td >${c.pontos}</td>
 									</tr>									
 								</c:forEach>
@@ -63,7 +69,8 @@
 						        			<a href="${pageContext.request.contextPath}/jogo/system/${j.id}">
 						        				<span class="glyphicon glyphicon-pencil text-muted"></span>
 						        			</a>
-						        		</c:if> 
+						        		</c:if>
+						        		<small>${j.status.descricao}</small> 
 						        		<a href="${pageContext.request.contextPath}/jogo/${j.id}">
 						        			${j.timeA.nome} <small>X</small> ${j.timeB.nome} 
 						        		</a>

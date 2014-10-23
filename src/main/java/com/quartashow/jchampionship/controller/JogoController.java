@@ -1,6 +1,7 @@
 package com.quartashow.jchampionship.controller;
 
 import java.io.IOException;
+import java.net.URI;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -113,7 +114,7 @@ public class JogoController {
 //		return mv;
 //	}
 	
-	private void calculaClassificacao(Jogo jogo) {
+	private List<Classificacao> calculaClassificacao(Jogo jogo) {
 		List<Classificacao> classificacoes = this.classificacaoDao.getClassificacoesByGrupo(jogo.getGrupo());
 		char vencedor = 'E';
 		if(jogo.getResultadoA() > jogo.getResultadoB()) 
@@ -140,8 +141,8 @@ public class JogoController {
 			} // Calcula classificacao Time B 
 			else if(classTime.getTime().getId() == jogo.getTimeB().getId()) {
 				classTime.setJogos(classTime.getJogos()+1);
-				classTime.setGolsPro(classTime.getGolsPro()+jogo.getResultadoA());
-				classTime.setGolsContra(classTime.getGolsContra()+jogo.getResultadoB());
+				classTime.setGolsPro(classTime.getGolsPro()+jogo.getResultadoB());
+				classTime.setGolsContra(classTime.getGolsContra()+jogo.getResultadoA()); 
 				if(vencedor == 'A') {
 					classTime.setDerrotas(classTime.getDerrotas()+1);
 				} else if(vencedor == 'E') {
@@ -154,9 +155,10 @@ public class JogoController {
 				this.classificacaoDao.update(classTime);
 			}
 		}
+		return classificacoes;
 	}
 	
-	private void ordenaClassificacao(Jogo jogo) {
+	private List<Classificacao> ordenaClassificacao(Jogo jogo) {
 		List<Classificacao> classificacoes = this.classificacaoDao.getClassificacoesByGrupo(jogo.getGrupo());
 		int pontosAnt = -1;
 		int posReal = 0;
@@ -166,6 +168,7 @@ public class JogoController {
 			for (Classificacao classificacao : classificacoes) {
 				if(!"S".equals(classificacao.getObservacao())) {
 					cS = classificacao;
+					break;
 				}
 			}
 			// Pega o com maior pontos sg 
@@ -180,28 +183,37 @@ public class JogoController {
 				}
 			}
 			
+			// pontos anterior ou Saldo de Gols for maior que pontos do proximo aumenta 1 colocacao
 			if(pontosAnt > cS.getPontos() || posReal == 0) {
 				posReal = posicao+1;
 			}
-			cS.setColocacao(posReal);
-			cS.setObservacao("S");
+			classificacoes.get(classificacoes.indexOf(cS)).setColocacao(posReal);
+			classificacoes.get(classificacoes.indexOf(cS)).setObservacao("S");
+			pontosAnt = cS.getPontos();
 		}
 		for (Classificacao classificacao : classificacoes) {
-			Classificacao csave = this.classificacaoDao.get(Classificacao.class, classificacao.getId());
-			csave.setObservacao("N");
-			csave.setColocacao(classificacao.getColocacao());
-			this.classificacaoDao.save(csave);
+			classificacao.setObservacao("N");
+			classificacao.setColocacao(classificacao.getColocacao());
+			this.classificacaoDao.update(classificacao);
 		}
+		return classificacoes;
 	}
 	
 	@RequestMapping(value="/finalizar/{id}", method=RequestMethod.POST, produces="application/json")
 	public ResponseEntity<String> finalizar(@PathVariable("id") long id) {
-		Jogo jogo = this.jogoDao.get(Jogo.class, id);
-		this.calculaClassificacao(jogo);
-		this.ordenaClassificacao(jogo);
-		jogo.setStatus(new Status(3));
-		this.jogoDao.update(jogo);		
-		return new ResponseEntity<String>(HttpStatus.CREATED);
+		try {
+			Jogo jogo = this.jogoDao.get(Jogo.class, id);
+			this.calculaClassificacao(jogo);
+			List<Classificacao> classificacoes = this.ordenaClassificacao(jogo);
+			jogo.setStatus(new Status(3));
+			this.jogoDao.update(jogo);		
+			HttpHeaders headers = new HttpHeaders();
+			headers.setLocation(URI.create("/edicao/"+jogo.getGrupo().getEdicao().getId()));
+			return new ResponseEntity<String>(new ObjectMapper().writeValueAsString(classificacoes), headers, HttpStatus.CREATED);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 	
 }

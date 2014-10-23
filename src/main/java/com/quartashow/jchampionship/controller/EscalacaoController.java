@@ -16,12 +16,14 @@ import com.quartashow.jchampionship.dao.CollectionEventosDao;
 import com.quartashow.jchampionship.dao.EscalacaoDao;
 import com.quartashow.jchampionship.dao.EventoDao;
 import com.quartashow.jchampionship.dao.JogadorEscaladoDao;
+import com.quartashow.jchampionship.dao.JogadorInfoEdicaoDao;
 import com.quartashow.jchampionship.dao.JogoDao;
 import com.quartashow.jchampionship.model.CollectionEventos;
 import com.quartashow.jchampionship.model.Escalacao;
 import com.quartashow.jchampionship.model.Evento;
 import com.quartashow.jchampionship.model.Jogador;
 import com.quartashow.jchampionship.model.JogadorEscalado;
+import com.quartashow.jchampionship.model.JogadorInfoEdicao;
 import com.quartashow.jchampionship.model.Jogo;
 import com.quartashow.jchampionship.model.Status;
 
@@ -43,6 +45,9 @@ public class EscalacaoController {
 
 	@Autowired
 	private CollectionEventosDao collectionEventoDao;
+
+	@Autowired
+	private JogadorInfoEdicaoDao jogadorInfoEdicaoDao;
 
 	@RequestMapping(value="/post/jogo/{jogoId}", method=RequestMethod.POST)
 	public ResponseEntity<String> addEscalacao(@PathVariable("jogoId") long jogoId) {
@@ -66,6 +71,9 @@ public class EscalacaoController {
 				jeA.setTime(jogo.getTimeA());
 				jeA.setJogador(j);
 				this.jogadorEscaladoDao.save(jeA); 
+				if(this.jogadorInfoEdicaoDao.exists(j, jogo.getGrupo().getEdicao()) == false) 
+					this.jogadorInfoEdicaoDao.save(new JogadorInfoEdicao(j, jogo.getGrupo().getEdicao()));
+				
 			}
 	
 			for (Jogador j : jogo.getTimeB().getJogadores()) {
@@ -74,6 +82,8 @@ public class EscalacaoController {
 				jeB.setTime(jogo.getTimeB());
 				jeB.setJogador(j);
 				this.jogadorEscaladoDao.save(jeB);
+				if(this.jogadorInfoEdicaoDao.exists(j, jogo.getGrupo().getEdicao()) == false) 
+					this.jogadorInfoEdicaoDao.save(new JogadorInfoEdicao(j, jogo.getGrupo().getEdicao()));
 			}		
 			jogo.setStatus(new Status(2)); // set em andamento
 			this.jogoDao.update(jogo);

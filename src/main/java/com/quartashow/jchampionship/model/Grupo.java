@@ -35,11 +35,18 @@ public class Grupo {
 
 	public Grupo() {}
 	
-	public Grupo(long id, List<Classificacao> classificacoes) {
+	public Grupo(long id, Edicao edicao) {
 		this.id = id;
+		this.edicao = edicao;
+	}	
+	
+	public Grupo(long id, Edicao edicao, List<Classificacao> classificacoes) {
+		this(id, edicao);
 		this.classificacoes = classificacoes;
 	}
 	
+
+
 	public long getId() {
 		return id;
 	}

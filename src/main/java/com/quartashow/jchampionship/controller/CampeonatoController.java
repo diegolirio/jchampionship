@@ -65,7 +65,7 @@ public class CampeonatoController {
 	public ResponseEntity<String> initValues() {
 		Status pendente = new Status("Pendente");
 		Status andamento = new Status("Em Andamento");
-		Status finalizado = new Status("Fianlizado");
+		Status finalizado = new Status("Finalizado");
 		this.statusDao.save(pendente);
 		this.statusDao.save(andamento);
 		this.statusDao.save(finalizado);

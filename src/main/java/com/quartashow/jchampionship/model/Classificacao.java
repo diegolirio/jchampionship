@@ -36,7 +36,7 @@ public class Classificacao {
 	@ManyToOne
 	private Grupo grupo; 
 
-	private String observacao;
+	private String observacao = "";
 	
 	public Classificacao() {}
 	

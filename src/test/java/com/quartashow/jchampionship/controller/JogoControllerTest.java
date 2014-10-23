@@ -20,6 +20,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -115,7 +116,7 @@ public class JogoControllerTest {
 	}
 	
 	@Test
-	public void testDeveFinalizarJogoECalcularClassificacao() throws Exception {
+	public void testDeveFinalizarJogoECalcularClassificacaoComTimeAVencedor() throws Exception {
 		
 		Time timeA = new Time(1l, "Corinthians");
 		Time timeB = new Time(2l, "Vasco");
@@ -129,15 +130,60 @@ public class JogoControllerTest {
 		jogo.setId(1l);
 		jogo.setTimeA(timeA);
 		jogo.setTimeB(timeB);
-		jogo.setGrupo(new Grupo(1l, classificacoes));
+		jogo.setGrupo(new Grupo(1l, new Edicao(1l), classificacoes));
 		jogo.setResultadoA(3);
 		jogo.setResultadoB(1);
 		jogo.setStatus(new Status(2l, "Em andamento"));
 		Mockito.when(this.jogoDao.get(Jogo.class, 1l)).thenReturn(jogo);
 		Mockito.when(this.classificacaoDao.getClassificacoesByGrupo(jogo.getGrupo())).thenReturn(classificacoes);		
 		
-		mockMvc.perform(post("/jogo/finalizar/1"))
-			.andExpect(status().isCreated());
+		Mockito.when(this.classificacaoDao.get(Classificacao.class, 1l)).thenReturn(classificacaoA);
+		
+		
+		ResultActions resultActions = 
+				mockMvc.perform(post("/jogo/finalizar/1"))
+					.andExpect(status().isCreated());
+		
+		String json = resultActions.andReturn().getResponse().getContentAsString();
+		System.out.println(json);
+		
+		String location = resultActions.andReturn().getResponse().getHeader("Location");
+		System.out.println(location);
+		
+		// TODO: terminar test para verificar se classificacao foi calculado de modo correto
+		//        Ambos os Times (A e B): verificar colocacao, vitorias, derrotas, empates, GP, GC, SG, pontos
+		
+		//mockMvc.perform(get(location))
+		//	.andExpect(status().isOk());
+		
+//		@SuppressWarnings("unchecked")
+//		List<Classificacao> classificacoesCalc = new ObjectMapper().convertValue(resultActions.andReturn().getResponse().getContentAsString(), List.class);
+//		for (Classificacao classCalc : classificacoesCalc) {
+//			if(classCalc.getTime().getId() == timeA.getId()) {
+//				Assert.assertTrue(classCalc.getColocacao() == 1);
+//				Assert.assertTrue(classCalc.getGolsPro() == 3);
+//				Assert.assertTrue(classCalc.getGolsContra() == 1);
+//				Assert.assertTrue(classCalc.getDerrotas() == 0);
+//				Assert.assertTrue(classCalc.getVitorias() == 1);
+//				Assert.assertTrue(classCalc.getPontos() == 3);
+//				Assert.assertTrue(classCalc.getEmpates() == 0);
+//			} else 
+//				if(classCalc.getTime().getId() == timeB.getId()) {
+//					Assert.assertTrue(classCalc.getColocacao() == 2);
+//					Assert.assertTrue(classCalc.getGolsPro() == 1);
+//					Assert.assertTrue(classCalc.getGolsContra() == 3);
+//					Assert.assertTrue(classCalc.getDerrotas() == 1);
+//					Assert.assertTrue(classCalc.getVitorias() == 0);
+//					Assert.assertTrue(classCalc.getPontos() == 0);
+//					Assert.assertTrue(classCalc.getEmpates() == 0);
+//				}
+//		}
 	}
+	
+	// TODO: testParaVerificarCalculoDeJogoComEmpate
+	
+	// TODO: testParaVerificarCalculoComJogoVencedorFoiTimeB
+	
+	// TODO: test da ordenacao da classificacao (Colocacao)
 	
 }

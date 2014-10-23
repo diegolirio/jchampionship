@@ -26,12 +26,16 @@ import com.quartashow.jchampionship.dao.CollectionEventosDao;
 import com.quartashow.jchampionship.dao.EscalacaoDao;
 import com.quartashow.jchampionship.dao.EventoDao;
 import com.quartashow.jchampionship.dao.JogadorEscaladoDao;
+import com.quartashow.jchampionship.dao.JogadorInfoEdicaoDao;
 import com.quartashow.jchampionship.dao.JogoDao;
+import com.quartashow.jchampionship.model.Edicao;
 import com.quartashow.jchampionship.model.Escalacao;
 import com.quartashow.jchampionship.model.Evento;
+import com.quartashow.jchampionship.model.Grupo;
 import com.quartashow.jchampionship.model.Jogador;
 import com.quartashow.jchampionship.model.JogadorEscalado;
 import com.quartashow.jchampionship.model.Jogo;
+import com.quartashow.jchampionship.model.Status;
 import com.quartashow.jchampionship.model.Time;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -57,7 +61,10 @@ public class EscalacaoControllerTest {
 	private EventoDao eventoDao;
 	
 	@Mock
-	private CollectionEventosDao collectionEventosDao;	
+	private CollectionEventosDao collectionEventosDao;
+
+	@Mock
+	private JogadorInfoEdicaoDao jogadorInfoEdicaoDao;	
 
 	@Before
 	public void setUp() throws Exception {
@@ -67,10 +74,13 @@ public class EscalacaoControllerTest {
 	
 	@Test
 	public void testDeveAdicionarEscalacaoAoJogoDeveRetornarStatusCodeCREATE201() throws Exception {
+		
+		// TODO: Usar Jogo builder 
 		long jogoId = 1l;
 		
 		Jogo jogo = Mockito.mock(Jogo.class);
 		Mockito.when(this.jogoDao.get(Jogo.class, jogoId)).thenReturn(jogo);
+		Mockito.when(jogo.getGrupo()).thenReturn(new Grupo(1l, new Edicao(1l)));
 		
 		Time timeA = Mockito.mock(Time.class);
 		Mockito.when(jogo.getTimeA()).thenReturn(timeA);
@@ -84,7 +94,9 @@ public class EscalacaoControllerTest {
 		
 		List<Jogador> jogadoresB = new ArrayList<Jogador>();
 		jogadoresB.add(new Jogador(2, "Guarrincha"));		
-		Mockito.when(jogo.getTimeB().getJogadores()).thenReturn(jogadoresB);		
+		Mockito.when(jogo.getTimeB().getJogadores()).thenReturn(jogadoresB);	
+		
+		//Mockito.when(jogadorInfoEdicaoDao.exists(jogadoresA.get(0), jogo.getGrupo().getEdicao())).thenReturn(false); 
 		
 		mockMvc.perform(post("/escalacao/post/jogo/"+jogoId))
 			.andExpect(status().isCreated());
@@ -95,6 +107,28 @@ public class EscalacaoControllerTest {
 //		je.setTime(timeA);
 //		Mockito.verify(jogadorEscaladoDao).save(je);		
 	}
+	
+	@Test
+	public void testDeveImpedirDeGerarEscalacaoPoisTimeAEstaSemJogadores() throws Exception {
+		
+		// TODO: Mover jogo para um Builder
+		Jogo jogo = new Jogo();
+		jogo.setId(1l);
+		jogo.setTimeA(new Time(1l, "Corinthians"));
+		jogo.setTimeB(new Time(2l, "Santos"));
+		jogo.setGrupo(new Grupo(1l, new Edicao(1l)));
+		jogo.setStatus(new Status(1l));		
+		jogo.getTimeA().setJogadores(new ArrayList<Jogador>());		
+		//ResultActions resultActions = 
+				mockMvc.perform(post("/escalacao/post/jogo/"+jogo.getId()))
+					.andExpect(status().isInternalServerError());		
+		// TODO: descomentar e terminar test...
+		//String message = resultActions.andReturn().getResponse().getContentAsString();		
+		// System.out.println(message);
+		// Assert.assertEquals(jogo.getTimeA().getNome() + " nao ha jogadores cadastrados, por favor cadastre ao menos Um.", "");
+	}
+	
+	// TODO: Criar test p/ testDeveImpedirDeGerarEscalacaoPoisTimeBEstaSemJogadores
 
 	@Test
 	public void testDeveRetornarViewEModelsParaAddEventos() throws Exception {
