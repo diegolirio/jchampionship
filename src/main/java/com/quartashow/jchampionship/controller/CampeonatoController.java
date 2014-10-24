@@ -72,7 +72,7 @@ public class CampeonatoController {
 		Usuario diegolirio = new Usuario();
 		diegolirio.setEmail("diegolirio.dl@gmail.com");
 		diegolirio.setNome("Diego Lirio");
-		diegolirio.setSenha("dyeg1986");
+		diegolirio.setSenha("198586");
 		this.usuarioDao.save(diegolirio);
 		
 		// campeonato

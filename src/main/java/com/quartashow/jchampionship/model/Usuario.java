@@ -1,12 +1,19 @@
 package com.quartashow.jchampionship.model;
 
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Email;
 
 @Entity
 public class Usuario {
@@ -16,14 +23,26 @@ public class Usuario {
 	
 	private String nome;
 	
+	@NotNull @Email @Size(min=1, message="campo obrigatorio")
 	private String email;
 	
+	@NotNull @Size(min=6, max=10)
 	private String senha;
 	
-	private Calendar dataCadastro;
+	
+    @Temporal(TemporalType.DATE)
+    @Column(columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+	private Date dataCadastro;
 	
 	@ManyToMany(mappedBy="usuarios")
 	private List<Campeonato> campeonatos;
+
+	public Usuario() {}
+	
+	public Usuario(String email, String senha) {
+		this.email = email;
+		this.senha = senha;
+	}
 
 	public long getId() {
 		return id;
@@ -57,11 +76,11 @@ public class Usuario {
 		this.senha = senha;
 	}
 
-	public Calendar getDataCadastro() {
+	public Date getDataCadastro() {
 		return dataCadastro;
 	}
 
-	public void setDataCadastro(Calendar dataCadastro) {
+	public void setDataCadastro(Date dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
 	
