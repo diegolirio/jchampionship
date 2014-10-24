@@ -3,8 +3,10 @@ package com.quartashow.jchampionship.model;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import org.codehaus.jackson.annotate.JsonBackReference;
@@ -20,6 +22,9 @@ public class Campeonato {
 	@JsonBackReference
 	@OneToMany(mappedBy="campeonato")
 	private List<Edicao> edicoes;
+	
+	@ManyToMany(fetch=FetchType.EAGER)
+	private List<Usuario> usuarios;
 	
 	//private String dono;//usuario
 	
@@ -40,6 +45,13 @@ public class Campeonato {
 	}
 	public void setEdicoes(List<Edicao> edicoes) {
 		this.edicoes = edicoes;
+	}
+	
+	public List<Usuario> getUsuarios() {
+		return usuarios;
+	}
+	public void setUsuarios(List<Usuario> usuarios) {
+		this.usuarios = usuarios;
 	}
 	@Override
 	public String toString() {

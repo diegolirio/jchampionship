@@ -1,8 +1,7 @@
 package com.quartashow.jchampionship.controller;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,11 +19,13 @@ import com.quartashow.jchampionship.dao.EdicaoDao;
 import com.quartashow.jchampionship.dao.EventoDao;
 import com.quartashow.jchampionship.dao.PosicaoDao;
 import com.quartashow.jchampionship.dao.StatusDao;
+import com.quartashow.jchampionship.dao.UsuarioDao;
 import com.quartashow.jchampionship.model.Campeonato;
 import com.quartashow.jchampionship.model.Edicao;
 import com.quartashow.jchampionship.model.Evento;
 import com.quartashow.jchampionship.model.Posicao;
 import com.quartashow.jchampionship.model.Status;
+import com.quartashow.jchampionship.model.Usuario;
 
 @Controller
 public class CampeonatoController {
@@ -46,6 +47,9 @@ public class CampeonatoController {
 	@Autowired
 	private PosicaoDao posicaoDao;
 
+	@Autowired
+	private UsuarioDao usuarioDao;
+
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView home() {
 		logger.info("");
@@ -63,17 +67,28 @@ public class CampeonatoController {
 	
 	@RequestMapping(value="/pre_cadastro", method=RequestMethod.GET)
 	public ResponseEntity<String> initValues() {
-		Status pendente = new Status("Pendente");
-		Status andamento = new Status("Em Andamento");
-		Status finalizado = new Status("Finalizado");
-		this.statusDao.save(pendente);
-		this.statusDao.save(andamento);
-		this.statusDao.save(finalizado);
 
+		// usuario
+		Usuario diegolirio = new Usuario();
+		diegolirio.setEmail("diegolirio.dl@gmail.com");
+		diegolirio.setNome("Diego Lirio");
+		diegolirio.setSenha("dyeg1986");
+		this.usuarioDao.save(diegolirio);
+		
+		// campeonato
 		Campeonato quartashow = new Campeonato();
 		quartashow.setDescricao("Quarta Show");
+		List<Usuario> usuarios = new ArrayList<Usuario>();
+		usuarios.add(diegolirio);
+		quartashow.setUsuarios(usuarios);
 		this.campeonatoDao.save(quartashow);
 		
+		// Status
+		this.statusDao.save(new Status("Pendente"));
+		this.statusDao.save(new Status("Em Andamento"));
+		this.statusDao.save(new Status("Finalizado"));
+		 
+		// posicao
 		Posicao gk = new Posicao();
 		gk.setDescricao("Goleiro");
 		gk.setSigla("GK");
@@ -84,6 +99,7 @@ public class CampeonatoController {
 		at.setSigla("AT");
 		this.posicaoDao.save(at);	
 		
+		// eventos do jogo
 		Evento gol = new Evento();
 		gol.setDescricao("Gol");
 		this.eventoDao.save(gol);
@@ -95,14 +111,6 @@ public class CampeonatoController {
 		Evento cv = new Evento();
 		cv.setDescricao("Cartão Vermelho");
 		this.eventoDao.save(cv);
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("Status pendente", pendente);
-		map.put("Status andamento", andamento);
-		map.put("Status finalizado", finalizado);
-		map.put("Quarta Show", quartashow);
-		
-		
 
 		return new ResponseEntity<String>("OK", HttpStatus.OK);
 	}

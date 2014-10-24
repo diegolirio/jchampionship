@@ -65,11 +65,11 @@
 						        <div class="col-lg-6">   
 						        	<h3 class="text-info">
 						        		<!-- TODO: if user admin -->
-						        		<c:if test="${true}">
-						        			<a href="${pageContext.request.contextPath}/jogo/system/${j.id}">
-						        				<span class="glyphicon glyphicon-pencil text-muted"></span>
-						        			</a>
-						        		</c:if>
+<%-- 						        		<c:if test="${true}"> --%>
+<%-- 						        			<a href="${pageContext.request.contextPath}/jogo/system/${j.id}"> --%>
+<!-- 						        				<span class="glyphicon glyphicon-pencil text-muted"></span> -->
+<!-- 						        			</a> -->
+<%-- 						        		</c:if> --%>
 						        		<small>${j.status.descricao}</small> 
 						        		<a href="${pageContext.request.contextPath}/jogo/${j.id}">
 						        			${j.timeA.nome} <small>X</small> ${j.timeB.nome} 
