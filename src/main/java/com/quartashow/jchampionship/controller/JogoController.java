@@ -239,13 +239,13 @@ public class JogoController {
 					for (CollectionEventos evento : jogadorEscalado.getEventos()) {
 
 						if(evento.getEvento().getId() == 1) // 1 = Gol
-							jogadorInfoEdicao.setCartaAmarelo(jogadorInfoEdicao.getCartaAmarelo()+1);
+							jogadorInfoEdicao.setGols(jogadorInfoEdicao.getGols()+1);
 						else
 						if(evento.getEvento().getId() == 2) // 2 = Cartao Amarelo
-							jogadorInfoEdicao.setCartaAmarelo(jogadorInfoEdicao.getCartaAmarelo()+1);
+							jogadorInfoEdicao.setCartaoAmarelo(jogadorInfoEdicao.getCartaoAmarelo()+1);
 						else 
 						if (evento.getEvento().getId() == 3) // 3 = Cartao Vermelho
-							jogadorInfoEdicao.setCartaAmarelo(jogadorInfoEdicao.getCartaoVermelho()+1);
+							jogadorInfoEdicao.setCartaoVermelho(jogadorInfoEdicao.getCartaoVermelho()+1);
 					}
 					this.jogadorInfoEdicaoDao.update(jogadorInfoEdicao);					
 				}

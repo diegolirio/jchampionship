@@ -60,6 +60,14 @@ public class EscalacaoController {
 			if(jogo.getTimeB().getJogadores().size() < 1) {
 				throw new RuntimeException(jogo.getTimeB().getNome() + " nao ha jogadores cadastrados, por favor cadastre ao menos Um.");
 			}
+
+			Escalacao escalacaoExclui = this.escalacaoDao.get(jogo);
+			if(escalacaoExclui != null) {
+				for (JogadorEscalado je : escalacaoExclui.getJogadoresEscalados()) {
+					this.jogadorEscaladoDao.delete(JogadorEscalado.class, je.getId());
+				}
+				this.escalacaoDao.delete(Escalacao.class, escalacaoExclui.getId());
+			}
 			
 			Escalacao escalacao = new Escalacao();
 			escalacao.setJogo(jogo);

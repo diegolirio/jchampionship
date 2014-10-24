@@ -17,11 +17,21 @@
 						<thead>
 							<tr class="text-danger">
 								<td >Jogador</td>
+								<td>J</td>
+								<td>CA</td>
+								<td>CV</td>
+								<td>Gols</td>
 							</tr>
 						</thead>
 						<tbody id="id_tbody">
 							<c:forEach var="jie" items="${edicao.jogadoresInfoEdicao}">
-								<td>${jie.jogador.nome}
+								<tr>
+									<td>${jie.jogador.nome}</td>
+									<td><small>${jie.jogos}</small></td>
+									<td><small>${jie.cartaoAmarelo}</small></td>
+									<td><small>${jie.cartaoVermelho}</small></td>
+									<td>${jie.gols}</td> 
+								</tr>
 							</c:forEach>
 						</tbody>								
 					</table>    

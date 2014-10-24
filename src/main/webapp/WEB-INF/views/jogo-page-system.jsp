@@ -31,7 +31,7 @@
 	                </div>
 	                <div class="panel-body">
 	                    
-							<c:if test="${escalacao == null && true}"> <!-- TODO: user admin -->
+							<c:if test="${jogo.status.id == 1 && true}"> <!-- TODO: user admin -->
 								<a href="${pageContext.request.contextPath}/escalacao/post/jogo/${jogo.id}" class="btn btn-outline btn-success btn-lg btn-block" id="id_add_escalacao_jogo">Adicionar informações da Partida</a>
 							</c:if>	                    
 	                    

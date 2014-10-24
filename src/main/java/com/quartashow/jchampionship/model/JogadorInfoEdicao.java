@@ -11,7 +11,7 @@ public class JogadorInfoEdicao {
 	@Id @GeneratedValue
 	private long id;
 	
-	@ManyToOne
+	@ManyToOne 
 	private Jogador jogador;
 	
 	@ManyToOne
@@ -19,7 +19,7 @@ public class JogadorInfoEdicao {
 	
 	private int gols = 0;
 	
-	private int cartaAmarelo = 0;
+	private int cartaoAmarelo = 0;
 	
 	private int cartaoVermelho = 0;
 	
@@ -64,12 +64,12 @@ public class JogadorInfoEdicao {
 		this.gols = gols;
 	}
 
-	public int getCartaAmarelo() {
-		return cartaAmarelo;
+	public int getCartaoAmarelo() {
+		return cartaoAmarelo;
 	}
 
-	public void setCartaAmarelo(int cartaAmarelo) {
-		this.cartaAmarelo = cartaAmarelo;
+	public void setCartaoAmarelo(int cartaAmarelo) {
+		this.cartaoAmarelo = cartaAmarelo;
 	}
 
 	public int getCartaoVermelho() {
@@ -90,8 +90,8 @@ public class JogadorInfoEdicao {
 	@Override
 	public String toString() {
 		return "JogadorInfoEdicao [id=" + id + ", jogador=" + jogador
-				+ ", edicao=" + edicao + ", gols=" + gols + ", cartaAmarelo="
-				+ cartaAmarelo + ", cartaoVermelho=" + cartaoVermelho + "]";
+				+ ", edicao=" + edicao + ", gols=" + gols + ", cartaoAmarelo="
+				+ cartaoAmarelo + ", cartaoVermelho=" + cartaoVermelho + "]";
 	}
 	
 	

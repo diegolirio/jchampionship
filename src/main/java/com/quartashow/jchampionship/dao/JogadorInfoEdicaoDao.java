@@ -13,7 +13,7 @@ import com.quartashow.jchampionship.model.JogadorInfoEdicao;
 public class JogadorInfoEdicaoDao extends AbstractGenericDAO<JogadorInfoEdicao> {
 
 	public boolean exists(Jogador jogador, Edicao edicao) {
-		Query query = this.manager.createQuery("select jie from JogadorEscalado jie where jie.jogador.id = :jogadorId and jie.edicao.id = :edicaoId");
+		Query query = this.manager.createQuery("select jie from JogadorInfoEdicao jie where jie.jogador.id = :jogadorId and jie.edicao.id = :edicaoId");
 		query.setParameter("jogadorId", jogador.getId());
 		query.setParameter("edicaoId", edicao.getId());
 		try {

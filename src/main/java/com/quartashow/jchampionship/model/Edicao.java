@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -32,6 +33,8 @@ public class Edicao {
 	@OneToMany(mappedBy="edicao")
 	private List<Grupo> grupos;
 	
+	@JsonBackReference
+	@OrderBy("gols desc")
 	@OneToMany(mappedBy="edicao")
 	private List<JogadorInfoEdicao> jogadoresInfoEdicao;
 	
