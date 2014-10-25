@@ -63,6 +63,9 @@ public class JogoController {
 				ValidationResponse validationResponse = new ValidationResponseHelper().fieldsErrorsToValidationResponse(result);
 				return new ResponseEntity<String>(validationResponse.toJSON(), HttpStatus.UNAUTHORIZED);
 			}
+			if(jogo.getTimeA().getId() == jogo.getTimeB().getId()) {
+				throw new RuntimeException("Nao é permitido cadastrar time contra ele mesmo time!");
+			}
 			jogo.setStatus(new Status(1));
 			this.jogoDao.save(jogo);
 			jogo = this.jogoDao.get(Jogo.class, jogo.getId());

@@ -210,24 +210,24 @@
                 <!-- /.dropdown-alerts --
             </li>
             -->
+            <c:if test="${empty usuario}">
+            	<li><a href="${pageContext.request.contextPath}/usuario/login"><i class="fa fa-sign-out fa-fw"></i> Entrar</a></li>
+            </c:if>
             <!-- /.dropdown -->
-            <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
-                </a>
-                <ul class="dropdown-menu dropdown-user">
-                	<c:if test="${false}">
-                    	<li><a href="#"><i class="fa fa-user fa-fw"></i> Perfil</a></li>
-						<!-- <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a></li> -->
-                    	<li class="divider"></li>
-                    	<li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Sair</a></li>
-                    </c:if>
-                    <c:if test="${true}">
-                    	<li><a href="${pageContext.request.contextPath}/usuario/login"><i class="fa fa-sign-out fa-fw"></i> Entrar</a></li>
-                    </c:if>
-                </ul>
-                <!-- /.dropdown-user -->
-            </li>
+            <c:if test="${not empty usuario}">
+	            <li class="dropdown">
+	                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+	                    <i class="fa fa-user fa-fw"></i> ${usuario.nome } <i class="fa fa-caret-down"></i>
+	                </a>
+	                <ul class="dropdown-menu dropdown-user">
+	                    	<li><a href="#"><i class="fa fa-user fa-fw"></i> Perfil</a></li>
+							<!-- <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a></li> -->
+	                    	<li class="divider"></li>
+	                    	<li><a href="${pageContext.request.contextPath}/usuario/logout"><i class="fa fa-sign-out fa-fw"></i> Sair</a></li>
+	                </ul>
+	                <!-- /.dropdown-user -->
+	            </li>
+	        </c:if>
             <!-- /.dropdown -->
         </ul>
         <!-- /.navbar-top-links -->
@@ -259,7 +259,7 @@
 	                    </li>
                     </c:if>                    
                     
-                    <c:if test="${true}">
+                    <c:if test="${not empty usuario && not empty admin && admin}">
 	                    <li>
 	                        <a href="${pageContext.request.contextPath}/edicao/system"><i class="fa fa-fw fa-file"></i> Criar novo Campeonato</a>
 	                    </li>         

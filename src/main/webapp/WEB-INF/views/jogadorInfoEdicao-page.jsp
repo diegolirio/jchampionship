@@ -41,10 +41,6 @@
         </div>
     </div>
     <!-- /.row -->
-	    
-	<a href="#${pageContext.request.contextPath}/edicao/system/${edicao.id}/set/status/2" class="btn btn-info pull-right" id="id_concluir_edicao">
-		Outros <i class="glyphicon glyphicon-share-alt"></i>
-	</a>
     
 <%--     <script src="${pageContext.request.contextPath}/static/quartashow/js/edicao-controller.js"></script> --%>
               

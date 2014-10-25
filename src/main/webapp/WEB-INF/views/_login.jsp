@@ -41,6 +41,7 @@
         <div class="row">
             <div class="col-md-4 col-md-offset-4">
             
+            	<br/>
 				<div class="class_message">
                      <div class="alert alert-danger alert-dismissable">
 						 <!-- <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> -->

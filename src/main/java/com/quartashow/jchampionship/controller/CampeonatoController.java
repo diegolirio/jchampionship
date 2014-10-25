@@ -75,6 +75,12 @@ public class CampeonatoController {
 		diegolirio.setSenha("198586");
 		this.usuarioDao.save(diegolirio);
 		
+		Usuario test = new Usuario();
+		test.setEmail("test@test.com");
+		test.setNome("Fulano");
+		test.setSenha("123456");
+		this.usuarioDao.save(test);		
+		
 		// campeonato
 		Campeonato quartashow = new Campeonato();
 		quartashow.setDescricao("Quarta Show");

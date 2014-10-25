@@ -80,7 +80,7 @@
                         	</c:forEach>
                         </div>
                         <div class="panel-footer">
-                            Panel Footer
+                            ...
                         </div>
                     </div>
                     <!-- /.col-lg-4 -->
@@ -89,10 +89,6 @@
 	    
 	</c:forEach>
 	    
-	<a href="#${pageContext.request.contextPath}/edicao/system/${edicao.id}/set/status/2" class="btn btn-info pull-right" id="id_concluir_edicao">
-		Concluir Cadastro <i class="glyphicon glyphicon-share-alt"></i>
-	</a>
-    
     <script src="${pageContext.request.contextPath}/static/quartashow/js/edicao-controller.js"></script>
               
                 

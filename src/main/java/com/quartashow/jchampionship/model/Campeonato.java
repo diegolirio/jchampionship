@@ -23,6 +23,7 @@ public class Campeonato {
 	@OneToMany(mappedBy="campeonato")
 	private List<Edicao> edicoes;
 	
+	@JsonBackReference
 	@ManyToMany(fetch=FetchType.EAGER)
 	private List<Usuario> usuarios;
 	

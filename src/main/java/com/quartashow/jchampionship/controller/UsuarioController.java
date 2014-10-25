@@ -5,6 +5,7 @@ import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.codehaus.jackson.map.ObjectMapper;
@@ -19,8 +20,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.quartashow.jchampionship.controller.common.ValidationResponse;
+import com.quartashow.jchampionship.dao.CampeonatoDao;
 import com.quartashow.jchampionship.dao.UsuarioDao;
 import com.quartashow.jchampionship.helper.ValidationResponseHelper;
+import com.quartashow.jchampionship.model.Campeonato;
 import com.quartashow.jchampionship.model.Usuario;
 
 @Controller
@@ -29,6 +32,8 @@ public class UsuarioController {
 
 	@Autowired
 	private UsuarioDao usuarioDao;
+	@Autowired
+	private CampeonatoDao campeonatoDao;
 
 	@RequestMapping(value="/login", method=RequestMethod.GET)
 	public ModelAndView pageLogin() {
@@ -37,13 +42,19 @@ public class UsuarioController {
 	} 
 	
 	@RequestMapping(value="/login", method=RequestMethod.POST, produces="application/json")
-	public ResponseEntity<String> login(@Valid Usuario usuario, BindingResult result) {
+	public ResponseEntity<String> login(@Valid Usuario usuario, BindingResult result, HttpSession session) {
 		try {
 			if(result.hasErrors()) {
 				ValidationResponse validationResponse = new ValidationResponseHelper().fieldsErrorsToValidationResponse(result);
 				return new ResponseEntity<String>(new ObjectMapper().writeValueAsString(validationResponse), HttpStatus.UNAUTHORIZED);
 			}
 			if(this.usuarioDao.login(usuario) == true) {
+				usuario = usuarioDao.get(usuario.getEmail());
+				for (Campeonato c : usuario.getCampeonatos()) {
+					if(c.getId() == 1l)
+						session.setAttribute("admin", true);
+				}
+				session.setAttribute("usuario", usuario);
 				HttpHeaders headers = new HttpHeaders(); 
 				headers.setLocation(URI.create("/"));
 				return new ResponseEntity<String>(headers , HttpStatus.OK);
@@ -59,7 +70,12 @@ public class UsuarioController {
 			e.printStackTrace();
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
 	}
+	
+	@RequestMapping(value="/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:/";
+	}	
 	
 }

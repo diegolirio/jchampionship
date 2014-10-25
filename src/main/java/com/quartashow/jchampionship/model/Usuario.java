@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -13,6 +14,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.codehaus.jackson.annotate.JsonBackReference;
 import org.hibernate.validator.constraints.Email;
 
 @Entity
@@ -34,7 +36,8 @@ public class Usuario {
     @Column(columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
 	private Date dataCadastro;
 	
-	@ManyToMany(mappedBy="usuarios")
+    @JsonBackReference
+	@ManyToMany(mappedBy="usuarios", fetch=FetchType.EAGER)
 	private List<Campeonato> campeonatos;
 
 	public Usuario() {}

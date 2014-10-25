@@ -1,5 +1,6 @@
 package com.quartashow.jchampionship.dao;
 
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
@@ -13,7 +14,21 @@ public class UsuarioDao extends AbstractGenericDAO<Usuario> {
 		Query query = this.manager.createQuery("select u from Usuario u where u.email = :email and u.senha = :senha");
 		query.setParameter("email", usuario.getEmail());
 		query.setParameter("senha", usuario.getSenha());
-		return query.getResultList().size() > 0;
+		try {
+			usuario = (Usuario) query.getSingleResult();
+		} catch (NoResultException e) {
+			return false;
+		}
+		return usuario.getId() > 0;
+	}
+
+	
+
+	public Usuario get(String email) {
+		Query query = this.manager.createQuery("Select u from Usuario u where u.email = :email");
+		query.setParameter("email", email);
+		Usuario usuario = (Usuario) query.getSingleResult();
+		return usuario;
 	}
 
 }

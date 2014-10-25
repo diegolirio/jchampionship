@@ -7,7 +7,7 @@
 				
 	<h1 class="page-header">
 		${time.nome} 
-		<c:if test="${true}"> <!-- TODO: if user admin -->
+		<c:if test="${not empty usuario && not empty admin && admin}">
     		<a href="${pageContext.request.contextPath}/time/system/${time.id}">
    				<span class="glyphicon glyphicon-pencil text-muted"></span>
    			</a>
@@ -39,8 +39,12 @@
 									<td></td>
 								</tr>
 							</c:forEach>
-							<c:if test="${fn:length(time.jogadores) <= 0 && true}"> <!-- TODO: if user admin -->
-								<h3>Não há jogadores para este time, <a href="${pageContext.request.contextPath}/time/system/${time.id}">cadastre agora</a></h3>
+							<c:if test="${fn:length(time.jogadores) <= 0 && true}">
+								<h3>Não há jogadores para este time 
+								<c:if test="${not empty usuario && not empty admin && admin}">
+									<a href="${pageContext.request.contextPath}/time/system/${time.id}">cadastre agora</a>
+								</c:if>
+							</h3>
 							</c:if>
 						</tbody>
 					</table>

@@ -15,7 +15,7 @@
 			<p class="text-primary">${jogo.status.descricao}</p>
 		</div>
 		
-		<c:if test="${jogo.status.id == 2 && true}"> <!-- TODO: user admin -->
+		<c:if test="${jogo.status.id == 2 && not empty usuario && not empty admin && admin}">
 			<a href="${pageContext.request.contextPath}/escalacao/system/${jogo.id}/add/evento/1" class="btn btn-outline btn-info" onclick="showWindowPopup(this.href, 600, 800); return false;" >Adicionar Gol</a>
 			<a href="${pageContext.request.contextPath}/escalacao/system/${jogo.id}/add/evento/2" class="btn btn-outline btn-warning" onclick="showWindowPopup(this.href, 600, 800); return false;">Cartão Amarelo</a>
 			<a href="${pageContext.request.contextPath}/escalacao/system/${jogo.id}/add/evento/3" class="btn btn-outline btn-danger" onclick="showWindowPopup(this.href, 600, 800); return false;">Cartão Vermelho</a>
@@ -31,7 +31,7 @@
 	                </div>
 	                <div class="panel-body">
 	                    
-							<c:if test="${jogo.status.id == 1 && true}"> <!-- TODO: user admin -->
+							<c:if test="${jogo.status.id == 1 && not empty usuario && not empty admin && admin}">
 								<a href="${pageContext.request.contextPath}/escalacao/post/jogo/${jogo.id}" class="btn btn-outline btn-success btn-lg btn-block" id="id_add_escalacao_jogo">Adicionar informações da Partida</a>
 							</c:if>	                    
 	                    
@@ -98,7 +98,7 @@
 	    </div>
 	    <!-- /.row -->
 	    
-		<c:if test="${jogo.status.id == 2 && true}"> <!-- TODO: user admin -->
+		<c:if test="${jogo.status.id == 2 && not empty usuario && not empty admin && admin}"> 
 			<a href="${pageContext.request.contextPath}/jogo/finalizar/${jogo.id}" class="btn btn-outline btn-success btn-lg btn-block" id="id_finalizar_jogo">Finalizar Jogo</a>
 		</c:if>		    
     
