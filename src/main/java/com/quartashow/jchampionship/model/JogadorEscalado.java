@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 
 @Entity
 public class JogadorEscalado {
@@ -26,7 +27,7 @@ public class JogadorEscalado {
 
 	//@ManyToMany(fetch=FetchType.EAGER)
 	//private List<Evento> eventos;
-	
+
 	@OneToMany(mappedBy="jogadorEscalado", fetch=FetchType.EAGER)
 	private List<CollectionEventos> eventos;
 	

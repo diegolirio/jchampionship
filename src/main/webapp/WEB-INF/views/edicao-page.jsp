@@ -63,19 +63,21 @@
                         <div class="panel-body">
                         	<c:forEach var="j" items="${g.jogos}">
 						        <div class="col-lg-6">   
-						        	<h3 class="text-info">
-						        		<!-- TODO: if user admin -->
-<%-- 						        		<c:if test="${true}"> --%>
-<%-- 						        			<a href="${pageContext.request.contextPath}/jogo/system/${j.id}"> --%>
-<!-- 						        				<span class="glyphicon glyphicon-pencil text-muted"></span> -->
-<!-- 						        			</a> -->
-<%-- 						        		</c:if> --%>
-						        		<small>${j.status.descricao}</small> 
+						        	<h2 class="text-info">
 						        		<a href="${pageContext.request.contextPath}/jogo/${j.id}">
-						        			${j.timeA.nome} <small>X</small> ${j.timeB.nome} 
+						        			${j.timeA.nome}
+						        			<c:if test="${j.status.id != 1}">
+						        				<span class="text-danger">${j.resultadoA}</span>
+						        			</c:if>  
+						        			<small>X</small>
+						        			<c:if test="${j.status.id != 1}"> 
+						        				<span class="text-danger">${j.resultadoB}</span>
+						        			</c:if>
+						        			${j.timeB.nome} 
 						        		</a>
-						        		<small> ${j.local.descricao} * 11/11/2011 </small> 
-						        	</h3>
+						        		<br/>
+					        			<small> <img src="${pageContext.request.contextPath}/static/quartashow/img/${j.status.imgName}"/> (${j.status.descricao}) - ${j.local.descricao} </small>
+						        	</h2>
 						        </div>                        	
                         	</c:forEach>
                         </div>

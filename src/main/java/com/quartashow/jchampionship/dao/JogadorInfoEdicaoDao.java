@@ -1,5 +1,7 @@
 package com.quartashow.jchampionship.dao;
 
+import java.util.List;
+
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
@@ -22,6 +24,13 @@ public class JogadorInfoEdicaoDao extends AbstractGenericDAO<JogadorInfoEdicao> 
 		} catch (NoResultException e) {
 			return false;
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<JogadorInfoEdicao> getJogadorInfoEdicaoByEdicao(Edicao edicao) {
+		Query query = this.manager.createQuery("Select jie from JogadorInfoEdicao jie where jie.edicao.id = :edicaoId order by jie.gols desc");
+		query.setParameter("edicaoId", edicao.getId());
+		return (List<JogadorInfoEdicao>) query.getResultList();
 	}	
 	
 }

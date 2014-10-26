@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <form id="form" action="${pageContext.request.contextPath}/time/post">
-	<h1 class="text-info"> Time</h1>
+	<h1 class="text-info"> ${time.nome}</h1>
 	
 	<input type="hidden" value="${time.id}" name="id">
 	

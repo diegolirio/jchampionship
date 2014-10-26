@@ -12,6 +12,8 @@ public class Status {
 	
 	private String descricao; // Pendencia do Formulario | Andamento | Finalizado | 
 
+	private String imgName;
+
 	public Status() {}
 
 	public Status(long id) {
@@ -25,6 +27,11 @@ public class Status {
 	public Status(long id, String descricao) {
 		this(id);
 		this.descricao = descricao;
+	}
+
+	public Status(String descricao, String imgName) {
+		this(descricao);
+		this.imgName = imgName;
 	}
 
 	public long getId() {
@@ -41,6 +48,14 @@ public class Status {
 
 	public void setDescricao(String nome) {
 		this.descricao = nome;
+	}
+
+	public String getImgName() {
+		return imgName;
+	}
+
+	public void setImgName(String imgName) {
+		this.imgName = imgName;
 	}
 	
 	

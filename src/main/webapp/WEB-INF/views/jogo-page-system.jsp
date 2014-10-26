@@ -12,7 +12,7 @@
 		
 		<div class="text-muted pull-right"> 
 			<p>Local: ${jogo.local.descricao} / Harbito: ${jogo.harbito.nome}</p>  
-			<p class="text-primary">${jogo.status.descricao}</p>
+			<p class="text-primary"> <img src="${pageContext.request.contextPath}/static/quartashow/img/${jogo.status.imgName}" /> ${jogo.status.descricao}</p>
 		</div>
 		
 		<c:if test="${jogo.status.id == 2 && not empty usuario && not empty admin && admin}">
@@ -40,7 +40,7 @@
 								<table class="table">
 									<thead class="text-warning">
 										<tr>
-											<td class="text-center">${escalacao.jogo.timeA.nome}</td>
+											<td class="text-center" colspan="2">${escalacao.jogo.timeA.nome}</td>
 											<td></td>
 										</tr> 
 									</thead>								
@@ -48,6 +48,7 @@
 										<c:forEach var="je" items="${escalacao.jogadoresEscalados}">
 											<c:if test="${escalacao.jogo.timeA.id == je.time.id}">
 												<tr>
+													<td>excluir</td>
 													<td class="jogador${je.id}"> 
 														 <img src="${pageContext.request.contextPath}/static/quartashow/img/${je.jogador.posicao.imgName }" alt="${je.jogador.posicao.descricao}"/>
 														 ${je.jogador.nome}
@@ -55,13 +56,19 @@
 													<td> 
 														<c:forEach var="ce" items="${je.eventos}">
 															<img src="${pageContext.request.contextPath}/static/quartashow/img/${ce.evento.imgName}" alt="${ce.evento.descricao}" />
+															<c:if test="${jogo.status.id == 2 && not empty usuario && not empty admin && admin}"> 
+																<img src="${pageContext.request.contextPath}/static/quartashow/img/lixeira.png" alt="Excluir" title="Excluir Gol, Cartão amarelo ou Cartão vermelho" />
+															</c:if>
 														</c:forEach> 
 													</td>
 												</tr>
 											</c:if>
 										</c:forEach>
 									</tbody>								
-								</table>	                    	
+								</table>	        
+								<c:if test="${jogo.status.id == 2 && not empty usuario && not empty admin && admin}"> 
+									<a href="${pageContext.request.contextPath}/escalacao/add/jogador/time/${jogo.timeA.id}/jogo/${jogo.id}" class="btn btn-outline btn-warning btn-xs btn-block" id="id_add_jogador_escalado_timeA">adicionar jogador para ${jogo.timeA.nome}</a>
+								</c:if>            	
 	                    	</div>
 
 	                    	<div class="col-md-6">
@@ -69,7 +76,7 @@
 								<table class="table">
 									<thead class="text-warning">
 										<tr>
-											<td class="text-center">${escalacao.jogo.timeB.nome}</td>
+											<td class="text-center" colspan="2">${escalacao.jogo.timeB.nome}</td>
 											<td></td>
 										</tr> 
 									</thead>								
@@ -77,6 +84,7 @@
 										<c:forEach var="je" items="${escalacao.jogadoresEscalados}">
 											<c:if test="${escalacao.jogo.timeB.id == je.time.id}">
 												<tr>
+												    <td>excluir</td>
 													<td class="jogador${je.id}"> 
 														 <img src="${pageContext.request.contextPath}/static/quartashow/img/${je.jogador.posicao.imgName }" alt="${je.jogador.posicao.descricao}"/>
 														 ${je.jogador.nome}
@@ -84,15 +92,20 @@
 													<td> 
 														<c:forEach var="ce" items="${je.eventos}">
 															<img src="${pageContext.request.contextPath}/static/quartashow/img/${ce.evento.imgName}" alt="${ce.evento.descricao}" />
+															<c:if test="${jogo.status.id == 2 && not empty usuario && not empty admin && admin}">
+																<img src="${pageContext.request.contextPath}/static/quartashow/img/lixeira.png" alt="Excluir" title="Excluir Gol, Cartão amarelo ou Cartão vermelho" />
+															</c:if>
 														</c:forEach>
 													</td>													
 												</tr>
 											</c:if>
 										</c:forEach>
 									</tbody>								
-								</table>	                    	
+								</table>
+								<c:if test="${jogo.status.id == 2 && not empty usuario && not empty admin && admin}"> 
+									<a href="${pageContext.request.contextPath}/escalacao/add/jogador/time/${jogo.timeB.id}/jogo/${jogo.id}" class="btn btn-outline btn-warning btn-xs btn-block" id="id_add_jogador_escalado_timeB">adicionar jogador para ${jogo.timeB.nome}</a>
+								</c:if>									                    	
 	                    	</div>
-	                    	
 	                    	
 	                </div>
 	            </div>

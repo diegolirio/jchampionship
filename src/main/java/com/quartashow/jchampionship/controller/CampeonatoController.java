@@ -90,9 +90,9 @@ public class CampeonatoController {
 		this.campeonatoDao.save(quartashow);
 		
 		// Status
-		this.statusDao.save(new Status("Pendente"));
-		this.statusDao.save(new Status("Em Andamento"));
-		this.statusDao.save(new Status("Finalizado"));
+		this.statusDao.save(new Status("Pendente", "interrogacao.png"));
+		this.statusDao.save(new Status("Em Andamento", "bola_32.png"));
+		this.statusDao.save(new Status("Finalizado", "apito_24.png"));
 		 
 		// posicao
 		Posicao gk = new Posicao();

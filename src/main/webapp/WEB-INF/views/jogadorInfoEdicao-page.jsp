@@ -18,20 +18,22 @@
 							<tr class="text-danger">
 								<td >Jogador</td>
 								<td>J</td>
-								<td>CA</td>
-								<td>CV</td>
+								<td><img src="${pageContext.request.contextPath}/static/quartashow/img/cartao-amarelo.png"/> </td>
+								<td><img src="${pageContext.request.contextPath}/static/quartashow/img/cartao-vermelho.png"/> </td>
 								<td>Gols</td>
 							</tr>
 						</thead>
 						<tbody id="id_tbody">
-							<c:forEach var="jie" items="${edicao.jogadoresInfoEdicao}">
-								<tr>
-									<td>${jie.jogador.nome}</td>
-									<td><small>${jie.jogos}</small></td>
-									<td><small>${jie.cartaoAmarelo}</small></td>
-									<td><small>${jie.cartaoVermelho}</small></td>
-									<td>${jie.gols}</td> 
-								</tr>
+							<c:forEach var="jie" items="${edicao.jogadoresInfoEdicao}" varStatus="status">
+								<c:if test="${jie.gols > 0}">
+									<tr ${status.count == 1 ? 'style="font-size:25px;"' : '' } >
+										<td>${jie.jogador.nome}</td>
+										<td><small>${jie.jogos}</small></td>
+										<td><small>${jie.cartaoAmarelo}</small></td>
+										<td><small>${jie.cartaoVermelho}</small></td>
+										<td>${jie.gols}</td> 
+									</tr>
+								</c:if>
 							</c:forEach>
 						</tbody>								
 					</table>    
