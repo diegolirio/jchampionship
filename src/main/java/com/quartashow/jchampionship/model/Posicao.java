@@ -13,6 +13,8 @@ public class Posicao {
 	private String descricao;
 	
 	private String sigla;
+	
+	private String imgName;
 
 	public long getId() {
 		return id;
@@ -36,6 +38,14 @@ public class Posicao {
 
 	public void setSigla(String sigla) {
 		this.sigla = sigla;
+	}
+
+	public String getImgName() {
+		return imgName;
+	}
+
+	public void setImgName(String imgName) {
+		this.imgName = imgName;
 	}
 	
 	

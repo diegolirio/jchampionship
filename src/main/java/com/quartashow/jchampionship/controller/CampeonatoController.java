@@ -98,24 +98,29 @@ public class CampeonatoController {
 		Posicao gk = new Posicao();
 		gk.setDescricao("Goleiro");
 		gk.setSigla("GK");
+		gk.setImgName("golerio_24x24.png");
 		this.posicaoDao.save(gk);
 		
 		Posicao at = new Posicao();
 		at.setDescricao("Linha");
 		at.setSigla("AT");
+		at.setImgName("chuteira_32.png");
 		this.posicaoDao.save(at);	
 		
 		// eventos do jogo
 		Evento gol = new Evento();
 		gol.setDescricao("Gol");
+		gol.setImgName("gol.png");
 		this.eventoDao.save(gol);
 
 		Evento ca = new Evento();
 		ca.setDescricao("Cartão Amarelo");
+		ca.setImgName("cartao-amarelo.png");
 		this.eventoDao.save(ca);
 
 		Evento cv = new Evento();
 		cv.setDescricao("Cartão Vermelho");
+		cv.setImgName("cartao-vermelho.png");
 		this.eventoDao.save(cv);
 
 		return new ResponseEntity<String>("OK", HttpStatus.OK);

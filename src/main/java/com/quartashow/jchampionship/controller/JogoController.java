@@ -146,7 +146,7 @@ public class JogoController {
 					classTime.setEmpates(classTime.getEmpates()+1);
 					classTime.setPontos(classTime.getPontos()+1);
 				} else if(vencedor == 'B') {
-					classTime.setDerrotas(classTime.getDerrotas());
+					classTime.setDerrotas(classTime.getDerrotas()+1);
 				}
 				this.classificacaoDao.update(classTime);
 			} // Calcula classificacao Time B 

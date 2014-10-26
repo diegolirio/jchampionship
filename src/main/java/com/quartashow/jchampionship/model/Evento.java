@@ -15,6 +15,8 @@ public class Evento {
 	
 	private String descricao;
 	
+	private String imgName;
+	
 	//@ManyToMany(mappedBy="eventos")
 	//private List<JogadorEscalado> jogadoresEscalados;
 	
@@ -33,6 +35,14 @@ public class Evento {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public String getImgName() {
+		return imgName;
+	}
+
+	public void setImgName(String imgName) {
+		this.imgName = imgName;
 	}
 
 	public String getDescricao() {

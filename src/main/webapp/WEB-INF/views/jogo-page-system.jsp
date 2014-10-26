@@ -40,7 +40,6 @@
 								<table class="table">
 									<thead class="text-warning">
 										<tr>
-											<td></td>
 											<td class="text-center">${escalacao.jogo.timeA.nome}</td>
 											<td></td>
 										</tr> 
@@ -49,11 +48,13 @@
 										<c:forEach var="je" items="${escalacao.jogadoresEscalados}">
 											<c:if test="${escalacao.jogo.timeA.id == je.time.id}">
 												<tr>
-													<td>${je.jogador.posicao.descricao}</td>
-													<td class="text-center jogador${je.id}">${je.jogador.nome}</td>
+													<td class="jogador${je.id}"> 
+														 <img src="${pageContext.request.contextPath}/static/quartashow/img/${je.jogador.posicao.imgName }" alt="${je.jogador.posicao.descricao}"/>
+														 ${je.jogador.nome}
+													</td>
 													<td> 
 														<c:forEach var="ce" items="${je.eventos}">
-															${ce.evento.descricao}
+															<img src="${pageContext.request.contextPath}/static/quartashow/img/${ce.evento.imgName}" alt="${ce.evento.descricao}" />
 														</c:forEach> 
 													</td>
 												</tr>
@@ -68,7 +69,6 @@
 								<table class="table">
 									<thead class="text-warning">
 										<tr>
-											<td></td>
 											<td class="text-center">${escalacao.jogo.timeB.nome}</td>
 											<td></td>
 										</tr> 
@@ -77,11 +77,13 @@
 										<c:forEach var="je" items="${escalacao.jogadoresEscalados}">
 											<c:if test="${escalacao.jogo.timeB.id == je.time.id}">
 												<tr>
-													<td>${je.jogador.posicao.descricao}</td>
-													<td class="text-center jogador${je.id}">${je.jogador.nome}</td>
+													<td class="jogador${je.id}"> 
+														 <img src="${pageContext.request.contextPath}/static/quartashow/img/${je.jogador.posicao.imgName }" alt="${je.jogador.posicao.descricao}"/>
+														 ${je.jogador.nome}
+													</td>
 													<td> 
 														<c:forEach var="ce" items="${je.eventos}">
-															${ce.evento.descricao}
+															<img src="${pageContext.request.contextPath}/static/quartashow/img/${ce.evento.imgName}" alt="${ce.evento.descricao}" />
 														</c:forEach>
 													</td>													
 												</tr>

@@ -34,7 +34,7 @@
 							<c:forEach var="j" items="${time.jogadores}">
 								<tr>
 									<td class="text-muted" title="${j.id}"></td>
-									<td>${j.posicao.descricao}</td>
+									<td><img src="${pageContext.request.contextPath}/static/quartashow/img/${j.posicao.imgName }" alt="${j.posicao.descricao}"/></td>
 									<td>${j.nome}</td>
 									<td></td>
 								</tr>
