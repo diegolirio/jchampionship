@@ -80,11 +80,19 @@
 						        	</h2>
 						        </div>                        	
                         	</c:forEach>
+                        	<c:if test="${not empty usuario && not empty admin && admin}">
+						        <div class="col-lg-6">   
+						        	<br/>
+						        	<a href="${pageContext.request.contextPath}/edicao/system/${edicao.id}/jogos" class="btn btn-block btn-outline btn-success" >
+						        		Cadastrar Novo jogo 
+						        	</a> 
+						        </div>
+						    </c:if>                          	
                         </div>
                         <div class="panel-footer">
                             ...
                         </div>
-                    </div>
+                    </div> 
                     <!-- /.col-lg-4 -->
                 </div>	   
          </div> 

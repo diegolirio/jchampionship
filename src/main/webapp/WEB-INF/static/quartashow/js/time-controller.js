@@ -62,7 +62,8 @@ $(function() {
 			}
 		});		
 	});
-	
+
+	// utilizado em time-form.jsp	
 	$('.addJogador').click(function() {
 		
 		var timeId = form.find('input[name="id"]').val();
@@ -71,13 +72,29 @@ $(function() {
 		$.post(	'/jchampionship/time/system/'+timeId+'/post/add/jogador/'+jogadorId,
 				function(data, statusText, response) {
 					
-					alert('Time: ' + timeId + '\nJogador: ' + jogadorId);
-					alert('Add jogador tabela!!!');
+					window.location.reload();
+					//alert('Time: ' + timeId + '\nJogador: ' + jogadorId);
+					//alert('Add jogador tabela!!!');
 			
 		}).fail(function(data) {
-			alert(JSON.stringify(data));
+			alert(JSON.stringify(data)); 
 		});
 		
+	});
+	
+	// utilizado em time-form.jsp
+	$('.removeJogadorTime').click(function(e) {
+		e.preventDefault();
+		$.post( $(this).attr('href'), 
+				function(data, statusText, response) {
+					if(response.status == 200) {
+						window.location.reload();
+					} else {
+						alert('Erro:' + JSON.stringify(response));
+					}
+		}).fail(function(data) {
+			alert('Erro:' + JSON.stringify(data));
+		});
 	});
 	
 	

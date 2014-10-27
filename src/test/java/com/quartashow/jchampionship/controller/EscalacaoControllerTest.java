@@ -25,9 +25,12 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.quartashow.jchampionship.dao.CollectionEventosDao;
 import com.quartashow.jchampionship.dao.EscalacaoDao;
 import com.quartashow.jchampionship.dao.EventoDao;
+import com.quartashow.jchampionship.dao.JogadorDao;
 import com.quartashow.jchampionship.dao.JogadorEscaladoDao;
 import com.quartashow.jchampionship.dao.JogadorInfoEdicaoDao;
 import com.quartashow.jchampionship.dao.JogoDao;
+import com.quartashow.jchampionship.dao.TimeDao;
+import com.quartashow.jchampionship.model.CollectionEventos;
 import com.quartashow.jchampionship.model.Edicao;
 import com.quartashow.jchampionship.model.Escalacao;
 import com.quartashow.jchampionship.model.Evento;
@@ -64,7 +67,16 @@ public class EscalacaoControllerTest {
 	private CollectionEventosDao collectionEventosDao;
 
 	@Mock
-	private JogadorInfoEdicaoDao jogadorInfoEdicaoDao;	
+	private JogadorInfoEdicaoDao jogadorInfoEdicaoDao;
+
+	@Mock
+	private TimeDao timeDao;
+
+	@Mock
+	private JogadorDao jogadorDao;
+
+	@Mock
+	private CollectionEventosDao collectionEventoDao;	
 
 	@Before
 	public void setUp() throws Exception {
@@ -183,5 +195,92 @@ public class EscalacaoControllerTest {
 				.param("jogadorEscaladoId", "1"))
 			.andExpect(status().isCreated());
 	}
+	
+	@Test
+	public void testDeveRetornarPageSimpleFormAddJogadorEscaladoParaJogo() throws Exception {
+		Time time = new Time(1l, "Corinthians");
+		
+		Jogo jogo = new Jogo();
+		jogo.setId(1l);
+		
+		Escalacao escalacao = new Escalacao();
+		escalacao.setId(1l);
+		escalacao.setJogo(jogo);
+		
+		
+		Mockito.when(this.timeDao.get(Time.class, time.getId())).thenReturn(time);
+		Mockito.when(this.escalacaoDao.get(Escalacao.class, escalacao.getId())).thenReturn(escalacao);
+		
+		List<Jogador> jogadoresEscalados = new ArrayList<Jogador>();
+		Mockito.when(this.jogadorDao.getJogadoresNaoEscalados(escalacao.getJogo())).thenReturn(jogadoresEscalados );
+		
+		mockMvc.perform(get("/escalacao/"+escalacao.getId()+"/add/jogador/time/"+time.getId()))
+			.andExpect(status().isOk())
+			.andExpect(view().name("_base_simple"))
+			.andExpect(model().attributeExists("content_import", "time", "escalacao"));
+	}
+	
+	@Test
+	public void testDeveSalvarJogadorEscalado() throws Exception {
+		Time time = new Time(1l, "Corinthians");		
+		
+		Escalacao escalacao = new Escalacao();
+		escalacao.setId(1l);
+		
+		mockMvc.perform(post("/escalacao/"+escalacao.getId()+"/add/jogador/time/"+time.getId())
+				.param("jogadorId", "1"))
+			.andExpect(status().isCreated());
+	}	
+	
+	@Test
+	public void testDeveRetornarPageSimpleExcluirJogadorEscalado() throws Exception {
+		long jogadorEscaladoId = 1l;
+		JogadorEscalado jogadorEscalado = Mockito.mock(JogadorEscalado.class);
+		Mockito.when(this.jogadorEscaladoDao.get(JogadorEscalado.class, jogadorEscaladoId)).thenReturn(jogadorEscalado );
+		
+		mockMvc.perform(get("/escalacao/jogadorEscalado/delete/"+jogadorEscaladoId))
+			.andExpect(status().isOk())
+			.andExpect(view().name("_base_simple"))
+			.andExpect(model().attributeExists("content_import", "jogadorEscalado"))
+			.andExpect(model().attribute("content_import", "escalacao-jogadorescalado-delete"));
+	}
+	
+	@Test
+	public void testDeveExcluirJogadorEscalado() throws Exception {
+		long jogadorEscaladoId = 1l;
+		JogadorEscalado jogadorEscalado = Mockito.mock(JogadorEscalado.class);
+		Mockito.when(this.jogadorEscaladoDao.get(JogadorEscalado.class, jogadorEscaladoId)).thenReturn(jogadorEscalado );
+		
+		mockMvc.perform(post("/escalacao/jogadorEscalado/delete/"+jogadorEscaladoId))
+			.andExpect(status().isOk());
+	}	
+	
+	@Test
+	public void testDeveRetornarPageSimpleExcluirEventosJogadorEscalado() throws Exception {
+		long jogadorEscaladoId = 1l;
+		JogadorEscalado jogadorEscalado = Mockito.mock(JogadorEscalado.class);
+		Mockito.when(this.jogadorEscaladoDao.get(JogadorEscalado.class, jogadorEscaladoId)).thenReturn(jogadorEscalado );		
+		mockMvc.perform(get("/escalacao/jogadorEscalado/"+jogadorEscaladoId+"/eventos/delete"))
+			.andExpect(status().isOk())
+			.andExpect(view().name("_base_simple"))
+			.andExpect(model().attributeExists("content_import", "jogadorEscalado"));
+	}
+	
+	@Test
+	public void testDeveExcluirEventoDoJogadorEscalado() throws Exception {
+		long jogadorEscaladoId = 1l;
+		long collectionEventoId = 1; 
+		JogadorEscalado jogadorEscalado = Mockito.mock(JogadorEscalado.class);
+		Mockito.when(this.jogadorEscaladoDao.get(JogadorEscalado.class, jogadorEscaladoId)).thenReturn(jogadorEscalado );
+		
+		CollectionEventos collectionEvento = Mockito.mock(CollectionEventos.class);
+		Evento evento = Mockito.mock(Evento.class);
+		Mockito.when(collectionEvento.getEvento()).thenReturn(evento);  
+		Mockito.when(this.collectionEventoDao.get(CollectionEventos.class, collectionEventoId)).thenReturn(collectionEvento );
+		
+		mockMvc.perform(post("/escalacao/jogadorEscalado/"+jogadorEscaladoId+"/eventos/delete")
+				.param("collectionEventoId", collectionEventoId+""))
+			.andExpect(status().isOk());
+	}		
 	
 }

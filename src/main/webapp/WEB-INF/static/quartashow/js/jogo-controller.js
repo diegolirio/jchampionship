@@ -120,16 +120,18 @@ $(function() {
 	
 	$('#id_finalizar_jogo').click(function(e) {
 		e.preventDefault();
-		alert('Finalizar devera Setar o jogo para finalizado, e calcular a classificacao e artilharia!!!!');
-		$.post( $(this).attr('href'),
-				function(data, statusText, response) {
-					console.log(JSON.stringify(response));
-					//alert(JSON.stringify(response));
-					window.location.href = '/jchampionship' + response.getResponseHeader('Location');
-		}).fail(function(data) {
-			console.log(JSON.stringify(data));
-			alert(JSON.stringify(data));
-		});
+		var ok = confirm('Deveja Finalizar ?\nJogo sera finalizado, e calculo da classificacao e artilharia serao gerados !');
+		if (ok == true) {
+			$.post( $(this).attr('href'),
+					function(data, statusText, response) {
+						console.log(JSON.stringify(response));
+						//alert(JSON.stringify(response));
+						window.location.href = '/jchampionship' + response.getResponseHeader('Location');
+			}).fail(function(data) {
+				console.log(JSON.stringify(data));
+				alert(JSON.stringify(data));
+			});
+		}
 	});
 	
 });

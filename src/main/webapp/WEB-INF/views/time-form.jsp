@@ -3,7 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 	<form id="form" action="${pageContext.request.contextPath}/time/post?page=N" method="post">
-		<h1 class="text-info"> Time</h1>
+		<h1 class="text-info"> ${time.nome}</h1>
 		
 		<input type="hidden" value="${time.id}" name="id">
 		
@@ -63,7 +63,7 @@
 									<tr>
 										<td>${j.posicao.descricao}</td>
 										<td>${j.nome}</td>
-										<td>Excluir</td>
+										<td><a href="${pageContext.request.contextPath}/time/system/${time.id}/remove/jogador/${j.id}" class="removeJogadorTime"><span class="text-danger">excluir</span></a></td>
 									</tr>									
 								</c:forEach>
 							</tbody>								

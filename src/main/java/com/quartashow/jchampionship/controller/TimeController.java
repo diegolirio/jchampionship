@@ -1,6 +1,5 @@
 package com.quartashow.jchampionship.controller;
 
-import java.io.IOException;
 import java.net.URI;
 
 import javax.validation.Valid;
@@ -91,12 +90,35 @@ public class TimeController {
 			time.getJogadores().add(jogador);
 			this.timeDao.update(time);
 			HttpHeaders headers = new HttpHeaders();
-			headers.setLocation(URI.create("/time/system/"+jogador .getId()));			
+			headers.setLocation(URI.create("/time/system/"+jogador.getId()));			
 			return new ResponseEntity<String>(new ObjectMapper().writeValueAsString(jogador), headers , HttpStatus.CREATED);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
+	@RequestMapping(value="/system/{timeId}/remove/jogador/{jogadorId}", method=RequestMethod.POST, produces="application/json")
+	public ResponseEntity<String> removeJogadorTime(@PathVariable("timeId") long timeId, @PathVariable("jogadorId") long jogadorId) {
+		try {
+			Time time = this.timeDao.get(Time.class, timeId);
+			Jogador jogador = this.jogadorDao.get(Jogador.class, jogadorId);
+			for (int i = 0; i <= time.getJogadores().size()-1; i++) {
+				if(time.getJogadores().get(i).getId() == jogador.getId()) {
+					System.out.println("REMOVE: " + i);
+					System.out.println("QTDE: " + time.getJogadores().size());
+					time.getJogadores().remove(i);
+					System.out.println("QTDE: " + time.getJogadores().size());
+				}
+			}			
+			this.timeDao.update(time);
+			HttpHeaders headers = new HttpHeaders();
+			headers.setLocation(URI.create("/time/system/"+jogador.getId()));			
+			return new ResponseEntity<String>(headers , HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+		
 }

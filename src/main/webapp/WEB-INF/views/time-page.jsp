@@ -39,7 +39,7 @@
 									<td></td>
 								</tr>
 							</c:forEach>
-							<c:if test="${fn:length(time.jogadores) <= 0 && true}">
+							<c:if test="${fn:length(time.jogadores) <= 0 && not empty usuario && not empty admin && admin}">
 								<h3>Não há jogadores para este time 
 								<c:if test="${not empty usuario && not empty admin && admin}">
 									<a href="${pageContext.request.contextPath}/time/system/${time.id}">cadastre agora</a>

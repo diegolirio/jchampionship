@@ -16,6 +16,8 @@ public class CollectionEventos {
 	
 	@ManyToOne
 	private Evento evento;
+	
+	private int quantidade;
 
 	public long getId() {
 		return id;
@@ -39,6 +41,14 @@ public class CollectionEventos {
 
 	public void setEvento(Evento evento) {
 		this.evento = evento;
+	}
+
+	public int getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(int quantidade) {
+		this.quantidade = quantidade;
 	}
 	
 	

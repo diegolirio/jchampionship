@@ -25,7 +25,7 @@
 						</thead>
 						<tbody id="id_tbody">
 							<c:forEach var="jie" items="${edicao.jogadoresInfoEdicao}" varStatus="status">
-								<c:if test="${jie.gols > 0}">
+<%-- 								<c:if test="${jie.gols > 0}"> --%>
 									<tr ${status.count == 1 ? 'style="font-size:25px;"' : '' } >
 										<td>${jie.jogador.nome}</td>
 										<td><small>${jie.jogos}</small></td>
@@ -33,7 +33,7 @@
 										<td><small>${jie.cartaoVermelho}</small></td>
 										<td>${jie.gols}</td> 
 									</tr>
-								</c:if>
+<%-- 								</c:if> --%>
 							</c:forEach>
 						</tbody>								
 					</table>    

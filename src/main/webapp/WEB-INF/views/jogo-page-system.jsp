@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 		<h1 class="page-header col-md-12"> 
@@ -48,7 +49,7 @@
 										<c:forEach var="je" items="${escalacao.jogadoresEscalados}">
 											<c:if test="${escalacao.jogo.timeA.id == je.time.id}">
 												<tr>
-													<td>excluir</td>
+													<td><a href="${pageContext.request.contextPath}/escalacao/jogadorEscalado/delete/${je.id}" onclick="showWindowPopup(this.href, 400, 600); return false;" > <span class="text-danger">excluir</span></a></td>
 													<td class="jogador${je.id}"> 
 														 <img src="${pageContext.request.contextPath}/static/quartashow/img/${je.jogador.posicao.imgName }" alt="${je.jogador.posicao.descricao}"/>
 														 ${je.jogador.nome}
@@ -56,10 +57,12 @@
 													<td> 
 														<c:forEach var="ce" items="${je.eventos}">
 															<img src="${pageContext.request.contextPath}/static/quartashow/img/${ce.evento.imgName}" alt="${ce.evento.descricao}" />
-															<c:if test="${jogo.status.id == 2 && not empty usuario && not empty admin && admin}"> 
-																<img src="${pageContext.request.contextPath}/static/quartashow/img/lixeira.png" alt="Excluir" title="Excluir Gol, Cartão amarelo ou Cartão vermelho" />
-															</c:if>
 														</c:forEach> 
+														<c:if test="${fn:length(je.eventos) > 0 && jogo.status.id == 2 && not empty usuario && not empty admin && admin}">
+															<a href="${pageContext.request.contextPath}/escalacao/jogadorEscalado/${je.id}/eventos/delete" onclick="showWindowPopup(this.href, 400, 600); return false;" > 
+																<img src="${pageContext.request.contextPath}/static/quartashow/img/lixeira.png" alt="Excluir" title="Excluir Gol, Cartão amarelo ou Cartão vermelho" class="pull-right" />
+															</a>
+														</c:if>
 													</td>
 												</tr>
 											</c:if>
@@ -67,7 +70,7 @@
 									</tbody>								
 								</table>	        
 								<c:if test="${jogo.status.id == 2 && not empty usuario && not empty admin && admin}"> 
-									<a href="${pageContext.request.contextPath}/escalacao/add/jogador/time/${jogo.timeA.id}/jogo/${jogo.id}" class="btn btn-outline btn-warning btn-xs btn-block" id="id_add_jogador_escalado_timeA">adicionar jogador para ${jogo.timeA.nome}</a>
+									<a href="${pageContext.request.contextPath}/escalacao/${escalacao.id}/add/jogador/time/${jogo.timeA.id}" class="btn btn-outline btn-warning btn-xs btn-block" id="id_add_jogador_escalado_timeA" onclick="showWindowPopup(this.href, 400, 600); return false;">adicionar jogador para ${jogo.timeA.nome}</a>
 								</c:if>            	
 	                    	</div>
 
@@ -84,7 +87,7 @@
 										<c:forEach var="je" items="${escalacao.jogadoresEscalados}">
 											<c:if test="${escalacao.jogo.timeB.id == je.time.id}">
 												<tr>
-												    <td>excluir</td>
+												    <td><a href="${pageContext.request.contextPath}/escalacao/jogadorEscalado/delete/${je.id}" onclick="showWindowPopup(this.href, 400, 600); return false;" > <span class="text-danger">excluir</span></a></td>
 													<td class="jogador${je.id}"> 
 														 <img src="${pageContext.request.contextPath}/static/quartashow/img/${je.jogador.posicao.imgName }" alt="${je.jogador.posicao.descricao}"/>
 														 ${je.jogador.nome}
@@ -93,7 +96,9 @@
 														<c:forEach var="ce" items="${je.eventos}">
 															<img src="${pageContext.request.contextPath}/static/quartashow/img/${ce.evento.imgName}" alt="${ce.evento.descricao}" />
 															<c:if test="${jogo.status.id == 2 && not empty usuario && not empty admin && admin}">
-																<img src="${pageContext.request.contextPath}/static/quartashow/img/lixeira.png" alt="Excluir" title="Excluir Gol, Cartão amarelo ou Cartão vermelho" />
+																<a href="${pageContext.request.contextPath}/escalacao/jogadorEscalado/${je.id}/eventos/delete" onclick="showWindowPopup(this.href, 400, 600); return false;" >
+																	<img src="${pageContext.request.contextPath}/static/quartashow/img/lixeira.png" alt="Excluir" title="Excluir Gol, Cartão amarelo ou Cartão vermelho" class="pull-right"/>
+																</a>
 															</c:if>
 														</c:forEach>
 													</td>													
@@ -103,7 +108,7 @@
 									</tbody>								
 								</table>
 								<c:if test="${jogo.status.id == 2 && not empty usuario && not empty admin && admin}"> 
-									<a href="${pageContext.request.contextPath}/escalacao/add/jogador/time/${jogo.timeB.id}/jogo/${jogo.id}" class="btn btn-outline btn-warning btn-xs btn-block" id="id_add_jogador_escalado_timeB">adicionar jogador para ${jogo.timeB.nome}</a>
+									<a href="${pageContext.request.contextPath}/escalacao/${escalacao.id}/add/jogador/time/${jogo.timeB.id}" class="btn btn-outline btn-warning btn-xs btn-block" id="id_add_jogador_escalado_timeB" onclick="showWindowPopup(this.href, 400, 600); return false;">adicionar jogador para ${jogo.timeB.nome}</a>
 								</c:if>									                    	
 	                    	</div>
 	                    	

@@ -26,6 +26,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.quartashow.jchampionship.dao.ClassificacaoDao;
+import com.quartashow.jchampionship.dao.EdicaoDao;
 import com.quartashow.jchampionship.dao.EscalacaoDao;
 import com.quartashow.jchampionship.dao.JogadorInfoEdicaoDao;
 import com.quartashow.jchampionship.dao.JogoDao;
@@ -64,6 +65,9 @@ public class JogoControllerTest {
 	@Mock
 	private JogadorInfoEdicaoDao jogadorInfoEdicaoDao;
 
+	@Mock
+	private EdicaoDao edicaoDao;
+
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
@@ -81,10 +85,12 @@ public class JogoControllerTest {
 				.param("grupo.id", "1")
 				.param("local.id", "1")
 				.param("timeA.id", "1")
-				.param("timeB.id", "1")
+				.param("timeB.id", "2")
 				.param("harbito.id", "1"))
 			.andExpect(MockMvcResultMatchers.status().isCreated());
 	}
+	
+	// TODO: criar test para validar time contra ele mesmo !!!
 	
 	@Test  
 	public void deveRetornarPaginaConfirmacaoExclusaoDoJogo() throws Exception {
@@ -286,5 +292,6 @@ public class JogoControllerTest {
 	// TODO: testParaVerificarAtualizacaoJogadorInfoEdicaoDosEventosDoJogo
 	
 	// TODO: test da ordenacao da classificacao (Colocacao)
+	
 	
 }

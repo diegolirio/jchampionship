@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.quartashow.jchampionship.controller.common.ValidationResponse;
 import com.quartashow.jchampionship.dao.ClassificacaoDao;
+import com.quartashow.jchampionship.dao.EdicaoDao;
 import com.quartashow.jchampionship.dao.EscalacaoDao;
 import com.quartashow.jchampionship.dao.JogadorEscaladoDao;
 import com.quartashow.jchampionship.dao.JogadorInfoEdicaoDao;
@@ -53,6 +54,9 @@ public class JogoController {
 
 	@Autowired
 	private JogadorInfoEdicaoDao jogadorInfoEdicaoDao;
+
+	@Autowired
+	private EdicaoDao edicaoDao;
 
 	@RequestMapping(value="/post", method=RequestMethod.POST, produces="application/json")
 	public ResponseEntity<String> post(@Valid Jogo jogo, BindingResult result) {
@@ -216,8 +220,8 @@ public class JogoController {
 			Jogo jogo = this.jogoDao.get(Jogo.class, id);
 			this.calculaClassificacao(jogo);
 			List<Classificacao> classificacoes = this.ordenaClassificacao(jogo);
-			jogo.setStatus(new Status(3));
 			this.atualizaJogadorinfoEdicao(jogo);
+			jogo.setStatus(new Status(3));
 			this.jogoDao.update(jogo);		
 			HttpHeaders headers = new HttpHeaders();
 			headers.setLocation(URI.create("/edicao/"+jogo.getGrupo().getEdicao().getId()));
@@ -230,13 +234,21 @@ public class JogoController {
 
 	private void atualizaJogadorinfoEdicao(Jogo jogo) {
 		Escalacao escalacao = this.escalacaoDao.get(jogo);
-		List<JogadorInfoEdicao> jogadoresInfoEdicao = this.jogadorInfoEdicaoDao.getList(JogadorInfoEdicao.class);
+		
+		// Salva os Jogadores escalados que nao existem na Info Edicao! 
+		for (JogadorEscalado jogadorEscalado : escalacao.getJogadoresEscalados()) {
+			if(this.jogadorInfoEdicaoDao.exists(jogadorEscalado.getJogador(), jogo.getGrupo().getEdicao()) == false) 
+				this.jogadorInfoEdicaoDao.save(new JogadorInfoEdicao(jogadorEscalado.getJogador(), jogo.getGrupo().getEdicao()));
+		}
+		
+		// Pega os jogadores da Info Edicao e atualiza as informacoes...
+		List<JogadorInfoEdicao> jogadoresInfoEdicao = this.jogadorInfoEdicaoDao.getJogadorInfoEdicaoByEdicao(jogo.getGrupo().getEdicao());
 		for (JogadorInfoEdicao jogadorInfoEdicao : jogadoresInfoEdicao) { // jogadores Info
 		
 			List<JogadorEscalado> jogadoresEscalados = escalacao.getJogadoresEscalados();
 			for (JogadorEscalado jogadorEscalado : jogadoresEscalados) { // Jogadores Escalados
 				
-				if(jogadorEscalado.getId() == jogadorInfoEdicao.getId()) { // se jogadorEscalado == jogadorInfoEdicao -> atualiza
+				if(jogadorEscalado.getJogador().getId() == jogadorInfoEdicao.getJogador().getId()) { // se jogadorEscalado == jogadorInfoEdicao -> atualiza
 					
 					jogadorInfoEdicao.setJogos(jogadorInfoEdicao.getJogos()+1);
 					for (CollectionEventos evento : jogadorEscalado.getEventos()) {
@@ -257,5 +269,6 @@ public class JogoController {
 		}
 		
 	}
+	
 	
 }
