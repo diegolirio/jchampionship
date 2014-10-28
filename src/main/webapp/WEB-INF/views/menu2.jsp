@@ -220,7 +220,7 @@
 	                    <i class="fa fa-user fa-fw"></i> ${usuario.nome } <i class="fa fa-caret-down"></i>
 	                </a>
 	                <ul class="dropdown-menu dropdown-user">
-	                    	<li><a href="#"><i class="fa fa-user fa-fw"></i> Perfil</a></li>
+	                    	<li><a href="${pageContext.request.contextPath}/usuario/system/perfil"><i class="fa fa-user fa-fw"></i> Perfil</a></li>
 							<!-- <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a></li> -->
 	                    	<li class="divider"></li>
 	                    	<li><a href="${pageContext.request.contextPath}/usuario/logout"><i class="fa fa-sign-out fa-fw"></i> Sair</a></li>

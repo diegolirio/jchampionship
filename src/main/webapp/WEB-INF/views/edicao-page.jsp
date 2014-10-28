@@ -65,18 +65,31 @@
 						        <div class="col-lg-6">   
 						        	<h2 class="text-info">
 						        		<a href="${pageContext.request.contextPath}/jogo/${j.id}">
-						        			${j.timeA.nome}
-						        			<c:if test="${j.status.id != 1}">
-						        				<span class="text-danger">${j.resultadoA}</span>
-						        			</c:if>  
-						        			<small>X</small>
-						        			<c:if test="${j.status.id != 1}"> 
-						        				<span class="text-danger">${j.resultadoB}</span>
-						        			</c:if>
-						        			${j.timeB.nome} 
+							        		<table class="table">
+							        			<tbody>
+							        				<tr>
+							        					<td>${j.timeA.nome}</td>
+							        					<td>
+							        						<c:if test="${j.status.id != 1}">
+							        							<span class="text-danger">${j.resultadoA}</span>
+							        						</c:if>
+														</td>	
+														<td><span class="text-muted">X</span></td>
+														<td>				
+										        			<c:if test="${j.status.id != 1}"> 
+										        				<span class="text-danger">${j.resultadoB}</span>
+										        			</c:if>			
+										        		</td>
+										        		<td>${j.timeB.nome}</td>											        					
+							        				</tr>
+							        			</tbody>
+							        			<tfoot>
+							        				<tr>
+							        					<td colspan="5"><small> <img src="${pageContext.request.contextPath}/static/quartashow/img/${j.status.imgName}"/> (${j.status.descricao}) - ${j.local.descricao} </small></td>
+							        				</tr>
+							        		</table>
 						        		</a>
 						        		<br/>
-					        			<small> <img src="${pageContext.request.contextPath}/static/quartashow/img/${j.status.imgName}"/> (${j.status.descricao}) - ${j.local.descricao} </small>
 						        	</h2>
 						        </div>                        	
                         	</c:forEach>

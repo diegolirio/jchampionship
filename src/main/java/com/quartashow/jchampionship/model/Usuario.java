@@ -39,6 +39,8 @@ public class Usuario {
     @JsonBackReference
 	@ManyToMany(mappedBy="usuarios", fetch=FetchType.EAGER)
 	private List<Campeonato> campeonatos;
+    
+    private boolean superUsuario = false;
 
 	public Usuario() {}
 	
@@ -93,6 +95,14 @@ public class Usuario {
 
 	public void setCampeonatos(List<Campeonato> campeonatos) {
 		this.campeonatos = campeonatos;
+	}
+	
+	public boolean isSuperUsuario() {
+		return superUsuario;
+	}
+
+	public void setSuperUsuario(boolean superUsuario) {
+		this.superUsuario = superUsuario;
 	}
 
 	@Override

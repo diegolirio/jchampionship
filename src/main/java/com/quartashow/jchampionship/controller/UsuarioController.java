@@ -78,4 +78,11 @@ public class UsuarioController {
 		return "redirect:/";
 	}	
 	
+	@RequestMapping(value="/system/perfil", method=RequestMethod.GET)
+	public ModelAndView pageMeuPerfil() {
+		ModelAndView mv = new ModelAndView("_base2");
+		mv.addObject("content_import", "usuario-edit-perfil");
+		return mv;
+	}
+	
 }

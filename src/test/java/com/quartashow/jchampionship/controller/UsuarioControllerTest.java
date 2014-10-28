@@ -3,6 +3,7 @@ package com.quartashow.jchampionship.controller;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -59,6 +60,15 @@ public class UsuarioControllerTest {
 //			.andExpect(status().isOk());
 //		
 //		Mockito.verify(usuarioDao.login(usuario));
+	}
+	
+	@Test
+	public void testDeveRetornarPaginaPerfilDoUsuario() throws Exception {
+		mockMvc.perform(get("/usuario/system/perfil"))
+			.andExpect(status().isOk())
+			.andExpect(view().name("_base2"))
+			.andExpect(model().attributeExists("content_import"))
+			.andExpect(model().attribute("content_import", "usuario-edit-perfil"));
 	}
 
 }

@@ -73,6 +73,7 @@ public class CampeonatoController {
 		diegolirio.setEmail("diegolirio.dl@gmail.com");
 		diegolirio.setNome("Diego Lirio");
 		diegolirio.setSenha("198586");
+		diegolirio.setSuperUsuario(true);
 		this.usuarioDao.save(diegolirio);
 		
 		Usuario test = new Usuario();
