@@ -44,8 +44,8 @@ public class UsuarioController {
 	@RequestMapping(value="/login", method=RequestMethod.POST, produces="application/json")
 	public ResponseEntity<String> login(@Valid Usuario usuario, BindingResult result, HttpSession session) {
 		try {
-			if(result.hasErrors()) {
-				ValidationResponse validationResponse = new ValidationResponseHelper().fieldsErrorsToValidationResponse(result);
+			if(result.hasFieldErrors("email")) {
+				ValidationResponse validationResponse = new ValidationResponseHelper().fieldsErrorsToValidationResponse(result.getFieldError("email"));
 				return new ResponseEntity<String>(new ObjectMapper().writeValueAsString(validationResponse), HttpStatus.UNAUTHORIZED);
 			}
 			if(this.usuarioDao.login(usuario) == true) {

@@ -15,7 +15,7 @@
 				<li><i class="glyphicon glyphicon-ok text-success"></i> <a href="${pageContext.request.contextPath}/edicao/nova/${edicao.id}">Edição</a></li>
 				<li><i class="glyphicon glyphicon-ok text-success"></i> <a href="${pageContext.request.contextPath}/edicao/system/${edicao.id}/grupos">Grupos</a></li>
 				<li><i class="glyphicon glyphicon-ok text-success"></i> <a href="${pageContext.request.contextPath}/edicao/system/${edicao.id}/times">Times</a> </li>
-				<li class="active"><i class="glyphicon glyphicon-star text-warning"></i> Jogos</li>
+				<li class="text-warning" style="font-size:30px;"><i class="glyphicon glyphicon-star"></i> Jogos</li>
 				<li class="active"><i class="fa fa-edit"></i> Escalação</li>
 				<li class="active"><i class="fa fa-edit"></i> Visão Geral</li>		
 			</ol>
