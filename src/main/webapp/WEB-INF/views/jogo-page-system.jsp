@@ -66,7 +66,7 @@
 										<tbody id="id_tbody">
 											<c:forEach var="je" items="${escalacao.jogadoresEscalados}">
 												<c:if test="${escalacao.jogo.timeA.id == je.time.id}">
-													<tr class="success">
+													<tr class="${jogo.resultadoA > jogo.resultadoB ? 'success' : 'danger'}" >
 														<td><a href="${pageContext.request.contextPath}/escalacao/jogadorEscalado/delete/${je.id}" onclick="showWindowPopup(this.href, 400, 600); return false;" > <span class="text-danger">excluir</span></a></td>
 														<td><img alt="foto" src="${je.jogador.uriFoto}" title="${je.jogador.nome}" class="img-responsive img-circle" height="30" width="30"/></td>
 														<td class="jogador${je.id}"> 
@@ -102,10 +102,10 @@
 												<td></td>
 											</tr> 
 										</thead>								
-										<tbody id="id_tbody">
+										<tbody id="id_tbody">     
 											<c:forEach var="je" items="${escalacao.jogadoresEscalados}">
 												<c:if test="${escalacao.jogo.timeB.id == je.time.id}">
-													<tr class="danger">
+													<tr class="${jogo.resultadoA < jogo.resultadoB ? 'success' : 'danger'}" >
 													    <td><a href="${pageContext.request.contextPath}/escalacao/jogadorEscalado/delete/${je.id}" onclick="showWindowPopup(this.href, 400, 600); return false;" > <span class="text-danger">excluir</span></a></td>
 													    <td><img alt="foto" src="${je.jogador.uriFoto}" title="${je.jogador.nome}" class="img-responsive img-circle" height="30" width="30"/></td>
 														<td class="jogador${je.id}"> 
