@@ -14,40 +14,41 @@
 	                </div>
 	                <div class="panel-body">
 	                    
-	                    <!--  Table -->
-						<table class="table table-striped table-hover well">
-							<thead>
-								<tr class="text-danger">
-									<td >Col</td>
-									<td >Time</td>
-									<td >J</td>
-									<td >V</td>
-									<td >E</td>
-									<td >D</td>
-									<td >GP</td>
-									<td >GC</td>
-									<td >SG</td>
-									<td >Pontos</td>
-								</tr>
-							</thead>
-							<tbody id="id_tbody">
-								<c:forEach var="c" items="${g.classificacoes}">
-									<tr class="">
-										<td title="Colocacao" class="text-info">${c.colocacao}º</td>
-										<td ><a href="${pageContext.request.contextPath}/time/${c.time.id}">${c.time.nome}</a></td>
-										<td >${c.jogos}</td>
-										<td >${c.vitorias}</td>
-										<td >${c.empates}</td>
-										<td >${c.derrotas}</td>
-										<td >${c.golsPro}</td>
-										<td >${c.golsContra}</td>
-										<td >${c.golsPro - c.golsContra}</td>										
-										<td >${c.pontos}</td>
-									</tr>									
-								</c:forEach>
-							</tbody>								
-						</table>    
-						
+	                    <div class="table-responsive">
+		                    <!--  Table -->
+							<table class="table table-striped table-hover well">
+								<thead>
+									<tr class="text-danger">
+										<td >Col</td>
+										<td >Time</td>
+										<td >J</td>
+										<td >V</td>
+										<td >E</td>
+										<td >D</td>
+										<td >GP</td>
+										<td >GC</td>
+										<td >SG</td>
+										<td >Pontos</td>
+									</tr>
+								</thead>
+								<tbody id="id_tbody">
+									<c:forEach var="c" items="${g.classificacoes}">
+										<tr class="">
+											<td title="Colocacao" class="text-info">${c.colocacao}º</td>
+											<td ><a href="${pageContext.request.contextPath}/time/${c.time.id}">${c.time.nome}</a></td>
+											<td >${c.jogos}</td>
+											<td >${c.vitorias}</td>
+											<td >${c.empates}</td>
+											<td >${c.derrotas}</td>
+											<td >${c.golsPro}</td>
+											<td >${c.golsContra}</td>
+											<td >${c.golsPro - c.golsContra}</td>										
+											<td >${c.pontos}</td> 
+										</tr>									
+									</c:forEach>
+								</tbody>								
+							</table>    
+						</div>						
 	                </div>
 	            </div>
 	        </div>
@@ -63,34 +64,37 @@
                         <div class="panel-body">
                         	<c:forEach var="j" items="${g.jogos}">
 						        <div class="col-lg-6">   
-						        	<h2 class="text-info">
-						        		<a href="${pageContext.request.contextPath}/jogo/${j.id}">
-							        		<table class="table">
-							        			<tbody>
-							        				<tr>
-							        					<td>${j.timeA.nome}</td>
-							        					<td>
-							        						<c:if test="${j.status.id != 1}">
-							        							<span class="text-danger">${j.resultadoA}</span>
-							        						</c:if>
-														</td>	
-														<td><span class="text-muted">X</span></td>
-														<td>				
-										        			<c:if test="${j.status.id != 1}"> 
-										        				<span class="text-danger">${j.resultadoB}</span>
-										        			</c:if>			
-										        		</td>
-										        		<td>${j.timeB.nome}</td>											        					
-							        				</tr>
-							        			</tbody>
-							        			<tfoot>
-							        				<tr>
-							        					<td colspan="5"><small> <img src="${pageContext.request.contextPath}/static/quartashow/img/${j.status.imgName}"/> (${j.status.descricao}) - ${j.local.descricao} </small></td>
-							        				</tr>
-							        		</table>
-						        		</a>
+						        	<h3 class="text-info">
+						        		<div class="table-responsive">
+						        			<a href="${pageContext.request.contextPath}/jogo/${j.id}">
+								        		<table class="table well">
+								        			<tbody>
+								        				<tr>
+								        					<td>${j.timeA.nome}</td>
+								        					<td>
+								        						<c:if test="${j.status.id != 1}">
+								        							<span class="text-danger">${j.resultadoA}</span>
+								        						</c:if>
+															</td>	
+															<td><span class="text-muted">X</span></td>
+															<td>				
+											        			<c:if test="${j.status.id != 1}"> 
+											        				<span class="text-danger">${j.resultadoB}</span>
+											        			</c:if>			
+											        		</td>
+											        		<td>${j.timeB.nome}</td>											        					
+								        				</tr>
+								        			</tbody>
+								        			<tfoot>
+								        				<tr>
+								        					<td colspan="5"><small> <img src="${pageContext.request.contextPath}/static/quartashow/img/${j.status.imgName}"/> (${j.status.descricao}) - ${j.local.descricao} </small></td>
+								        				</tr>
+								        		</table>
+								        	</a>
+								        </div>   
+						        		
 						        		<br/>
-						        	</h2>
+						        	</h3>
 						        </div>                        	
                         	</c:forEach>
                         	<c:if test="${not empty usuario && not empty admin && admin}">

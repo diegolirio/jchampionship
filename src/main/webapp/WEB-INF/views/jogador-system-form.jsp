@@ -21,6 +21,8 @@
 			</c:forEach>
 		</select>
 	</div>
+	
+	<input type="hidden" name="uriFoto" value="${pageContext.request.contextPath}/static/quartashow/img/jogadores/jogador_no_photo.png"> 
  
 	<br/>
 		

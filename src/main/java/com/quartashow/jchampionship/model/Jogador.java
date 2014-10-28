@@ -28,6 +28,8 @@ public class Jogador {
 	@NotNull
 	@ManyToOne
 	private Posicao posicao;
+	
+	private String uriFoto;
 
 	public Jogador() {}
 	
@@ -66,6 +68,14 @@ public class Jogador {
 
 	public void setPosicao(Posicao posicao) {
 		this.posicao = posicao;
+	}
+	
+	public String getUriFoto() {
+		return uriFoto;
+	}
+
+	public void setUriFoto(String uriFoto) {
+		this.uriFoto = uriFoto;
 	}
 
 	@Override

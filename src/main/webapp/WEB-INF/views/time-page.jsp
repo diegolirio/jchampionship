@@ -21,7 +21,7 @@
 			</div>
 			<div class="panel-body">
 				<div class="table-responsive">
-					<table class="table table-striped table-bordered table-hover">
+					<table class="table table-striped table-hover">
 						<thead class="text-danger">
 							<tr>
 								<th class="text-muted">#</th>
@@ -33,9 +33,13 @@
 						<tbody>
 							<c:forEach var="j" items="${time.jogadores}">
 								<tr>
-									<td class="text-muted" title="${j.id}"></td>
+									<td class="text-muted"><img alt="foto" src="${j.uriFoto}" class="img-responsive img-circle" height="30" width="30"/> </td>
 									<td><img src="${pageContext.request.contextPath}/static/quartashow/img/${j.posicao.imgName }" alt="${j.posicao.descricao}"/></td>
-									<td>${j.nome}</td>
+									<td>
+										<h5><a href="javascript:undefined">
+											${j.nome}
+										</a></h5>
+									</td>
 									<td></td>
 								</tr>
 							</c:forEach>
@@ -51,7 +55,7 @@
 				</div>
 			</div>
 			<div class="panel-footer">
-				Panel Footer
+				Sujeito a Alterações...
 			</div>
 		</div>
 	</div>					

@@ -73,6 +73,7 @@ public class CampeonatoController {
 		diegolirio.setEmail("diegolirio.dl@gmail.com");
 		diegolirio.setNome("Diego Lirio");
 		diegolirio.setSenha("198586");
+		diegolirio.setUriImage("/jchampionship/static/quartashow/img/usuario/profile-user_fake.png");
 		diegolirio.setSuperUsuario(true);
 		this.usuarioDao.save(diegolirio);
 		
@@ -80,6 +81,7 @@ public class CampeonatoController {
 		test.setEmail("test@test.com");
 		test.setNome("Fulano");
 		test.setSenha("123456");
+		test.setUriImage("/jchampionship/static/quartashow/img/usuario/profile-user_fake.png");
 		this.usuarioDao.save(test);		
 		
 		// campeonato

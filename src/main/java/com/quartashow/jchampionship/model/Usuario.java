@@ -42,6 +42,8 @@ public class Usuario {
     
     private boolean superUsuario = false;
 
+    private String uriImage;
+    
 	public Usuario() {}
 	
 	public Usuario(String email, String senha) {
@@ -103,6 +105,13 @@ public class Usuario {
 
 	public void setSuperUsuario(boolean superUsuario) {
 		this.superUsuario = superUsuario;
+	}
+	public String getUriImage() {
+		return uriImage;
+	}
+
+	public void setUriImage(String uriImage) {
+		this.uriImage = uriImage;
 	}
 
 	@Override

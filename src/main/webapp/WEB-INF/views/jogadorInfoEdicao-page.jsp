@@ -26,8 +26,13 @@
 						<tbody id="id_tbody">
 							<c:forEach var="jie" items="${edicao.jogadoresInfoEdicao}" varStatus="status">
 <%-- 								<c:if test="${jie.gols > 0}"> --%>
-									<tr ${status.count == 1 ? 'style="font-size:25px;"' : '' } >
-										<td>${jie.jogador.nome}</td>
+									<tr ${status.count == 1 ? 'style="font-size:25px;"' : '' } >  
+										<td>
+											<a href="javascript:undefined" title="${jie.jogador.nome}">
+												<img alt="foto" src="${jie.jogador.uriFoto}" class="img-circle" height="${status.count == 1 ? 50 : 30 }" width="${status.count == 1 ? 50 : 30 }"/> 
+												${jie.jogador.nome}
+											</a>
+										</td>
 										<td><small>${jie.jogos}</small></td>
 										<td><small>${jie.cartaoAmarelo}</small></td>
 										<td><small>${jie.cartaoVermelho}</small></td>
