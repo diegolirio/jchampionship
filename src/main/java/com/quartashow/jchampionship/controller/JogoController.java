@@ -270,13 +270,15 @@ public class JogoController {
 		
 	}
 
-	@RequestMapping(value="/jogo/{id}/retornStatus", method=RequestMethod.POST, produces="application/json")
+	@RequestMapping(value="/{id}/retornStatus", method=RequestMethod.POST, produces="application/json")
 	public ResponseEntity<String> returnCalculadoStatusFinalizadoEmAndamento(@PathVariable("id") long id) {
 		try {
 			Jogo jogo = this.jogoDao.get(Jogo.class, id);
 			this.retornaCalculoJogadorInfoEdicao(jogo);
 			this.retornaCalculaClassificacao(jogo);
 			this.ordenaClassificacao(jogo);
+			jogo.setStatus(new Status(2));
+			this.jogoDao.update(jogo);
 			return new ResponseEntity<String>(HttpStatus.OK);
 		} catch(Exception e) {
 			e.printStackTrace();

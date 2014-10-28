@@ -138,6 +138,7 @@ $(function() {
 		e.preventDefault();
 		$.post( $(this).attr('href'), 
 				function(data, statusText, response) {
+					alert(response.status); 
 					if(response.status == 200) {
 						window.location.reload();
 					} else {

@@ -211,7 +211,7 @@
             </li>
             -->
             <c:if test="${empty usuario}">
-            	<li><a href="${pageContext.request.contextPath}/usuario/login"><i class="fa fa-sign-out fa-fw"></i> Entrar</a></li>
+            	<li><a href="${pageContext.request.contextPath}/usuario/login?next="><i class="fa fa-sign-out fa-fw"></i> Entrar</a></li>
             </c:if>
             <!-- /.dropdown -->
             <c:if test="${not empty usuario}">

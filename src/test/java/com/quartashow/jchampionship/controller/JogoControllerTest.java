@@ -295,8 +295,117 @@ public class JogoControllerTest {
 	
 	@Test
 	public void testDeveRetornarStatusDoJogoDeFinalizadoParaEmAndamentoECalculo() throws Exception {
-		long jogoId = 1l;
-		mockMvc.perform(post("/jogo/"+jogoId+"/retornStatus"))
+		
+		// TODO: Criar Build da Edicao vinculado com Grupo, jogo , jogadores info e escalado, com eventos 
+		
+		Edicao edicao = new Edicao(1l);
+		
+		Time timeA = new Time(1l, "Corinthians");
+		Time timeB = new Time(2l, "Vasco");
+		List<Classificacao> classificacoes = new ArrayList<Classificacao>();
+		Classificacao classificacaoA = new Classificacao(1, timeA);
+		Classificacao classificacaoB = new Classificacao(2, timeB);
+		classificacoes.add(classificacaoA);
+		classificacoes.add(classificacaoB);
+		
+		Jogo jogo = new Jogo();
+		jogo.setId(1l);
+		jogo.setTimeA(timeA);
+		jogo.setTimeB(timeB);
+		jogo.setGrupo(new Grupo(1l, edicao, classificacoes));
+		jogo.setResultadoA(3);
+		jogo.setResultadoB(1);
+		jogo.setStatus(new Status(2l, "Em andamento"));
+		Mockito.when(this.jogoDao.get(Jogo.class, 1l)).thenReturn(jogo);
+		Mockito.when(this.classificacaoDao.getClassificacoesByGrupo(jogo.getGrupo())).thenReturn(classificacoes);		
+		
+		Mockito.when(this.classificacaoDao.get(Classificacao.class, 1l)).thenReturn(classificacaoA);
+		
+		// Evento
+		Evento gol = new Evento(1l);
+		Evento ca = new Evento(1l);
+		Evento cv = new Evento(1l);
+		
+		// Escalacao 
+		Escalacao escalacao = new Escalacao();
+		escalacao.setJogo(jogo);
+		escalacao.setId(1l);
+		
+		List<JogadorEscalado> jogadoresEscalados = new ArrayList<JogadorEscalado>();
+		
+		// jogador Escalado 1
+		JogadorEscalado jogadorEscalado1 = new JogadorEscalado();
+		jogadorEscalado1.setId(1l);		
+		Jogador jogador1 = new Jogador(1l, "Diego");
+		jogadorEscalado1.setJogador(jogador1);
+		jogadorEscalado1.setTime(timeA);
+		List<CollectionEventos> eventos = new ArrayList<CollectionEventos>();
+		
+		CollectionEventos golDiego = new CollectionEventos();
+		golDiego.setId(1l);
+		golDiego.setEvento(gol);
+		eventos.add(golDiego);
+
+		CollectionEventos golDiego2 = new CollectionEventos();
+		golDiego2.setId(2l);
+		golDiego2.setEvento(gol);
+		eventos.add(golDiego2);		
+		
+		CollectionEventos golDiego3 = new CollectionEventos();
+		golDiego3.setId(3l);
+		golDiego3.setEvento(gol);
+		eventos.add(golDiego3);		
+		
+		CollectionEventos cvDiego = new CollectionEventos();
+		cvDiego.setId(4l);
+		cvDiego.setEvento(cv);
+		eventos.add(cvDiego);			
+		
+		jogadorEscalado1.setEventos(eventos);
+		jogadoresEscalados.add(jogadorEscalado1);
+		
+		// jogador escalado 2
+		JogadorEscalado jogadorEscalado2 = new JogadorEscalado();
+		jogadorEscalado2.setId(1l);		
+		Jogador jogador2 = new Jogador(2l, "Jonh");
+		jogadorEscalado2.setJogador(jogador2);
+		jogadorEscalado2.setTime(timeA);
+		List<CollectionEventos> eventosJonh = new ArrayList<CollectionEventos>();
+		
+		CollectionEventos golJonh = new CollectionEventos();
+		golJonh.setId(5l);
+		golJonh.setEvento(gol);
+		eventosJonh.add(golJonh);	
+		
+		CollectionEventos cvJonh = new CollectionEventos();
+		cvJonh.setId(6l);
+		cvJonh.setEvento(ca);
+		eventosJonh.add(cvJonh);			
+		
+		jogadorEscalado2.setEventos(eventosJonh);
+		
+		jogadoresEscalados.add(jogadorEscalado2);		
+		
+		escalacao.setJogadoresEscalados(jogadoresEscalados);
+		
+		// Jogadores Info da Edicao		
+		List<JogadorInfoEdicao> jogadoresInfoEdicao = new ArrayList<JogadorInfoEdicao>();
+		
+		// jogador info da Edicao 1
+		JogadorInfoEdicao jogadorInfoEdicao1 = new JogadorInfoEdicao(jogador1, edicao);
+		jogadoresInfoEdicao.add(jogadorInfoEdicao1);
+
+		// jogador info da Edicao 2
+		JogadorInfoEdicao jogadorInfoEdicao2 = new JogadorInfoEdicao(jogador2, edicao);
+		jogadoresInfoEdicao.add(jogadorInfoEdicao2);
+		
+		edicao.setJogadoresInfoEdicao(jogadoresInfoEdicao);
+		
+		Mockito.when(jogadorInfoEdicaoDao.getList(JogadorInfoEdicao.class)).thenReturn(jogadoresInfoEdicao);
+		
+		Mockito.when(escalacaoDao.get(jogo)).thenReturn(escalacao);
+		
+		mockMvc.perform(post("/jogo/"+jogo.getId()+"/retornStatus"))
 			.andExpect(status().isOk());
 	}
 }
