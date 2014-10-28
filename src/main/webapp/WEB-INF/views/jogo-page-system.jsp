@@ -13,7 +13,12 @@
 		
 		<div class="text-muted pull-right"> 
 			<p>Local: ${jogo.local.descricao} / Harbito: ${jogo.harbito.nome}</p>  
-			<p class="text-primary"> <img src="${pageContext.request.contextPath}/static/quartashow/img/${jogo.status.imgName}" /> ${jogo.status.descricao}</p>
+			<p class="text-primary"> 
+				<img src="${pageContext.request.contextPath}/static/quartashow/img/${jogo.status.imgName}" /> ${jogo.status.descricao}
+				<c:if test="${jogo.status.id == 3 && not empty usuario && not empty admin && admin}">
+					<a href="${pageContext.request.contextPath}/jogo/${jogo.id}/retornStatus" class="pull-right" id="idVoltarStatusJogo"><span class="text-danger glyphicon glyphicon-arrow-left">Voltar</span></a>
+				</c:if>
+			</p>
 		</div>
 		
 		<c:if test="${jogo.status.id == 2 && not empty usuario && not empty admin && admin}">

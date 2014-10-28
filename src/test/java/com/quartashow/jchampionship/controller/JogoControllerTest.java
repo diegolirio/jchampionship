@@ -293,5 +293,10 @@ public class JogoControllerTest {
 	
 	// TODO: test da ordenacao da classificacao (Colocacao)
 	
-	
+	@Test
+	public void testDeveRetornarStatusDoJogoDeFinalizadoParaEmAndamentoECalculo() throws Exception {
+		long jogoId = 1l;
+		mockMvc.perform(post("/jogo/"+jogoId+"/retornStatus"))
+			.andExpect(status().isOk());
+	}
 }

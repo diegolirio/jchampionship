@@ -133,6 +133,20 @@ $(function() {
 			});
 		}
 	});
+
+	$('#idVoltarStatusJogo').click(function(e) {
+		e.preventDefault();
+		$.post( $(this).attr('href'), 
+				function(data, statusText, response) {
+					if(response.status == 200) {
+						window.location.reload();
+					} else {
+						alert('Erro: ' + JSON.stringify(response));
+					}
+		}).fail(function(data) {
+			alert('Erro: ' + JSON.stringify(data));
+		});
+	});
 	
 });
 

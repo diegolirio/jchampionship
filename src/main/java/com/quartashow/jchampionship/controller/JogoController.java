@@ -269,6 +269,89 @@ public class JogoController {
 		}
 		
 	}
+
+	@RequestMapping(value="/jogo/{id}/retornStatus", method=RequestMethod.POST, produces="application/json")
+	public ResponseEntity<String> returnCalculadoStatusFinalizadoEmAndamento(@PathVariable("id") long id) {
+		try {
+			Jogo jogo = this.jogoDao.get(Jogo.class, id);
+			this.retornaCalculoJogadorInfoEdicao(jogo);
+			this.retornaCalculaClassificacao(jogo);
+			this.ordenaClassificacao(jogo);
+			return new ResponseEntity<String>(HttpStatus.OK);
+		} catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	private void retornaCalculoJogadorInfoEdicao(Jogo jogo) {
+		Escalacao escalacao = this.escalacaoDao.get(jogo);
+		List<JogadorInfoEdicao> jogadoresInfoEdicao = this.jogadorInfoEdicaoDao.getJogadorInfoEdicaoByEdicao(jogo.getGrupo().getEdicao());
+		for (JogadorEscalado je : escalacao.getJogadoresEscalados()) {
+			for(JogadorInfoEdicao jie : jogadoresInfoEdicao) {
+				if(je.getJogador().getId() == jie.getJogador().getId()) {
+					jie.setJogos(jie.getJogos()-1);
+					for (CollectionEventos evento : je.getEventos()) {
+
+						if(evento.getEvento().getId() == 1) // 1 = Gol
+							jie.setGols(jie.getGols()-1);
+						else
+						if(evento.getEvento().getId() == 2) // 2 = Cartao Amarelo
+							jie.setCartaoAmarelo(jie.getCartaoAmarelo()-1);
+						else 
+						if (evento.getEvento().getId() == 3) // 3 = Cartao Vermelho
+							jie.setCartaoVermelho(jie.getCartaoVermelho()-1);
+					}
+					this.jogadorInfoEdicaoDao.update(jie);
+				}
+			}
+		}
+	}
+
+	private List<Classificacao> retornaCalculaClassificacao(Jogo jogo) {
+		List<Classificacao> classificacoes = this.classificacaoDao.getClassificacoesByGrupo(jogo.getGrupo());
+		char vencedor = 'E';
+		if(jogo.getResultadoA() > jogo.getResultadoB()) 
+			vencedor = 'A';
+		else if (jogo.getResultadoA() < jogo.getResultadoB())
+			vencedor = 'B';
+		
+		for (Classificacao classTime : classificacoes) {
+			// calcula classificacao time A
+			if(classTime.getTime().getId() == jogo.getTimeA().getId()) {
+				classTime.setJogos(classTime.getJogos()-1);
+				classTime.setGolsPro(classTime.getGolsPro()-jogo.getResultadoA());
+				classTime.setGolsContra(classTime.getGolsContra()-jogo.getResultadoB());
+				if(vencedor == 'A') {
+					classTime.setVitorias(classTime.getVitorias()-1);
+					classTime.setPontos(classTime.getPontos()-3);
+				} 
+				else if (vencedor == 'E') {
+					classTime.setEmpates(classTime.getEmpates()-1);
+					classTime.setPontos(classTime.getPontos()-1);
+				} else if(vencedor == 'B') {
+					classTime.setDerrotas(classTime.getDerrotas()-1);
+				}
+				this.classificacaoDao.update(classTime);
+			} // Calcula classificacao Time B 
+			else if(classTime.getTime().getId() == jogo.getTimeB().getId()) {
+				classTime.setJogos(classTime.getJogos()-1);
+				classTime.setGolsPro(classTime.getGolsPro()-jogo.getResultadoB());
+				classTime.setGolsContra(classTime.getGolsContra()-jogo.getResultadoA()); 
+				if(vencedor == 'A') {
+					classTime.setDerrotas(classTime.getDerrotas()-1);
+				} else if(vencedor == 'E') {
+					classTime.setEmpates(classTime.getEmpates()-1);
+					classTime.setPontos(classTime.getPontos()-1);					
+				} else if(vencedor == 'B') {
+					classTime.setVitorias(classTime.getVitorias()-1);
+					classTime.setPontos(classTime.getPontos()-3);
+				}
+				this.classificacaoDao.update(classTime);
+			}
+		}
+		return classificacoes;
+	}
 	
 	
 }
