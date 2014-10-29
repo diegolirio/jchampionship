@@ -8,33 +8,40 @@
         <div class="col-lg-12">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h3 class="panel-title"><i class="fa fa-fw fa-table"></i> ${usuario.nome} </h3>
+                    <h3 class="panel-title"><i class="fa fa-fw fa-table"></i> ${usuarioCadastro.nome} </h3>
                 </div>
                 <div class="panel-body">
 	                    
 					<form id="id_form_perfil" method="GET" action="" class="col-lg-6">
 
-						<input type="hidden" name="id" value="${usuario.id}" >
+						<input type="hidden" name="id" value="${usuarioCadastro.id}" >
 						
+						<img src="${usuarioCadastro.uriImage}" class="img-circle" height="60" width="60"/>	
+						<!-- <a href="#">alterar foto</a> -->
+
+						<br/><br/> 
+
 						<div class="form-group">
 							<label>Nome </label> <span id="id_message_nome"></span> 
-							<input class="form-control"	name="nome" value="${usuario.nome }">
+							<input class="form-control"	name="nome" value="${usuarioCadastro.nome }">
 						</div>
 
 						<div class="form-group">
 							<label>E-mail</label> <span id="id_message_email"></span>
-							<input class="form-control"	name="email" value="${usuario.email }">
+							<input class="form-control"	name="email" value="${usuarioCadastro.email }">
 						</div>
 						
-						<c:if test="${usuario.superUsuario}">
+						<c:if test="${usuarioCadastro.superUsuario}">
 	              			<div class="form-group">
 	                            <div class="checkbox">
 	                                <label>
-	                                    <input type="checkbox" value="${usuario.superUsuario}" name="superUsuario">Super Usuário
+	                                    <input type="checkbox" value="${usuarioCadastro.superUsuario}" name="superUsuario">Super Usuário
 	                                </label>
 	                            </div>	
 	                        </div>					
 						</c:if>
+						 
+						<a href="#">alterar senha</a>
 							
 						<input type="submit" class="btn btn-success" value="Salvar" >
 

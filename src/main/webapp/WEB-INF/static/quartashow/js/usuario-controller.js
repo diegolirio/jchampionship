@@ -32,4 +32,24 @@ $(function() {
 		
 	});
 	
+	
+	$('#id_form_perfil').submit(function(e) {
+		e.preventDefault();
+		
+		// TODO: GET Params....
+		var items = new Array();
+		$('#id_form_perfil:input').each(function (el) {
+		    items[el.name] = el;
+		    console.log(items[el.name]);
+		});		
+		
+		$.post( $(this).attr('action'),
+				function(data, statusText, response) {
+					alert(JSON.stringify(response));
+		}).fail(function(data) {
+			alert(JSON.stringify(data));
+		});
+	});
+	
+	
 });

@@ -11,6 +11,9 @@ public class AuthorizerInterceptor extends HandlerInterceptorAdapter {
 
 	private static final Logger logger = LoggerFactory.getLogger(AuthorizerInterceptor.class);
 	
+	// path /system acesso ao cadastro do Edicao(campeonato)
+	private static final String PATH_SYSTEM = "/system";
+	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		String uri = request.getRequestURI();
@@ -19,14 +22,14 @@ public class AuthorizerInterceptor extends HandlerInterceptorAdapter {
 		// Acesso das requisicao com system na path da uri somente para usuario admin.
 		// Se tem system na path da uri e se existir o admin na sessao, 
 		//  -> retorna true se admin for true, se nao false
-		if(uri.contains("/system") && request.getSession().getAttribute("admin") != null) {
+		if(uri.contains(PATH_SYSTEM) && request.getSession().getAttribute("admin") != null) {
 			boolean isAdmin = (boolean) request.getSession().getAttribute("admin");
 			return isAdmin;
 		}
 		
 		// Se nao existir /system na path da uri considero uri's publicas, 
 		//   considerando resources e static (css, img, js).
-		if(uri.contains("/system") == false) {
+		if(uri.contains(PATH_SYSTEM) == false) {
 			return true;
 		}
 		// se usuario estiver logado redireciona p/ principal se nao p/ login

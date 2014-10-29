@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -78,10 +79,23 @@ public class UsuarioController {
 		return "redirect:/";
 	}	
 	
-	@RequestMapping(value="/system/perfil", method=RequestMethod.GET)
-	public ModelAndView pageMeuPerfil() {
+	@RequestMapping(value="/system/perfil/{id}", method=RequestMethod.GET)
+	public ModelAndView pageMeuPerfil(@PathVariable("id") long id, HttpSession session, String cadastre) {
 		ModelAndView mv = new ModelAndView("_base2");
 		mv.addObject("content_import", "usuario-edit-perfil");
+		Usuario usuarioSession = (Usuario) session.getAttribute("usuario");
+		if("meu".equals(cadastre) == false) {
+			if (id > 0l)  {
+				if (usuarioSession.isSuperUsuario()) {
+					mv.addObject("usuarioCadastro", this.usuarioDao.get(Usuario.class, id));
+				}
+			} else {
+				mv.addObject("usuarioCadastro", usuarioSession);
+			}
+		}
+		else {
+			mv.addObject("usuarioCadastro", (Usuario) session.getAttribute("usuario"));
+		}
 		return mv;
 	}
 	

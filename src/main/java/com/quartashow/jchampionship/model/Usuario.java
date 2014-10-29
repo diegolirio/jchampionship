@@ -43,7 +43,7 @@ public class Usuario {
     
     private boolean superUsuario = false;
 
-    private String uriImage;
+    private String uriImage = "/jchampionship/static/quartashow/img/usuario/profile-user_fake.png";
     
 	public Usuario() {}
 	
