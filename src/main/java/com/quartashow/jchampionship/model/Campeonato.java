@@ -2,6 +2,7 @@ package com.quartashow.jchampionship.model;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -17,6 +18,7 @@ public class Campeonato {
 	@Id @GeneratedValue
 	private int id;
 	
+	@Column(unique=true)
 	private String descricao;
 	
 	@JsonBackReference

@@ -13,6 +13,7 @@ import javax.validation.constraints.Size;
 import org.codehaus.jackson.annotate.JsonBackReference;
 
 @Entity
+//@Table(uniqueConstraints=@UniqueConstraint(columnNames={"descricao", "campeonato.id"}))
 public class Edicao {
 	
 	@Id @GeneratedValue

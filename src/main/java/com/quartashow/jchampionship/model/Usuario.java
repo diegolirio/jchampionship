@@ -26,6 +26,7 @@ public class Usuario {
 	private String nome;
 	
 	@NotNull @Email @Size(min=1, message="campo obrigatorio")
+	@Column(unique=true)
 	private String email;
 	
 	@NotNull @Size(min=6, max=10)

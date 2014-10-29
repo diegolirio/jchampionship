@@ -7,10 +7,13 @@ $(function() {
 		e.preventDefault();		
 		var nome = form.find('input[name="nome"]').val();	
 		var posicaoId = form.find('select[name="posicao.id"]').val();
+		var uriFoto = form.find('input[name=uriFoto]').val();
+		alert(uriFoto);
 		console.log(nome);		
 		$.post(	form.attr('action'),
 				{ nome: nome,
-				  'posicao.id': posicaoId },
+				  'posicao.id': posicaoId, 
+				  uriFoto: uriFoto }, 
 				function(data, statusText, response) {
 					if(response.status == 201) {
 						console.log(JSON.stringify(response.responseJSON));

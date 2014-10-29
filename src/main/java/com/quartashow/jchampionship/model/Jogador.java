@@ -29,7 +29,7 @@ public class Jogador {
 	@ManyToOne
 	private Posicao posicao;
 	
-	private String uriFoto;
+	private String uriFoto = "/jchampionship/static/quartashow/img/jogadores/jogador_no_photo.png";
 
 	public Jogador() {}
 	

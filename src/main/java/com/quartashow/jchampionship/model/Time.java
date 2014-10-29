@@ -2,6 +2,7 @@ package com.quartashow.jchampionship.model;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -19,6 +20,7 @@ public class Time {
 	private long id;
 
 	@NotNull @Size(min=3, max=25)
+	@Column(unique=true)
 	private String nome;
 
 	@JsonBackReference

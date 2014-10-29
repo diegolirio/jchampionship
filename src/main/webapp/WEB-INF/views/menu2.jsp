@@ -258,6 +258,12 @@
 	                        <a href="${pageContext.request.contextPath}/jogadorInfoEdicao/artilharia/by/edicao/${edicao.id}"><i class="fa fa-dashboard fa-fw"></i> Artilharia</a>
 	                    </li>
                     </c:if>                    
+
+					<c:if test="${usuario.superUsuario == true}">
+	                    <li>
+	                        <a href="${pageContext.request.contextPath}/usuario/system/perfil/0"><i class="fa fa-fw fa-file"></i> Criar novo Usuário</a>
+	                    </li>         
+                    </c:if>
                     
                     <c:if test="${not empty usuario && not empty admin && admin}">
 	                    <li>

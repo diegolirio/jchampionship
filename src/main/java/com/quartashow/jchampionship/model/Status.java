@@ -1,5 +1,6 @@
 package com.quartashow.jchampionship.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -10,7 +11,8 @@ public class Status {
 	@Id @GeneratedValue
 	private long id;
 	
-	private String descricao; // Pendencia do Formulario | Andamento | Finalizado | 
+	@Column(unique=true)
+	String descricao; // Pendencia do Formulario | Andamento | Finalizado | 
 
 	private String imgName;
 
