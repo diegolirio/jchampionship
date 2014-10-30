@@ -136,17 +136,20 @@ $(function() {
 
 	$('#idVoltarStatusJogo').click(function(e) {
 		e.preventDefault();
-		$.post( $(this).attr('href'), 
-				function(data, statusText, response) {
-					alert(response.status); 
-					if(response.status == 200) {
-						window.location.reload();
-					} else {
-						alert('Erro: ' + JSON.stringify(response));
-					}
-		}).fail(function(data) {
-			alert('Erro: ' + JSON.stringify(data));
-		});
+		var ok = confirm("Deseja voltar situação do Jogo ?\nCalculo da clasificação e artilharia será cancelado.");
+		if(ok == true) {
+			$.post( $(this).attr('href'), 
+					function(data, statusText, response) {
+						//alert(response.status); 
+						if(response.status == 200) {
+							window.location.reload();
+						} else {
+							alert('Erro: ' + JSON.stringify(response));
+						}
+			}).fail(function(data) {
+				alert('Erro: ' + JSON.stringify(data));
+			});
+		}
 	});
 	
 });

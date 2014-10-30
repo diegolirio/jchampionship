@@ -67,7 +67,11 @@
 											<c:forEach var="je" items="${escalacao.jogadoresEscalados}">
 												<c:if test="${escalacao.jogo.timeA.id == je.time.id}">
 													<tr class="${jogo.resultadoA > jogo.resultadoB ? 'success' : 'danger'}" >
-														<td><a href="${pageContext.request.contextPath}/escalacao/jogadorEscalado/delete/${je.id}" onclick="showWindowPopup(this.href, 400, 600); return false;" > <span class="text-danger">excluir</span></a></td>
+														<td>
+															<c:if test="${jogo.status.id == 2 && not empty usuario && not empty admin && admin}">
+																<a href="${pageContext.request.contextPath}/escalacao/jogadorEscalado/delete/${je.id}" onclick="showWindowPopup(this.href, 400, 600); return false;" > <span class="text-danger">excluir</span></a>
+															</c:if>
+														</td>
 														<td><img alt="foto" src="${je.jogador.uriFoto}" title="${je.jogador.nome}" class="img-responsive img-circle" height="30" width="30"/></td>
 														<td class="jogador${je.id}"> 
 															 <img src="${pageContext.request.contextPath}/static/quartashow/img/${je.jogador.posicao.imgName }" alt="${je.jogador.posicao.descricao}"/>
@@ -106,7 +110,11 @@
 											<c:forEach var="je" items="${escalacao.jogadoresEscalados}">
 												<c:if test="${escalacao.jogo.timeB.id == je.time.id}">
 													<tr class="${jogo.resultadoA < jogo.resultadoB ? 'success' : 'danger'}" >
-													    <td><a href="${pageContext.request.contextPath}/escalacao/jogadorEscalado/delete/${je.id}" onclick="showWindowPopup(this.href, 400, 600); return false;" > <span class="text-danger">excluir</span></a></td>
+													    <td>
+													    	<c:if test="${jogo.status.id == 2 && not empty usuario && not empty admin && admin}">
+													    		<a href="${pageContext.request.contextPath}/escalacao/jogadorEscalado/delete/${je.id}" onclick="showWindowPopup(this.href, 400, 600); return false;" > <span class="text-danger">excluir</span></a>
+													    	</c:if>
+													    </td>
 													    <td><img alt="foto" src="${je.jogador.uriFoto}" title="${je.jogador.nome}" class="img-responsive img-circle" height="30" width="30"/></td>
 														<td class="jogador${je.id}"> 
 															 <img src="${pageContext.request.contextPath}/static/quartashow/img/${je.jogador.posicao.imgName }" alt="${je.jogador.posicao.descricao}"/>
@@ -115,12 +123,12 @@
 														<td> 
 															<c:forEach var="ce" items="${je.eventos}">
 																<img src="${pageContext.request.contextPath}/static/quartashow/img/${ce.evento.imgName}" alt="${ce.evento.descricao}" />
-																<c:if test="${jogo.status.id == 2 && not empty usuario && not empty admin && admin}">
-																	<a href="${pageContext.request.contextPath}/escalacao/jogadorEscalado/${je.id}/eventos/delete" onclick="showWindowPopup(this.href, 400, 600); return false;" >
-																		<img src="${pageContext.request.contextPath}/static/quartashow/img/lixeira.png" alt="Excluir" title="Excluir Gol, Cartão amarelo ou Cartão vermelho" class="pull-right"/>
-																	</a>
-																</c:if>
-															</c:forEach>
+															</c:forEach>														
+															<c:if test="${fn:length(je.eventos) > 0 && jogo.status.id == 2 && not empty usuario && not empty admin && admin}">
+																<a href="${pageContext.request.contextPath}/escalacao/jogadorEscalado/${je.id}/eventos/delete" onclick="showWindowPopup(this.href, 400, 600); return false;" > 
+																	<img src="${pageContext.request.contextPath}/static/quartashow/img/lixeira.png" alt="Excluir" title="Excluir Gol, Cartão amarelo ou Cartão vermelho" class="pull-right" />
+																</a>
+															</c:if>															
 														</td>													
 													</tr>
 												</c:if>
