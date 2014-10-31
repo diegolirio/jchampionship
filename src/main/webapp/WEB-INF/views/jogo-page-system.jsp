@@ -1,24 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 		<!-- Placar Responsive -->
-		<h1 class="page-header col-md-12 visible-lg visible-md"> 
+		<h1 class="page-header col-lg-12 col-md-12 col-sm-12 visible-lg visible-md visible-sm"> 
 			<span class="text-center col-md-4"><a href="${pageContext.request.contextPath}/time/${jogo.timeA.id}">${jogo.timeA.nome}</a></span>
 			<span class="text-center text-danger col-md-1" id="id_rA" >${jogo.resultadoA}</span>
 			<span class="text-center text-muted col-md-1">X</span>
 			<span class="text-center text-danger col-md-1" id="id_rB">${jogo.resultadoB}</span>
 			<span class="text-center col-md-4"><a href="${pageContext.request.contextPath}/time/${jogo.timeB.id}">${jogo.timeB.nome}</a></span>
-		</h1>
-		
-		<h3 class="page-header col-md-12 visible-sm visible-xs">
-			<span class="text-center col-md-4"><a href="${pageContext.request.contextPath}/time/${jogo.timeA.id}">${jogo.timeA.nome}</a></span>
-			<span class="text-center text-danger col-md-1" id="id_rA" >${jogo.resultadoA}</span>
-			<span class="text-center text-muted col-md-1">X</span>
-			<span class="text-center text-danger col-md-1" id="id_rB">${jogo.resultadoB}</span>
-			<span class="text-center col-md-4"><a href="${pageContext.request.contextPath}/time/${jogo.timeB.id}">${jogo.timeB.nome}</a></span>		
-		</h3>
+		</h1>		
+		<div class="page-header col-xs-12 visible-xs text-center">
+			<table class="table">
+				<tr>
+					<td><h3 class="text-center col-md-4"><a href="${pageContext.request.contextPath}/time/${jogo.timeA.id}">${jogo.timeA.nome}</a></h3></td>
+					<td><h3 class="text-center text-danger col-md-1" id="id_rA" >${jogo.resultadoA}</h3></td>
+				</tr>
+				<tr>
+					<!-- <h3 class="text-center text-muted col-md-1">X</h3> -->
+					<td><h3 class="text-center col-md-4"><a href="${pageContext.request.contextPath}/time/${jogo.timeB.id}">${jogo.timeB.nome}</a></h3></td>
+					<td><h3 class="text-center text-danger col-md-1" id="id_rB">${jogo.resultadoB}</h3></td>
+				</tr>
+			</table>		
+		</div>
 		<!-- Fim Placar Responsive -->
 		 
 		<div class="text-muted pull-right"> 
@@ -29,6 +35,7 @@
 					<a href="${pageContext.request.contextPath}/jogo/${jogo.id}/retornStatus" class="pull-right" id="idVoltarStatusJogo"><span class="text-danger glyphicon glyphicon-arrow-left">Voltar</span></a>
 				</c:if>
 			</p>
+			<p>Data: <fmt:formatDate value="${jogo.dataHora}" pattern="dd/MM/yyyy"/> </p>
 		</div>
 		
 		<c:if test="${jogo.status.id == 2 && not empty usuario && not empty admin && admin}">
@@ -40,7 +47,7 @@
 		<br/><br/><br/> 
 
 	    <div class="row">
-	        <div class="col-lg-12"> 
+	        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> 
 	        
 				<c:if test="${jogo.status.id == 1 && not empty usuario && not empty admin && admin}">
 					<a href="${pageContext.request.contextPath}/escalacao/post/jogo/${jogo.id}" class="btn btn-outline btn-success btn-lg btn-block" id="id_add_escalacao_jogo">Adicionar informações da Partida</a>
@@ -54,7 +61,7 @@
 		                </div>
 		                <div class="panel-body">
 		                    
-		                    	<div class="col-md-6">
+		                    	<div class="table-responsive col-lg-6 col-md-6 col-sm-12 col-xs-12">
 									<!--  Table -->
 									<table class="table">
 										<thead class="text-warning">
@@ -97,7 +104,7 @@
 									</c:if>            	
 		                    	</div>
 	
-		                    	<div class="col-md-6">
+		                    	<div class="table-responsive col-lg-6 col-md-6 col-sm-12 col-xs-12">
 									<!--  Table -->
 									<table class="table">
 										<thead class="text-warning">
