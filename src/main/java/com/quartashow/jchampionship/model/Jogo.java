@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -39,6 +41,9 @@ public class Jogo {
 	@ManyToOne
 	private Status status;
 
+	@Temporal(TemporalType.TIMESTAMP)
+    private java.util.Date dataHora;
+	
 	public long getId() {
 		return id;
 	}
@@ -105,6 +110,14 @@ public class Jogo {
 	
 	public Status getStatus() {
 		return status;
+	}
+
+	public java.util.Date getDataHora() {
+		return dataHora;
+	}
+
+	public void setDataHora(java.util.Date dataHora) {
+		this.dataHora = dataHora;
 	}
 
 	public void setStatus(Status status) {

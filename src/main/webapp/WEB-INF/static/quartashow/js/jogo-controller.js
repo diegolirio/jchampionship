@@ -28,6 +28,7 @@ $(function() {
 		var harbito = formJogo.find('select[name="harbito.id"]').val();
 		var local = formJogo.find('select[name="local.id"]').val();
 		var grupoId = formJogo.find('select[name="grupo.id"]').val() ;
+		var dataHora = formJogo.find('input[name=dataHora]').val();
 		
 		console.log(timeA);
 		
@@ -36,7 +37,8 @@ $(function() {
 				  'timeB.id': timeB,
 				  'harbito.id': harbito,
 				  'local.id': local,
-				  'grupo.id': grupoId },
+				  'grupo.id': grupoId,
+				  'dataHora': dataHora },
 				function(data, statusText, response) {
 					if(response.status == 201) {
 						console.log(JSON.stringify(data));

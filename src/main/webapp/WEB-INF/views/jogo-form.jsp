@@ -5,7 +5,7 @@
 
 			<%-- <input type="hidden" name="id" value="${jogo.id}" > --%>
 
-			<div class="form-group col-lg-4">
+			<div class="form-group col-lg-3">
 				<label>Grupo </label> <span id="id_message_grupo"></span> 
 				<select class="form-control" id="id_grupos" name="grupo.id">
 					<option value="">Selecione o Grupo...</option>
@@ -15,7 +15,7 @@
 				</select>
 			</div>
 
-			<div class="form-group col-lg-4">
+			<div class="form-group col-lg-3">
 				<label>Harbito </label> <span id="id_message_harbito"></span>
 				<a href="${pageContext.request.contextPath}/harbito/page/simple" onclick="showWindowPopup(this.href, 400, 600); return false;"><i class="glyphicon glyphicon-plus"></i></a> 
 				<select class="form-control" id="id_harbitos" name="harbito.id">
@@ -26,7 +26,7 @@
 				</select>
 			</div>						
 			
-			<div class="form-group col-lg-4">
+			<div class="form-group col-lg-3">
 				<label>Local </label> <span id="id_message_local"></span> 
 				<a href="${pageContext.request.contextPath}/local/page/simple" onclick="showWindowPopup(this.href, 400, 600); return false;"><i class="glyphicon glyphicon-plus"></i></a>
 				<select class="form-control" id="id_locais" name="local.id">
@@ -36,6 +36,11 @@
 					</c:forEach>
 				</select>
 			</div>						
+
+			<div class="form-group col-lg-3">
+				<label>Data e Hora </label> <span id="id_message_datahora"></span>
+				<input class="form-control datepicker" type="text" name="dataHora">
+			</div>
 
 			<div class="form-group col-lg-5">
 				<label>Time A </label> <span id="id_message_timea"></span>
