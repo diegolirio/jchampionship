@@ -22,7 +22,7 @@
 
             <div class="row">
             	<c:forEach var="e" items="${edicoes}">
-	                <div class="col-lg-6 col-md-6">
+	                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 	                    <div class="panel panel-success">
 	                        <div class="panel-heading">
 	                            <div class="row">
@@ -45,5 +45,19 @@
 	                    </div>
 	                </div>
 	            </c:forEach>
+		   		<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 text-center">
+		
+					<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- QuartaShowPage Header 230X100 -->
+					<ins class="adsbygoogle"
+						 style="display:inline-block;width:320px;height:100px"
+						 data-ad-client="ca-pub-1041989301102612"
+						 data-ad-slot="4832115487"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>		
+												
+			  </div>	            
            </div>
+	           
                

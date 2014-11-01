@@ -176,6 +176,7 @@ public class JogoController {
 	private List<Classificacao> ordenaClassificacao(Jogo jogo) {
 		List<Classificacao> classificacoes = this.classificacaoDao.getClassificacoesByGrupo(jogo.getGrupo());
 		int pontosAnt = -1;
+		int sg = -1;
 		int posReal = 0;
 		for(int posicao = 0; posicao <= classificacoes.size()-1; posicao++) {
 			Classificacao cS = null;
@@ -199,12 +200,15 @@ public class JogoController {
 			}
 			
 			// pontos anterior ou Saldo de Gols for maior que pontos do proximo aumenta 1 colocacao
-			if(pontosAnt > cS.getPontos() || posReal == 0) {
-				posReal = posicao+1;
+			if(pontosAnt > cS.getPontos() ||
+			   (pontosAnt == cS.getPontos() && sg > cS.getGolsPro() - cS.getGolsContra()) || 
+			   posReal == 0) {
+					posReal = posicao+1;
 			}
 			classificacoes.get(classificacoes.indexOf(cS)).setColocacao(posReal);
 			classificacoes.get(classificacoes.indexOf(cS)).setObservacao("S");
 			pontosAnt = cS.getPontos();
+			sg = cS.getGolsPro() - cS.getGolsContra();
 		}
 		for (Classificacao classificacao : classificacoes) {
 			classificacao.setObservacao("N");

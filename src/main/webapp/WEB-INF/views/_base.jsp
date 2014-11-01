@@ -39,7 +39,7 @@
     <script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
     <script>
             $(function() {
-                    $( ".datepicker" ).datepicker({dateFormat: 'dd/mm/yy'});
+                    $( ".datepicker" ).datepicker({dateFormat: 'yy/mm/dd'});
             });
     </script> 
 
