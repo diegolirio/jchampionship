@@ -22,8 +22,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import com.quartashow.jchampionship.dao.EdicaoDao;
 import com.quartashow.jchampionship.dao.JogadorDao;
 import com.quartashow.jchampionship.dao.PosicaoDao;
+import com.quartashow.jchampionship.model.Edicao;
 import com.quartashow.jchampionship.model.Posicao;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -41,6 +43,9 @@ public class JogadorControllerTest {
 
 	@Mock
 	private PosicaoDao posicaoDao;
+
+	@Mock
+	private EdicaoDao edicaoDao;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -79,5 +84,15 @@ public class JogadorControllerTest {
 				.param("nome", ""))
 			 .andExpect(status().isUnauthorized());
 	}	
-	
+
+	@Test
+	public void testDeveRetornarPaginaDeJogadoresPorEdicao() throws Exception {
+		Edicao edicao = new Edicao(1l);
+		Mockito.when(edicaoDao.get(Edicao.class, edicao.getId())).thenReturn(edicao);
+		mockMvc.perform(get("/jogador/by/edicao/"+edicao.getId()))
+			.andExpect(status().isOk())
+			.andExpect(view().name("_base2"))
+			.andExpect(model().attributeExists("content_import", "edicao", "jogadores"))
+			.andExpect(model().attribute("content_import", "jogador-page"));
+	}
 }

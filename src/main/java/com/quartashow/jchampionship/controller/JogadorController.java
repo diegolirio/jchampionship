@@ -17,9 +17,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.quartashow.jchampionship.controller.common.ValidationResponse;
+import com.quartashow.jchampionship.dao.EdicaoDao;
 import com.quartashow.jchampionship.dao.JogadorDao;
 import com.quartashow.jchampionship.dao.PosicaoDao;
 import com.quartashow.jchampionship.helper.ValidationResponseHelper;
+import com.quartashow.jchampionship.model.Edicao;
 import com.quartashow.jchampionship.model.Jogador;
 import com.quartashow.jchampionship.model.Posicao;
 
@@ -32,6 +34,9 @@ public class JogadorController {
 	
 	@Autowired
 	private PosicaoDao posicaoDao;
+
+	@Autowired
+	private EdicaoDao edicaoDao;
 
 	@RequestMapping(value="/page/simple")
 	public ModelAndView pageSimple() {
@@ -58,5 +63,14 @@ public class JogadorController {
 		Jogador jogador = this.jogadorDao.get(Jogador.class, id);
 		return new ResponseEntity<String>(new Gson().toJson(jogador), HttpStatus.OK);
 	}	
-	
+
+	@RequestMapping(value="/by/edicao/{edicaoId}", method=RequestMethod.GET)
+	public ModelAndView pageJogadoresByEdicao(@PathVariable("edicaoId") long edicaoId) {
+		ModelAndView mv = new ModelAndView("_base2");
+		mv.addObject("content_import", "jogador-page");
+		Edicao edicao = this.edicaoDao.get(Edicao.class, edicaoId);
+		mv.addObject("edicao", edicao );
+		mv.addObject("jogadores", this.jogadorDao.getJogadoresByEdicao(edicao));
+		return mv;
+	}
 }
