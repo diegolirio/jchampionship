@@ -11,7 +11,9 @@
                     <h3 class="panel-title"><i class="fa fa-fw fa-table"></i> Jogadores </h3>
                 </div>
                 <div class="panel-body">
-                    <a href="${pageContext.request.contextPath}/jogador/system/form/0?next=${requestScope['javax.servlet.forward.request_uri']}" class="btn btn-outline btn-success">Novo Jogador</a>
+                	<c:if test="${not empty usuario && not empty admin && admin}">
+                    	<a href="${pageContext.request.contextPath}/jogador/system/form/0?next=${requestScope['javax.servlet.forward.request_uri']}" class="btn btn-outline btn-success">Novo Jogador</a>
+                    </c:if>
                     <!--  Table -->
 					<table class="table table-striped table-hover well">
 						<thead>
@@ -34,8 +36,8 @@
 										</td>
 										<td>
 											<c:if test="${not empty usuario && not empty admin && admin}">
-												<small><a href="${pageContext.request.contextPath}/jogador/system/form/${j.id}?next=${requestScope['javax.servlet.forward.request_uri']}">editar</a></small> | 
-												<small><a href="${pageContext.request.contextPath}/jogador/system/delete/${j.id}" id="idDeleteJogador">excluir</a></small></td>
+												<small><a href="${pageContext.request.contextPath}/jogador/system/form/${j.id}?next=${requestScope['javax.servlet.forward.request_uri']}">editar</a></small> 
+<%-- 												| <small><a href="${pageContext.request.contextPath}/jogador/system/delete/${j.id}" id="idDeleteJogador">excluir</a></small></td> --%>
 											</c:if>
 									</tr>
 							</c:forEach>

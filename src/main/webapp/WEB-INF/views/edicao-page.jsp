@@ -20,16 +20,17 @@
 							<table class="table table-striped table-hover well">
 								<thead>
 									<tr class="text-danger">
-										<td >Col</td>
+										<td class="text-center">Col</td>
 										<td >Time</td>
-										<td >J</td>
-										<td >V</td>
-										<td >E</td>
-										<td >D</td>
-										<td >GP</td>
-										<td >GC</td>
-										<td >SG</td>
-										<td >Pontos</td>
+										<td class="text-center">Pontos</td>
+										<td class="text-center">J</td>
+										<td class="text-center">V</td>
+										<td class="text-center">E</td>
+										<td class="text-center">D</td>
+										<td class="text-center">GP</td>
+										<td class="text-center">GC</td>
+										<td class="text-center">SG</td>
+										<td class="text-center" title="percentual de aproveitamento">%</td>
 									</tr>
 								</thead>
 								<tbody id="id_tbody">
@@ -37,14 +38,15 @@
 										<tr class="">
 											<td title="Colocacao" class="text-info">${c.colocacao}º</td>
 											<td ><a href="${pageContext.request.contextPath}/time/${c.time.id}">${c.time.nome}</a></td>
-											<td >${c.jogos}</td>
-											<td >${c.vitorias}</td>
-											<td >${c.empates}</td>
-											<td >${c.derrotas}</td>
-											<td >${c.golsPro}</td>
-											<td >${c.golsContra}</td>
-											<td >${c.golsPro - c.golsContra}</td>										
-											<td >${c.pontos}</td> 
+											<td class="text-center"><b>${c.pontos}</b></td>
+											<td class="text-center">${c.jogos}</td>
+											<td class="text-center">${c.vitorias}</td>
+											<td class="text-center">${c.empates}</td>
+											<td class="text-center">${c.derrotas}</td>
+											<td class="text-center">${c.golsPro}</td>
+											<td class="text-center">${c.golsContra}</td>
+											<td class="text-center">${c.golsPro - c.golsContra}</td>										
+											<td class="text-center"><small>${c.pontos * 100 / (c.jogos * 3)}</small></td>
 										</tr>									
 									</c:forEach>
 								</tbody>								

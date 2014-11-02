@@ -252,6 +252,9 @@
                     
                     <c:if test="${edicao != null}">
 	                    <li>
+	                        <a href="${pageContext.request.contextPath}/edicao/${edicao.id}"><i class="fa fa-dashboard fa-fw"></i> Classificação</a>
+	                    </li>
+	                    <li>
 	                        <a href="${pageContext.request.contextPath}/time/by/edicao/${edicao.id}"><i class="fa fa-dashboard fa-fw"></i> Times</a>
 	                    </li>
 	                    <li>
