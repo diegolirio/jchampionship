@@ -7,7 +7,8 @@
 	<input type="hidden" value="${time.id}" name="id">
 	
 	<div class="form-group col-lg-4">
-		<label>Nome do Time <small id="id_view" class="text-warning">?</small></label> <span id="id_message_nome"></span>
+		<label>Nome do Time <small id="id_view" class="text-warning">?</small></label> 
+		<span id="id_message_nome"></span>
 		<input class="form-control" type="text" name="nome" value="${time.nome}">
 	</div>						
  

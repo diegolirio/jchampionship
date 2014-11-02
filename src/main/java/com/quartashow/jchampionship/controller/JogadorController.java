@@ -43,6 +43,7 @@ public class JogadorController {
 		ModelAndView mv = new ModelAndView("_base_simple");
 		mv.addObject("content_import", "jogador-system-form");
 		mv.addObject("posicoes", this.posicaoDao.getList(Posicao.class));
+		mv.addObject("jogador", new Jogador());
 		return mv ;
 	}
 	

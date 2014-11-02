@@ -45,7 +45,7 @@
 								<a href="javascript:undefined" class="btn btn-info addJogador">Adicionar Jogador</a>
 							</div>
 							<div class="col-lg-2">
-								<a href="${pageContext.request.contextPath}/jogador/page/simple" onclick="showWindowPopup(this.href, 500, 600); return false;">Novo Jogador</a>
+								<a href="${pageContext.request.contextPath}/jogador/page/simple?page=popup" onclick="showWindowPopup(this.href, 500, 600); return false;">Novo Jogador</a>
 							</div>							
 						</div>		
 						<br/><br/> 

@@ -1,7 +1,6 @@
 $(function() {
 	
-	$('#id_login').click(function(e) {
-		
+	$('#form').submit(function(e) {
 		e.preventDefault();
 		
 		var email = $('form').find('input[name=email]').val();
@@ -11,9 +10,11 @@ $(function() {
 				{ email: email,
 				  senha: senha },
 				function(data, statusText, response) {
-					  
-					  //alert(JSON.stringify(response));
-					  window.location.href = "/jchampionship"+response.getResponseHeader("Location");
+					  var _get =_GET("next");
+					  if(isEmpty(_get)) 
+						  window.location.href = "/jchampionship"+response.getResponseHeader("Location");
+					  else
+						  window.location.href = _get;
 					  
 		}).fail(function(data) {
 			if(data.status == 401) {

@@ -54,7 +54,7 @@
                         <h3 class="panel-title">Login</h3>
                     </div>
                     <div class="panel-body">
-                        <form role="form">
+                        <form role="form" id="form">
                             <fieldset>
                                 <div class="form-group">
                                     <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
@@ -68,7 +68,7 @@
                                     </label>
                                 </div>
                                 <!-- Change this to a button or input when using this as a form -->
-                                <a href="" class="btn btn-lg btn-success btn-block" id="id_login">Entrar</a>
+                                <input type="submit" class="btn btn-lg btn-success btn-block" id="id_login" value="Entrar" >
                             </fieldset>
                         </form>
                     </div>
@@ -90,6 +90,9 @@
     <script src="${pageContext.request.contextPath}/static/sb2/js/sb-admin-2.js"></script>
 
 	<script type="text/javascript" src="${pageContext.request.contextPath}/static/quartashow/js/usuario-controller.js"></script>
+
+	<script type="text/javascript" src="https://raw.githubusercontent.com/diegolirio/commons_js/master/string-common.js"></script>
+	<script type="text/javascript" src="https://raw.githubusercontent.com/diegolirio/commons_js/master/ui-common.js"></script>
 
 	<script type="text/javascript">
 		$('.class_message').hide();

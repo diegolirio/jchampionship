@@ -5,7 +5,7 @@
 <form id="form" action="${pageContext.request.contextPath}/jogador/post">
 	<h1 class="text-info"> Jogador</h1>
 	
-	<input type="hidden" value="${jogador.id}" name="id">
+	<input type="hidden" value="${not empty jogador ? jogador.id : 0}" name="id">
 	
 	<div class="form-group col-lg-4">
 		<label>Nome </label> <span id="id_message_nome"></span>
