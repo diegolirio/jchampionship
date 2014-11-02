@@ -71,7 +71,7 @@ public class JogadorController {
 	@RequestMapping(value="/by/edicao/{edicaoId}", method=RequestMethod.GET)
 	public ModelAndView pageJogadoresByEdicao(@PathVariable("edicaoId") long edicaoId) {
 		ModelAndView mv = new ModelAndView("_base2");
-		mv.addObject("content_import", "jogador-page");
+		mv.addObject("content_import", "jogador-list");
 		Edicao edicao = this.edicaoDao.get(Edicao.class, edicaoId);
 		mv.addObject("edicao", edicao);
 		mv.addObject("jogadores", this.jogadorDao.getJogadoresByEdicao(edicao));
@@ -85,6 +85,14 @@ public class JogadorController {
 		mv.addObject("content_import", "jogador-system-form");
 		mv.addObject("jogador", this.jogadorDao.get(Jogador.class, id));
 		mv.addObject("posicoes", this.posicaoDao.getList(Posicao.class));
+		return mv;
+	}
+	
+	@RequestMapping(value="/{id}", method=RequestMethod.GET)
+	public ModelAndView pageJogador(@PathVariable("id") long id) {
+		ModelAndView mv = new ModelAndView("_base2");
+		mv.addObject("content_import", "jogador-page");
+		mv.addObject("jogador", this.jogadorDao.get(Jogador.class, id));
 		return mv;
 	}
 }

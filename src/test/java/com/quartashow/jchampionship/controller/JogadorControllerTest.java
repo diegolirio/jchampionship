@@ -26,6 +26,7 @@ import com.quartashow.jchampionship.dao.EdicaoDao;
 import com.quartashow.jchampionship.dao.JogadorDao;
 import com.quartashow.jchampionship.dao.PosicaoDao;
 import com.quartashow.jchampionship.model.Edicao;
+import com.quartashow.jchampionship.model.Jogador;
 import com.quartashow.jchampionship.model.Posicao;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -39,14 +40,14 @@ public class JogadorControllerTest {
 	private MockMvc mockMvc;
 	
 	@Mock
-	private JogadorDao timeDao;
+	private JogadorDao jogadorDao;
 
 	@Mock
 	private PosicaoDao posicaoDao;
 
 	@Mock
 	private EdicaoDao edicaoDao;
-	
+
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
@@ -93,7 +94,7 @@ public class JogadorControllerTest {
 			.andExpect(status().isOk())
 			.andExpect(view().name("_base2"))
 			.andExpect(model().attributeExists("content_import", "edicao", "jogadores"))
-			.andExpect(model().attribute("content_import", "jogador-page"));
+			.andExpect(model().attribute("content_import", "jogador-list"));
 	}
 	
 	@Test
@@ -103,5 +104,16 @@ public class JogadorControllerTest {
 			.andExpect(view().name("_base2"))
 			.andExpect(model().attributeExists("content_import"))
 			.andExpect(model().attribute("content_import", "jogador-system-form"));
+	}
+	
+	@Test
+	public void testDeveRetornarPaginaJogador() throws Exception {
+		Jogador jogador = new Jogador(1l, "Diego");
+		Mockito.when(jogadorDao.get(Jogador.class, 1l)).thenReturn(jogador);
+		mockMvc.perform(get("/jogador/"+jogador .getId()))
+			.andExpect(status().isOk())
+			.andExpect(view().name("_base2"))
+			.andExpect(model().attributeExists("content_import", "jogador"))
+			.andExpect(model().attribute("content_import", "jogador-page"));
 	}
 }
