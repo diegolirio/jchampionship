@@ -18,6 +18,7 @@
 							<tr class="text-danger">
 								<td >#</td>
 								<td >Jogador</td>
+								<td></td>
 							</tr>
 						</thead>
 						<tbody id="id_tbody">
@@ -29,10 +30,12 @@
 												<img src="${j.uriFoto}" class="img-circle" height="30" width="30"/> 
 												${j.nome}
 											</a>
+										<td>${j.posicao.descricao}</td>
 										</td>
 										<td>
 											<c:if test="${not empty usuario && not empty admin && admin}">
-												<small>editar</small> | <small>excluir</small></td>
+												<small><a href="${pageContext.request.contextPath}/jogador/system/form/${j.id}?next=${requestScope['javax.servlet.forward.request_uri']}">editar</a></small> | 
+												<small><a href="${pageContext.request.contextPath}/jogador/system/delete/${j.id}" id="idDeleteJogador">excluir</a></small></td>
 											</c:if>
 									</tr>
 							</c:forEach>

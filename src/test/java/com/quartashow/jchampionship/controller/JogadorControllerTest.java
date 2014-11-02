@@ -95,4 +95,13 @@ public class JogadorControllerTest {
 			.andExpect(model().attributeExists("content_import", "edicao", "jogadores"))
 			.andExpect(model().attribute("content_import", "jogador-page"));
 	}
+	
+	@Test
+	public void testDeveRetornarPaginaDeCadastroDeJogador() throws Exception {
+		mockMvc.perform(get("/jogador/system/form/0"))
+			.andExpect(status().isOk())
+			.andExpect(view().name("_base2"))
+			.andExpect(model().attributeExists("content_import"))
+			.andExpect(model().attribute("content_import", "jogador-system-form"));
+	}
 }

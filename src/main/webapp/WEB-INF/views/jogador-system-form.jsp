@@ -9,15 +9,15 @@
 	
 	<div class="form-group col-lg-4">
 		<label>Nome </label> <span id="id_message_nome"></span>
-		<input class="form-control" type="text" name="nome">
+		<input class="form-control" type="text" name="nome" value="${jogador.nome}">
 	</div>			
 	
 	<div class="form-group col-lg-4">
 		<label>Posição </label> <span id="id_message_posicao"></span>
 		<select class="form-control" name="posicao.id">
 			<option value="">Selecione a Posição...</option>
-			<c:forEach var="p" items="${posicoes}">
-				<option value="${p.id}">${p.descricao}</option>
+			<c:forEach var="p" items="${posicoes}"> 
+				<option value="${p.id}" ${jogador.posicao.id == p.id ? 'selected' : ''}>${p.descricao}</option>
 			</c:forEach>
 		</select>
 	</div>
@@ -26,9 +26,9 @@
  
 	<br/>
 		
-	<a href="#" class="btn btn-default" onclick="window.close();">Cancelar</a>
-	
-	<a href="#" class="btn btn-success saveJogador">Salvar</a>
+	<a href="${pageContext.request.contextPath}/jogador/by/edicao/1" class="btn btn-default" onclick="window.close();">Cancelar</a>
+	<input type="submit" class="btn btn-success" name="btnSave" value="Salvar">
+	<!-- 	<input type="submit" class="btn btn-success" name="btnSave" value="Salvar e cadastrar Novo"> -->
 		
 	<br/><br/>
 </form>

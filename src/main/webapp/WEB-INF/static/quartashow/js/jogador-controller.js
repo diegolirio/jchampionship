@@ -3,15 +3,17 @@ $(function() {
 	
 	var form = $('#form');
 	
-	$('.saveJogador').click(function(e) {
-		e.preventDefault();		
+	$(form).submit(function(e) {
+		e.preventDefault();
+		var id = form.find('input[name="id"]').val();	
 		var nome = form.find('input[name="nome"]').val();	
 		var posicaoId = form.find('select[name="posicao.id"]').val();
 		var uriFoto = form.find('input[name=uriFoto]').val();
 		alert(uriFoto);
 		console.log(nome);		
 		$.post(	form.attr('action'),
-				{ nome: nome,
+				{ id: id,
+			      nome: nome,
 				  'posicao.id': posicaoId, 
 				  uriFoto: uriFoto }, 
 				function(data, statusText, response) {

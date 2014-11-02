@@ -52,7 +52,10 @@ public class JogadorController {
 			ValidationResponse validationResponse = new ValidationResponseHelper().fieldsErrorsToValidationResponse(result);
 			return new ResponseEntity<String>(new Gson().toJson(validationResponse), HttpStatus.UNAUTHORIZED);
 		}
-		this.jogadorDao.save(jogador);
+		if(jogador.getId() <= 0)
+			this.jogadorDao.save(jogador);
+		else
+			this.jogadorDao.update(jogador); 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(URI.create("/jogador/get/"+jogador.getId()));
 		return new ResponseEntity<String>(new Gson().toJson(jogador), headers , HttpStatus.CREATED);
@@ -63,14 +66,24 @@ public class JogadorController {
 		Jogador jogador = this.jogadorDao.get(Jogador.class, id);
 		return new ResponseEntity<String>(new Gson().toJson(jogador), HttpStatus.OK);
 	}	
-
+ 
 	@RequestMapping(value="/by/edicao/{edicaoId}", method=RequestMethod.GET)
 	public ModelAndView pageJogadoresByEdicao(@PathVariable("edicaoId") long edicaoId) {
 		ModelAndView mv = new ModelAndView("_base2");
 		mv.addObject("content_import", "jogador-page");
 		Edicao edicao = this.edicaoDao.get(Edicao.class, edicaoId);
-		mv.addObject("edicao", edicao );
+		mv.addObject("edicao", edicao);
 		mv.addObject("jogadores", this.jogadorDao.getJogadoresByEdicao(edicao));
+		//mv.addObject("jogadores", this.jogadorDao.getList(Jogador.class));
+		return mv;
+	}
+	
+	@RequestMapping(value="/system/form/{id}", method=RequestMethod.GET)
+	public ModelAndView pageForm(@PathVariable("id") long id) {
+		ModelAndView mv = new ModelAndView("_base2");
+		mv.addObject("content_import", "jogador-system-form");
+		mv.addObject("jogador", this.jogadorDao.get(Jogador.class, id));
+		mv.addObject("posicoes", this.posicaoDao.getList(Posicao.class));
 		return mv;
 	}
 }
