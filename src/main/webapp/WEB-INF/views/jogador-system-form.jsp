@@ -9,7 +9,7 @@
 	
 	<div class="form-group col-lg-4">
 		<label>Nome </label> <span id="id_message_nome"></span>
-		<input class="form-control" type="text" name="nome" value="${jogador.nome}">
+		<input class="form-control" type="text" name="nome" value="${jogador.nome}" autofocus>
 	</div>			
 	
 	<div class="form-group col-lg-4">
@@ -28,11 +28,13 @@
 		
 	<a href="${pageContext.request.contextPath}/jogador/by/edicao/1" class="btn btn-default" onclick="window.close();">Cancelar</a>
 	<input type="submit" class="btn btn-success" name="btnSave" value="Salvar">
-	<!-- 	<input type="submit" class="btn btn-success" name="btnSave" value="Salvar e cadastrar Novo"> -->
+	<c:if test="${param.page ne 'popup'}">
+		<input type="submit" class="btn btn-success" name="btnSave" value="Salvar e cadastrar Novo">
+	</c:if>
 		
 	<br/><br/>
 </form>
  
-<script type="text/javascript" src="https://raw.githubusercontent.com/diegolirio/commons_js/master/ui-common.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/quartashow/js/common-valid.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/quartashow/js/common/ui-common.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/quartashow/js/common/common-valid.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/quartashow/js/jogador-controller.js"></script>

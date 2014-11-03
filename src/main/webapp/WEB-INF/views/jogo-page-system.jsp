@@ -158,7 +158,7 @@
 			<a href="${pageContext.request.contextPath}/jogo/finalizar/${jogo.id}" class="btn btn-outline btn-success btn-lg btn-block" id="id_finalizar_jogo">Finalizar Jogo</a>
 		</c:if>		    
     
-    <script type="text/javascript" src="https://raw.githubusercontent.com/diegolirio/commons_js/master/ui-common.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/static/quartashow/js/common/ui-common.js"></script>
     <script src="${pageContext.request.contextPath}/static/quartashow/js/jogo-controller.js"></script>
               
                 

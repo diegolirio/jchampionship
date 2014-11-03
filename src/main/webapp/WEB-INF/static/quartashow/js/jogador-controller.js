@@ -9,6 +9,7 @@ $(function() {
 		var nome = form.find('input[name="nome"]').val();	
 		var posicaoId = form.find('select[name="posicao.id"]').val();
 		var uriFoto = form.find('input[name=uriFoto]').val();
+		var btnSave = form.find('input[name=btnSave]').val();
 		console.log(nome);		
 		$.post(	form.attr('action'),
 				{ id: id,
@@ -21,10 +22,14 @@ $(function() {
 						if (_GET("page") == 'popup') {
 							closeWindowPopupStatusNormal(response.status, 'Jogador Criado com sucesso', response.responseJSON.id, response.responseJSON.nome, 'id_jogadores');
 						} else {
-							var _get =_GET("next");
-							if(_get == '' || _get == undefined)
-								_get = '/jchampion'+response.getResponseHeader('Location');
-							window.location.href = _get; 
+							if(btnSave != 'Salvar') { // Savar e Cadastrando um Novo...
+								window.location.href = '/jchampionship/jogador/system/form/0';	
+							} else {
+								var _get =_GET("next");
+								if(_get == '' || _get == undefined)
+									_get = '/jchampion'+response.getResponseHeader('Location');
+								window.location.href = _get;
+							}
 						}
 					} else {
 						alert("Not 201 ===> " + JSON.stringify(response));

@@ -27,6 +27,6 @@
 	<br/><br/>
 </form>
  
-<script type="text/javascript" src="https://raw.githubusercontent.com/diegolirio/commons_js/master/ui-common.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/quartashow/js/common-valid.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/quartashow/js/common/ui-common.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/quartashow/js/common/common-valid.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/quartashow/js/escalacao-controller.js"></script>

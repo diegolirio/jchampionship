@@ -89,10 +89,9 @@
     <!-- Custom Theme JavaScript -->
     <script src="${pageContext.request.contextPath}/static/sb2/js/sb-admin-2.js"></script>
 
+	<script type="text/javascript" src="${pageContext.request.contextPath}/static/quartashow/js/common/string-common.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/static/quartashow/js/common/ui-common.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/static/quartashow/js/usuario-controller.js"></script>
-
-	<script type="text/javascript" src="https://raw.githubusercontent.com/diegolirio/commons_js/master/string-common.js"></script>
-	<script type="text/javascript" src="https://raw.githubusercontent.com/diegolirio/commons_js/master/ui-common.js"></script>
 
 	<script type="text/javascript">
 		$('.class_message').hide();
