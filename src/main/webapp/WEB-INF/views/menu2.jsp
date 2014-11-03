@@ -9,7 +9,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="http://quartashow.com">QuartaShow.com</a>
+            <a class="navbar-brand" href="${pageContext.request.contextPath}">QuartaShow.com</a>
         </div>
         <!-- /.navbar-header -->
 

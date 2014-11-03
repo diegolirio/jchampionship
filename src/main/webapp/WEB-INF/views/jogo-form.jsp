@@ -1,9 +1,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
    <div class="col-lg-12">
 		<form id="id_form_jogo" method="POST" action="${pageContext.request.contextPath}/jogo/post">
 
 			<%-- <input type="hidden" name="id" value="${jogo.id}" > --%>
+
+			<div class="form-group col-lg-1">
+				<label><small>Rodada</small> </label> <span id="id_message_rodada"></span>
+				<input class="form-control" type="text" name="rodada" title="somente numero" onclick="NumbersOnly(e); return false;">
+			</div>
 
 			<div class="form-group col-lg-3">
 				<label>Grupo </label> <span id="id_message_grupo"></span> 
@@ -37,7 +43,7 @@
 				</select>
 			</div>						
 
-			<div class="form-group col-lg-3">
+			<div class="form-group col-lg-2">
 				<label>Data e Hora </label> <span id="id_message_datahora"></span>
 				<input class="form-control datepicker" type="text" name="dataHora">
 			</div>
@@ -74,35 +80,39 @@
 	
 	
 	<br/><br/>
-	
+	 
 	<div class="col-lg-12">
 		<table class="table table-striped table-hover well">
-			<thead>
+			<thead class="text-center">
 				<tr class="text-danger">
-					<td>ID</td>
+					<!-- <td>ID</td> -->
+					<td >Rodada</td>
 					<td >Grupo</td>
 					<td >Time A</td>
 					<td ></td>
-					<td class="text-center text-muted">X</td>
+					<td class="text-center text-muted"></td>
 					<td ></td>
 					<td >Time B</td>
 					<td >Local</td>
 					<td >Harbito</td>
+					<td>Data</td>
 					<td title="Excluir">Excluir</td>
 				<tr>
 			</thead>
 			<tbody id="id_tbody">
 				<c:forEach var="j" items="${jogos}">
-					<tr>
-						<td>${j.id}</td>
+					<tr class="text-center">
+						<%-- <td><small class="text-muted">${j.id}</small></td> --%>
+						<td >${j.rodada}</td>
 						<td >${j.grupo.descricao}</td>
 						<td >${j.timeA.nome}</td>
 						<td >${j.resultadoA}</td>
-						<td class="text-center text-muted">X</td>
+						<td class="text-muted">X</td>
 						<td >${j.resultadoB}</td>
 						<td >${j.timeB.nome}</td>
-						<td >${j.local.descricao}</td>
+						<td >${j.local.descricao}</td>    
 						<td >${j.harbito.nome}</td>
+						<td ><fmt:formatDate value="${j.dataHora}" pattern="dd/MM/yyyy"/>   </td>
 						<td>
 							<c:if test="${j.status.id == 1}"> <!-- Pendente -->
 								<a href="${pageContext.request.contextPath}/jogo/delete_confirm/${j.id}" onclick="showWindowPopup(this.href); return false;">Excluir</a>
@@ -113,3 +123,6 @@
 			</tbody>								
 		</table>       				
 	</div>
+	
+	<script src="${pageContext.request.contextPath}/static/quartashow/js/common/number-common.js"></script>
+	

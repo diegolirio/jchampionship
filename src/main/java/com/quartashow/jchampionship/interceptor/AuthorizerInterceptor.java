@@ -30,7 +30,7 @@ public class AuthorizerInterceptor extends HandlerInterceptorAdapter {
 			return true;
 		}
 		// se usuario estiver logado redireciona p/ principal se nao p/ login
-		response.sendRedirect(request.getSession().getAttribute("usuario") == null ? "/jchampionship/usuario/login" : "/jchampionship/");
+		response.sendRedirect(request.getSession().getAttribute("usuario") == null ? "/jchampionship/usuario/login?next="+uri : "/jchampionship/");
 		return false;
 	}
 	

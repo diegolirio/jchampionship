@@ -1,5 +1,3 @@
-<script type="text/javascript">
-		
 		// Bloqueia no input qualquer caracter que nao seje numerico
 		// Ex: <input type="number" onkeypress="return NumbersOnly(event);">
 		function NumbersOnly(e) {
@@ -13,5 +11,3 @@
 					  return false;
 		    }
 		}
-		
-</script>

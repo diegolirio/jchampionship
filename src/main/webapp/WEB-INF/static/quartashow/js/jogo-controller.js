@@ -4,8 +4,9 @@ $(function() {
 	var formJogo = $('#id_form_jogo');
 	
 	var addTabelaJogos = function(jogo) {
-		var html = "<tr>";
-		html += "<td>"+jogo.id+"</td>"; 
+		var html = "<tr class='text-center'>";
+		//html += "<td>"+jogo.id+"</td>"; 
+		html += "<td>"+jogo.rodada+"</td>";
 		html += "<td >"+jogo.grupo.descricao+"</td>";
 		html += "<td >"+jogo.timeA.nome+"</td>";
 		html += "<td >"+jogo.resultadoA+"</td>";
@@ -14,6 +15,7 @@ $(function() {
 		html += "<td >"+jogo.timeB.nome+"</td>";
 		html += "<td >"+jogo.local.descricao+"</td>";
 		html += "<td >"+jogo.harbito.nome+"</td>";
+		html += "<td>"+jogo.dataHora+"</td>";
 		html += "<td><a href='/jchampionship/jogo/delete_confirm/"+jogo.id+"' onclick='showWindowPopup(this.href); return false;'>Excluir</a></td>";
 		html += "</tr>";		
 		$('#id_tbody').append(html);
@@ -29,8 +31,9 @@ $(function() {
 		var local = formJogo.find('select[name="local.id"]').val();
 		var grupoId = formJogo.find('select[name="grupo.id"]').val() ;
 		var dataHora = formJogo.find('input[name=dataHora]').val();
+		var rodada = formJogo.find('input[name=rodada]').val();
 		
-		console.log(timeA);
+		console.log(rodada);
 		
 		$.post(	formJogo.attr('action'),
 				{ 'timeA.id': timeA,
@@ -38,13 +41,14 @@ $(function() {
 				  'harbito.id': harbito,
 				  'local.id': local,
 				  'grupo.id': grupoId,
-				  'dataHora': dataHora },
+				  'dataHora': dataHora,
+				  'rodada':   rodada}, 
 				function(data, statusText, response) {
 					if(response.status == 201) {
 						console.log(JSON.stringify(data));
 						addTabelaJogos(data);					
 					} else {
-						alert("Not 201 ===> " + JSON.stringify(response));
+						alert("OK ===> status: " + response.status + "\n\n" + JSON.stringify(response));
 					}
 				}
 		).fail(function(data) {
@@ -58,10 +62,11 @@ $(function() {
 				$('#id_message_timeb').html(getHtmlTooltipsErrorMessage(data.responseJSON.errorMessages['timeB.id']));
 				$('#id_message_resultadoa').html(getHtmlTooltipsErrorMessage(data.responseJSON.errorMessages.resultadoA));
 				$('#id_message_resultadob').html(getHtmlTooltipsErrorMessage(data.responseJSON.errorMessages.resultadoB));
+				$('#id_message_rodada').html(getHtmlTooltipsErrorMessage(data.responseJSON.errorMessages.rodada));
 				$('form span.tooltips').tooltip('show');				
 			} 
 			else {
-				alert("Not 401 ===> " + JSON.stringify(data));
+				alert("Falha ===> " + JSON.stringify(data));
 			}
 		});
 		

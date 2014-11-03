@@ -71,6 +71,11 @@
 						        		<div class="table-responsive">
 						        			<a href="${pageContext.request.contextPath}/jogo/${j.id}">
 								        		<table class="table well">
+								        			<thead>
+								        				<tr>
+								        					<td colspan="5"><small>Rodada: ${j.rodada}</small></td>
+								        				</tr>
+								        			</thead>
 								        			<tbody>
 								        				<tr>
 								        					<td>${j.timeA.nome}</td>
@@ -90,10 +95,15 @@
 								        			</tbody>
 								        			<tfoot>
 								        				<tr>
-								        					<td colspan="5"><small> 
-								        						<span class="pull-right"><img src="${pageContext.request.contextPath}/static/quartashow/img/${j.status.imgName}"/> (${j.status.descricao}) - ${j.local.descricao}</span>
-								        						<fmt:formatDate value="${j.dataHora}" pattern="dd/MM/yyyy"/> 
-								        					</small></td>
+								        					<td colspan="3">
+								        						<small><span class=""><img src="${pageContext.request.contextPath}/static/quartashow/img/${j.status.imgName}"/> (${j.status.descricao})</span></small>
+															</td>
+															<td>
+																<small>${j.local.descricao}</small>
+															</td>
+															<td>
+								        						<small><fmt:formatDate value="${j.dataHora}" pattern="dd/MM/yyyy"/></small> 
+								        					</td>
 								        				</tr>
 								        		</table>
 								        	</a>

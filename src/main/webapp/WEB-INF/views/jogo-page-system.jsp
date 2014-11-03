@@ -28,13 +28,14 @@
 		<!-- Fim Placar Responsive -->
 		 
 		<div class="text-muted pull-right"> 
-			<p>Local: ${jogo.local.descricao} / Harbito: ${jogo.harbito.nome}</p>  
 			<p class="text-primary"> 
 				<img src="${pageContext.request.contextPath}/static/quartashow/img/${jogo.status.imgName}" /> ${jogo.status.descricao}
 				<c:if test="${jogo.status.id == 3 && not empty usuario && not empty admin && admin}">
 					<a href="${pageContext.request.contextPath}/jogo/${jogo.id}/retornStatus" class="pull-right" id="idVoltarStatusJogo"><span class="text-danger glyphicon glyphicon-arrow-left">Voltar</span></a>
 				</c:if>
 			</p>
+			<p>Rodada: ${jogo.rodada}</p>		
+			<p>Local: ${jogo.local.descricao} / Harbito: ${jogo.harbito.nome}</p>  
 			<p>Data: <fmt:formatDate value="${jogo.dataHora}" pattern="dd/MM/yyyy"/> </p>
 		</div>
 		
