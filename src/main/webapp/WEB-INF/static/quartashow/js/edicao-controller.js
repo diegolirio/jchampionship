@@ -9,7 +9,10 @@ function getEdicoesPendentes() {
 			tbody += '   <td >'+e.descricao+'</td>';
 			tbody += '   <td title="Campeonato">'+e.campeonato.descricao+'</td>';
 			tbody += '   <td title="Pendente">'+e.status.descricao+'</td>';
-			tbody += '	 <td title="Concluir"><a href="/jchampionship/edicao/system/'+e.id+'/grupos">Concluir</a></td>';
+			tbody += '	 <td title="Concluir">';
+			tbody += '		<a href="/jchampionship/edicao/system/'+e.id+'/grupos">concluir </a>';
+			tbody += '		<a href="/jchampionship/edicao/delete/'+e.id+'" id="idDeleteEdicao" class="text-danger"> excluir</a>';
+			tbody += '</td>';
 			tbody += '</tr>';			
 		});
 		$('#id_tbody').html(tbody);
@@ -68,6 +71,20 @@ $(function() {
 			return false;
 		});		
 		
+	});
+	
+	$('#idDeleteEdicao').click(function(e) {
+		e.preventDefault();
+		$.post( $(this).attr('href'),
+				function(data, statusText, response) {
+					if (response.status == 200) {
+						window.location.reload();
+					} else { 
+						alert(JSON.stringify(response));
+					}
+		}).fail(function(data) {
+			alert(JSON.stringify(data));
+		});	
 	});
 	
 });

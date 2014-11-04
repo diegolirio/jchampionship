@@ -86,7 +86,8 @@ public class JogoControllerTest {
 				.param("local.id", "1")
 				.param("timeA.id", "1")
 				.param("timeB.id", "2")
-				.param("harbito.id", "1"))
+				.param("harbito.id", "1")
+				.param("rodada", "1"))
 			.andExpect(MockMvcResultMatchers.status().isCreated());
 	}
 	

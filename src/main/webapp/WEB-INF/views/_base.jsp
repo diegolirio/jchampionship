@@ -60,15 +60,15 @@
 			
 					<div class=" pull-right">
 
-						<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-						<!-- QuartaShowPage Header 230X100 -->
-						<ins class="adsbygoogle"
-							 style="display:inline-block;width:320px;height:100px"
-							 data-ad-client="ca-pub-1041989301102612"
-							 data-ad-slot="4832115487"></ins>
-						<script>
-						(adsbygoogle = window.adsbygoogle || []).push({});
-						</script>		
+<!-- 						<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
+<!-- 						QuartaShowPage Header 230X100 -->
+<!-- 						<ins class="adsbygoogle" -->
+<!-- 							 style="display:inline-block;width:320px;height:100px" -->
+<!-- 							 data-ad-client="ca-pub-1041989301102612" -->
+<!-- 							 data-ad-slot="4832115487"></ins> -->
+<!-- 						<script> -->
+<!--  						(adsbygoogle = window.adsbygoogle || []).push({});  -->
+<!-- 						</script>		 -->
 													
 					</div>
 

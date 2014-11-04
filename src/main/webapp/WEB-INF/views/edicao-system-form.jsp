@@ -10,14 +10,14 @@
 <div class="row">
 
 	<div class="col-lg-12">
-
-		<ol class="breadcrumb">
+		<ol class="breadcrumb">		
 			<li><i class="glyphicon glyphicon-ok text-success"></i> <a href="${pageContext.request.contextPath}">Campeonato</a></li>
-			<li class="active"><i class="glyphicon glyphicon-star text-warning"></i> Edição</li>
+			<li class="text-warning" style="font-size:30px;"><i class="glyphicon glyphicon-star"></i> Edição</li>
 			<li class="active"><i class="fa fa-edit"></i> Grupos</li>
+			<li class="active"><i class="fa fa-edit"></i> Times</li>
 			<li class="active"><i class="fa fa-edit"></i> Jogos</li>
 			<li class="active"><i class="fa fa-edit"></i> Escalação</li>
-			<li class="active"><i class="fa fa-edit"></i> Visão Geral</li>
+			<li class="active"><i class="fa fa-edit"></i> Visão Geral</li>		
 		</ol>
 	</div>
 </div>

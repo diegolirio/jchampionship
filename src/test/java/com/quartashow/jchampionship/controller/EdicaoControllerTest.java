@@ -83,7 +83,7 @@ public class EdicaoControllerTest {
 		mockMvc.perform(get("/edicao/system"))
 			.andExpect(status().is(200))
 			.andExpect(view().name("_base"))
-			.andExpect(model().attributeExists("content_import"))
+			.andExpect(model().attributeExists("content_import", "edicoes"))
 			.andExpect(model().attribute("content_import", "edicao-system-pendentes"));
 	}		
 	
@@ -207,5 +207,11 @@ public class EdicaoControllerTest {
 			.andExpect(view().name("_base2"))
 			.andExpect(model().attributeExists("content_import", "edicao"))
 			.andExpect(model().attribute("content_import", "edicao-page"));
-	}		
+	}
+	
+	@Test
+	public void testDeveExcluirEdicao() throws Exception {
+		mockMvc.perform(post("/edicao/delete/"+edicao.getId()))
+			.andExpect(status().isOk());
+	}
 }

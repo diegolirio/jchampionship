@@ -62,7 +62,8 @@ public class EdicaoController {
 	
 	@RequestMapping(value="/system", method=RequestMethod.GET)
 	public ModelAndView pageEdicoesPendentes() {
-		ModelAndView mv = new ModelAndView("_base");
+		ModelAndView mv = new ModelAndView("_base"); 
+		mv.addObject("edicoes", this.edicaoDao.getListByStatus(new Status(1l)));
 		mv.addObject("content_import", "edicao-system-pendentes");
 		return mv;
 	}	
@@ -182,5 +183,16 @@ public class EdicaoController {
 		mv.addObject("edicao", edicao);
 		return mv;
 	}
-	
+ 
+	@RequestMapping(value="/delete/{id}", method=RequestMethod.POST, produces="application/json")
+	public ResponseEntity<String> delete(@PathVariable("id") long id) {
+		try {
+			// TODO Verificar se há Grupos Jogos e times vinculados com a edicao...
+			this.edicaoDao.delete(Edicao.class, id);
+			return new ResponseEntity<String>(HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 }
