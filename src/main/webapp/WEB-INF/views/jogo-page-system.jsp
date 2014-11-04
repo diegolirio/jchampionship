@@ -61,6 +61,12 @@
 		                    <h3 class="panel-title"><i class="fa fa-fw fa-table"></i> Escalação </h3>
 		                </div>
 		                <div class="panel-body">
+									<p>
+										<img src="${pageContext.request.contextPath}/static/quartashow/img/gol.png" height="15"/> <small class="text-muted">Gol</small> &bull;
+										<img src="${pageContext.request.contextPath}/static/quartashow/img/cartao-amarelo.png" height="15"/> <small class="text-muted">Cartão Amarelo</small> &bull;
+										<img src="${pageContext.request.contextPath}/static/quartashow/img/cartao-vermelho.png" height="15"/> <small class="text-muted">Cartão Vermelho</small>
+<%-- 										<img src="${pageContext.request.contextPath}/static/quartashow/img/cartao-vermelho.png" height="15"/> <small class="text-muted">Falta</small> --%>
+									</p>
 		                    
 		                    	<div class="table-responsive col-lg-6 col-md-6 col-sm-12 col-xs-12">
 									<!--  Table -->

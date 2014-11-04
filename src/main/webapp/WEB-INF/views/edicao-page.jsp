@@ -36,7 +36,7 @@
 								<tbody id="id_tbody">
 									<c:forEach var="c" items="${g.classificacoes}">
 										<tr class="">
-											<td title="Colocacao" class="text-info">${c.colocacao}º</td>
+											<td title="Colocacao" class="text-info text-center"><b>${c.colocacao}º</b></td>
 											<td ><a href="${pageContext.request.contextPath}/time/${c.time.id}">${c.time.nome}</a></td>
 											<td class="text-center"><b>${c.pontos}</b></td>
 											<td class="text-center">${c.jogos}</td>
@@ -66,7 +66,7 @@
                         </div>
                         <div class="panel-body">
                         	<c:forEach var="j" items="${g.jogos}">
-						        <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12">   
+						        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">   
 						        	<h3 class="text-info">
 						        		<div class="table-responsive">
 						        			<a href="${pageContext.request.contextPath}/jogo/${j.id}">
@@ -95,10 +95,10 @@
 								        			</tbody>
 								        			<tfoot>
 								        				<tr>
-								        					<td colspan="3">
+								        					<td colspan="2">
 								        						<small><span class=""><img src="${pageContext.request.contextPath}/static/quartashow/img/${j.status.imgName}"/> (${j.status.descricao})</span></small>
 															</td>
-															<td>
+															<td colspan="2">
 																<small>${j.local.descricao}</small>
 															</td>
 															<td>
