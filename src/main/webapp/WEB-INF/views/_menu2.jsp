@@ -9,7 +9,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="${pageContext.request.contextPath}">Quarta<span class="text-success">Show</span>.com</a>
+            <a class="navbar-brand text-success" href="${pageContext.request.contextPath}" >Quarta<span class="text-warning">Show</span>.com</a>
         </div>
         <!-- /.navbar-header -->
 

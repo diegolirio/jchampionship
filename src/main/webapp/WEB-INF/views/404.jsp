@@ -40,7 +40,7 @@
 
     <div id="wrapper">
 
- 		<jsp:include page="menu2.jsp"></jsp:include>
+ 		<jsp:include page="_menu2.jsp"></jsp:include>
 
         <!-- Page Content -->
         <div id="page-wrapper">

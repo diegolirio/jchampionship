@@ -57,6 +57,23 @@
 	        </div>
 	    </div>
 	    <!-- /.row -->
+	    
+	    <!-- publicidade -->
+	    <div class="row">
+	    	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+				<!-- Azul_Suave_728X90 -->
+				<ins class="adsbygoogle"
+				     style="display:inline-block;width:100%;height:90px"
+				     data-ad-client="ca-pub-1041989301102612"
+				     data-ad-slot="2407772281"></ins>
+				<script>
+				(adsbygoogle = window.adsbygoogle || []).push({});
+				</script>	 
+			</div>   		
+	    </div>
+	     
+	     <br/>
 	     
 	    <div class="row">
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
