@@ -48,14 +48,14 @@
 
     <div id="wrapper">
 
- 		<jsp:include page="_menu2.jsp"></jsp:include>
+		<jsp:include page="_menu2.jsp"></jsp:include>
 
         <!-- Page Content -->
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
                 
-                		<h3><a href="javascript:history.back();"><span class="glyphicon glyphicon-arrow-left text-muted"></span></a></h3>
+						<!-- <h3><a href="javascript:history.back();"><span class="glyphicon glyphicon-arrow-left text-muted"></span></a></h3> -->
                 		<jsp:include page="${content_import}.jsp"></jsp:include>
                     
                     
