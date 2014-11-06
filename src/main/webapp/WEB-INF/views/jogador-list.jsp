@@ -32,6 +32,7 @@
 												<img src="${j.uriFoto}" class="img-circle" height="30" width="30"/> 
 												${j.nome}
 											</a>
+										</td>
 										<td>${j.posicao.descricao}</td>
 										<td>
 											<c:if test="${not empty usuario && not empty admin && admin}">

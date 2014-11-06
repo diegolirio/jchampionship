@@ -1,6 +1,7 @@
 package com.quartashow.jchampionship.controller;
 
 import java.net.URI;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -18,9 +19,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.quartashow.jchampionship.controller.common.ValidationResponse;
+import com.quartashow.jchampionship.dao.ClassificacaoDao;
+import com.quartashow.jchampionship.dao.EdicaoDao;
+import com.quartashow.jchampionship.dao.GrupoDao;
 import com.quartashow.jchampionship.dao.JogadorDao;
 import com.quartashow.jchampionship.dao.TimeDao;
 import com.quartashow.jchampionship.helper.ValidationResponseHelper;
+import com.quartashow.jchampionship.model.Classificacao;
+import com.quartashow.jchampionship.model.Edicao;
+import com.quartashow.jchampionship.model.Grupo;
 import com.quartashow.jchampionship.model.Jogador;
 import com.quartashow.jchampionship.model.Time;
 
@@ -33,6 +40,15 @@ public class TimeController {
 	
 	@Autowired
 	private JogadorDao jogadorDao;
+
+	@Autowired
+	private EdicaoDao edicaoDao;
+
+	@Autowired
+	private ClassificacaoDao classificacaoDao;
+
+	@Autowired
+	private GrupoDao grupoDao;
 
 	@RequestMapping(value="/page/simple")
 	public ModelAndView pageSimple(Time time) {
@@ -121,4 +137,35 @@ public class TimeController {
 		}
 	}
 		
+	@RequestMapping(value="/by/edicao/{edicaoId}", method=RequestMethod.GET)
+	public ModelAndView pageTimeByEdicao(@PathVariable("edicaoId") long edicaoId) {
+		ModelAndView mv = new ModelAndView("_base2");
+		mv.addObject("content_import", "time-list");
+		Edicao edicao = this.edicaoDao.get(Edicao.class, edicaoId);
+		mv.addObject("edicao", edicao);
+		List<Time> times = this.timeDao.getTimesByEdicaoClassificacao(edicao);
+		mv.addObject("times", times);
+		return mv;
+	}
+	
+	@RequestMapping(value="/{id}/edicao/{edicaoId}", method=RequestMethod.GET)
+	public ModelAndView pageTime(@PathVariable("id") long id, @PathVariable("edicaoId") long edicaoId) {
+		ModelAndView mv = new ModelAndView("_base2");
+		mv.addObject("content_import", "time-page");
+		Time time = this.timeDao.get(Time.class, id);
+		Edicao edicao = edicaoDao.get(Edicao.class, edicaoId);
+		mv.addObject("time", time);
+		mv.addObject("edicao", edicao);
+		Classificacao classificacao = null;
+		for(Grupo g : this.grupoDao.getGruposByEdicao(edicao)) {
+			for(Classificacao c : this.classificacaoDao.getClassificacoesByGrupo(g)) {
+				if(c.getTime().getId() == time.getId()) {
+					classificacao = c;
+					break;
+				}
+			}
+		}
+		mv.addObject("classificacao", classificacao);
+		return mv;
+	}	
 }

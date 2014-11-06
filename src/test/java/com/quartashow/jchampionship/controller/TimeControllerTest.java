@@ -22,8 +22,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import com.quartashow.jchampionship.dao.EdicaoDao;
 import com.quartashow.jchampionship.dao.JogadorDao;
 import com.quartashow.jchampionship.dao.TimeDao;
+import com.quartashow.jchampionship.model.Edicao;
 import com.quartashow.jchampionship.model.Jogador;
 import com.quartashow.jchampionship.model.Time;
 
@@ -41,7 +43,10 @@ public class TimeControllerTest {
 	private TimeDao timeDao;
 
 	@Mock
-	private JogadorDao jogadorDao;	
+	private JogadorDao jogadorDao;
+
+	@Mock
+	private EdicaoDao edicaoDao;	
 	
 	@Before
 	public void setUp() throws Exception {
@@ -118,6 +123,30 @@ public class TimeControllerTest {
 			.andExpect(status().isCreated());
 	}
 	
+	@Test
+	public void testDeveRetornarPaginaDeTimesDeUmaEdicao() throws Exception {
+		Edicao edicao = new Edicao(1l);
+		Mockito.when(this.edicaoDao.get(Edicao.class, edicao.getId())).thenReturn(edicao);
+		mockMvc.perform(get("/time/by/edicao/"+edicao .getId()))
+			.andExpect(status().isOk())
+			.andExpect(view().name("_base2"))
+			.andExpect(model().attributeExists("content_import", "edicao", "times"))
+			.andExpect(model().attribute("content_import", "time-list"));
+	}
 	
+	@Test
+	public void testDeveRetornarPaginaDeUmTimePorEdicaoViewModels() throws Exception {
+		
+		Time time = Mockito.mock(Time.class);
+		Mockito.when(this.timeDao.get(Time.class, 1)).thenReturn(time);
+
+		Edicao edicao = Mockito.mock(Edicao.class);
+		Mockito.when(this.edicaoDao.get(Edicao.class, 1)).thenReturn(edicao);
+		
+		mockMvc.perform(get("/time/1/edicao/1"))
+			.andExpect(status().isOk())
+			.andExpect(view().name("_base2"))
+			.andExpect(model().attributeExists("content_import", "time", "edicao", "classificacao"));
+	}	
 	
 }
