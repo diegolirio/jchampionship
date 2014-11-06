@@ -46,7 +46,7 @@
 											<td class="text-center">${c.golsPro}</td>
 											<td class="text-center">${c.golsContra}</td>
 											<td class="text-center">${c.golsPro - c.golsContra}</td>										
-											<td class="text-center"><small>${c.pontos * 100 / ((c.jogos == 0 ? 1 : c.jogos) * 3)}</small></td>
+											<td class="text-center"><small><fmt:formatNumber pattern="##0.00">${c.pontos * 100 / ((c.jogos == 0 ? 1 : c.jogos) * 3)}</fmt:formatNumber></small></td>
 										</tr>									
 									</c:forEach>
 								</tbody>								

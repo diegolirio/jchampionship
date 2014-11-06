@@ -89,7 +89,7 @@
 														<td><img alt="foto" src="${je.jogador.uriFoto}" title="${je.jogador.nome}" class="img-responsive img-circle" height="30" width="30"/></td>
 														<td class="jogador${je.id}"> 
 															 <img src="${pageContext.request.contextPath}/static/quartashow/img/${je.jogador.posicao.imgName }" alt="${je.jogador.posicao.descricao}"/>
-															 <a href="javascript:undefined">${je.jogador.nome}</a>
+															 <a href="${pageContext.request.contextPath}/jogador/${je.jogador.id}/edicao/${jogo.grupo.edicao.id}">${je.jogador.nome}</a>
 														</td>
 														<td> 
 															<c:forEach var="ce" items="${je.eventos}">
@@ -132,7 +132,7 @@
 													    <td><img alt="foto" src="${je.jogador.uriFoto}" title="${je.jogador.nome}" class="img-responsive img-circle" height="30" width="30"/></td>
 														<td class="jogador${je.id}"> 
 															 <img src="${pageContext.request.contextPath}/static/quartashow/img/${je.jogador.posicao.imgName }" alt="${je.jogador.posicao.descricao}"/>
-															 <a href="javascript:undefined">${je.jogador.nome}</a>
+															 <a href="${pageContext.request.contextPath}/jogador/${je.jogador.id}/edicao/${jogo.grupo.edicao.id}">${je.jogador.nome}</a>
 														</td>
 														<td> 
 															<c:forEach var="ce" items="${je.eventos}">

@@ -246,7 +246,7 @@ public class JogoController {
 		}
 		
 		// Pega os jogadores da Info Edicao e atualiza as informacoes...
-		List<JogadorInfoEdicao> jogadoresInfoEdicao = this.jogadorInfoEdicaoDao.getJogadorInfoEdicaoByEdicao(jogo.getGrupo().getEdicao());
+		List<JogadorInfoEdicao> jogadoresInfoEdicao = this.jogadorInfoEdicaoDao.getJogadoresInfoEdicaoByEdicao(jogo.getGrupo().getEdicao());
 		for (JogadorInfoEdicao jogadorInfoEdicao : jogadoresInfoEdicao) { // jogadores Info
 		
 			List<JogadorEscalado> jogadoresEscalados = escalacao.getJogadoresEscalados();
@@ -292,7 +292,7 @@ public class JogoController {
 
 	private void retornaCalculoJogadorInfoEdicao(Jogo jogo) {
 		Escalacao escalacao = this.escalacaoDao.get(jogo);
-		List<JogadorInfoEdicao> jogadoresInfoEdicao = this.jogadorInfoEdicaoDao.getJogadorInfoEdicaoByEdicao(jogo.getGrupo().getEdicao());
+		List<JogadorInfoEdicao> jogadoresInfoEdicao = this.jogadorInfoEdicaoDao.getJogadoresInfoEdicaoByEdicao(jogo.getGrupo().getEdicao());
 		for (JogadorEscalado je : escalacao.getJogadoresEscalados()) {
 			for(JogadorInfoEdicao jie : jogadoresInfoEdicao) {
 				if(je.getJogador().getId() == jie.getJogador().getId()) {

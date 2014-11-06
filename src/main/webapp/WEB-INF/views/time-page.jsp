@@ -36,9 +36,7 @@
 									<td class="text-muted"><img alt="foto" src="${j.uriFoto}" class="img-responsive img-circle" height="30" width="30"/> </td>
 									<td><img src="${pageContext.request.contextPath}/static/quartashow/img/${j.posicao.imgName }" alt="${j.posicao.descricao}"/></td>
 									<td>
-										<h5><a href="javascript:undefined">
-											${j.nome}
-										</a></h5>
+										<h5><a href="${pageContext.request.contextPath}/jogador/${j.id} ${not empty edicao ? '/edicao/'+edicao.id : ''}"> ${j.nome} </a></h5>
 									</td>
 									<td></td>
 								</tr>

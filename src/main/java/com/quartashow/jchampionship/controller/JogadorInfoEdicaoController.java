@@ -26,7 +26,7 @@ public class JogadorInfoEdicaoController {
 		ModelAndView mv = new ModelAndView("_base2");
 		mv.addObject("content_import", "jogadorInfoEdicao-page");
 		Edicao edicao = this.edicaoDao.get(Edicao.class, id);
-		edicao.setJogadoresInfoEdicao(this.jogadorInfoEdicaoDao.getJogadorInfoEdicaoByEdicao(edicao));
+		edicao.setJogadoresInfoEdicao(this.jogadorInfoEdicaoDao.getJogadoresInfoEdicaoByEdicao(edicao));
 		mv.addObject("edicao", edicao);
 		return mv;
 	}

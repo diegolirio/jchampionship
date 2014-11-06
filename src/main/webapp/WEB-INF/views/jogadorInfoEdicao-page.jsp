@@ -28,7 +28,7 @@
 <%-- 								<c:if test="${jie.gols > 0}"> --%>
 									<tr ${status.count == 1 ? 'style="font-size:25px;"' : '' } >  
 										<td>
-											<a href="javascript:undefined" title="${jie.jogador.nome}">
+											<a href="${pageContext.request.contextPath}/jogador/${jie.jogador.id}/edicao/${jie.edicao.id}" title="${jie.jogador.nome}">
 												<img src="${jie.jogador.uriFoto}" class="img-circle" height="${status.count == 1 ? 50 : 30 }" width="${status.count == 1 ? 50 : 30 }"/> 
 												${jie.jogador.nome}
 											</a>

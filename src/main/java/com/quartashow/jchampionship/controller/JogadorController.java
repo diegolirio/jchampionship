@@ -19,10 +19,12 @@ import com.google.gson.Gson;
 import com.quartashow.jchampionship.controller.common.ValidationResponse;
 import com.quartashow.jchampionship.dao.EdicaoDao;
 import com.quartashow.jchampionship.dao.JogadorDao;
+import com.quartashow.jchampionship.dao.JogadorInfoEdicaoDao;
 import com.quartashow.jchampionship.dao.PosicaoDao;
 import com.quartashow.jchampionship.helper.ValidationResponseHelper;
 import com.quartashow.jchampionship.model.Edicao;
 import com.quartashow.jchampionship.model.Jogador;
+import com.quartashow.jchampionship.model.JogadorInfoEdicao;
 import com.quartashow.jchampionship.model.Posicao;
 
 @Controller
@@ -37,6 +39,9 @@ public class JogadorController {
 
 	@Autowired
 	private EdicaoDao edicaoDao;
+
+	@Autowired
+	private JogadorInfoEdicaoDao jogadorInfoEdicaoDao;
 
 	@RequestMapping(value="/page/simple")
 	public ModelAndView pageSimple() {
@@ -87,6 +92,19 @@ public class JogadorController {
 		mv.addObject("posicoes", this.posicaoDao.getList(Posicao.class));
 		return mv;
 	}
+	
+	@RequestMapping(value="/{id}/edicao/{edicaoId}", method=RequestMethod.GET)
+	public ModelAndView pageJogador(@PathVariable("id") long id, @PathVariable("edicaoId") long edicaoId) {
+		ModelAndView mv = new ModelAndView("_base2");
+		mv.addObject("content_import", "jogador-page");
+		Edicao edicao = this.edicaoDao.get(Edicao.class, edicaoId);
+		Jogador jogador = this.jogadorDao.get(Jogador.class, id);
+		JogadorInfoEdicao jogadorInfoEdicao = this.jogadorInfoEdicaoDao.get(edicao, jogador);
+		mv.addObject("edicao", edicao);
+		mv.addObject("jogador", jogador);
+		mv.addObject("jogadorInfoEdicao", jogadorInfoEdicao);
+		return mv;
+	}	
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public ModelAndView pageJogador(@PathVariable("id") long id) {

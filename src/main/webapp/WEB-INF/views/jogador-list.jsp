@@ -28,17 +28,17 @@
 									<tr>
 										<td><small>${j.id}</small></td>  
 										<td>
-											<a href="javascript:undefined" title="${j.nome}">
+											<a href="${pageContext.request.contextPath}/jogador/${j.id}/edicao/${edicao.id}" title="${j.nome}">
 												<img src="${j.uriFoto}" class="img-circle" height="30" width="30"/> 
 												${j.nome}
 											</a>
 										<td>${j.posicao.descricao}</td>
-										</td>
 										<td>
 											<c:if test="${not empty usuario && not empty admin && admin}">
 												<small><a href="${pageContext.request.contextPath}/jogador/system/form/${j.id}?next=${requestScope['javax.servlet.forward.request_uri']}">editar</a></small> 
 <%-- 												| <small><a href="${pageContext.request.contextPath}/jogador/system/delete/${j.id}" id="idDeleteJogador">excluir</a></small></td> --%>
 											</c:if>
+										</td>
 									</tr>
 							</c:forEach>
 						</tbody>								
