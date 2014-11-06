@@ -149,9 +149,9 @@ public class TimeController {
 	}
 	
 	@RequestMapping(value="/{id}/edicao/{edicaoId}", method=RequestMethod.GET)
-	public ModelAndView pageTime(@PathVariable("id") long id, @PathVariable("edicaoId") long edicaoId) {
+	public ModelAndView pageTimePorEdicao(@PathVariable("id") long id, @PathVariable("edicaoId") long edicaoId) {
 		ModelAndView mv = new ModelAndView("_base2");
-		mv.addObject("content_import", "time-page");
+		mv.addObject("content_import", "_blank");
 		Time time = this.timeDao.get(Time.class, id);
 		Edicao edicao = edicaoDao.get(Edicao.class, edicaoId);
 		mv.addObject("time", time);
