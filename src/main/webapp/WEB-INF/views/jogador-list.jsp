@@ -13,27 +13,29 @@
                 <div class="panel-body">
                 	<c:if test="${not empty usuario && not empty admin && admin}">
                     	<a href="${pageContext.request.contextPath}/jogador/system/form/0?next=${requestScope['javax.servlet.forward.request_uri']}" class="btn btn-outline btn-success">Novo Jogador</a>
+                    	<br/><br/>
                     </c:if>
+                             
                     <!--  Table -->
 					<table class="table table-striped table-hover well">
 						<thead>
 							<tr class="text-danger">
-								<td >#</td>
-								<td >Jogador</td>
-								<td></td>
+								<th ></th>
+								<th >Jogador</th>
+								<th></th>
 							</tr>
 						</thead>
 						<tbody id="id_tbody">
 							<c:forEach var="j" items="${jogadores}" varStatus="status">
 									<tr>
-										<td><small>${j.id}</small></td>  
+										<td><small></small></td>  
 										<td>
 											<a href="${pageContext.request.contextPath}/jogador/${j.id}/edicao/${edicao.id}" title="${j.nome}">
 												<img src="${j.uriFoto}" class="img-circle" height="30" width="30"/> 
 												${j.nome}
 											</a>
 										</td>
-										<td>${j.posicao.descricao}</td>
+										<td title="${j.posicao.descricao}"><img src="${pageContext.request.contextPath}/static/quartashow/img/${j.posicao.imgName }"/></td>
 										<td>
 											<c:if test="${not empty usuario && not empty admin && admin}">
 												<small><a href="${pageContext.request.contextPath}/jogador/system/form/${j.id}?next=${requestScope['javax.servlet.forward.request_uri']}">editar</a></small> 

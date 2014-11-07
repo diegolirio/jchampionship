@@ -31,7 +31,7 @@
 										<img alt="${e.id}" src="${pageContext.request.contextPath}/static/quartashow/img/trofeu_100.png">
 	                                </div>
 	                                <div class="col-xs-9 text-right">
-	                                    <div class="huge"><a href="${pageContext.request.contextPath}/edicao/${e.id}">${e.campeonato.descricao} ${e.descricao}</a></div>
+	                                    <div class="huge"><a href="${pageContext.request.contextPath}/edicao/${e.id}">${e.campeonato.descricao} <span class="text-info">${e.descricao}</span></a></div>
 	                                    <div>${e.status.descricao}</div>
 	                                </div>
 	                            </div>

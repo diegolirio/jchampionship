@@ -40,9 +40,9 @@
 				//];
 
 				var data = [
-					{ label: "Vitorias", data: ${classificacao.vitorias}, color: "#298A08"},
-					{ label: "Empates",  data: ${classificacao.empates},  color: "#FACC2E"},
-					{ label: "Derrotas", data: ${classificacao.derrotas}, color: "#B40404"}
+					{ label: "${classificacao.vitorias} Vitoria(s)", data: ${classificacao.vitorias}, color: "#298A08"},
+					{ label: "${classificacao.empates}  Empate(s)",  data: ${classificacao.empates},  color: "#FACC2E"},
+					{ label: "${classificacao.derrotas} Derrota(s)", data: ${classificacao.derrotas}, color: "#B40404"}
 				];				
 				
 				// Randomly Generated Data

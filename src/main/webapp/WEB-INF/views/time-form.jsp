@@ -28,10 +28,13 @@
 	        <div class="col-lg-12">
 	            <div class="panel panel-success"> 
 	                <div class="panel-heading">
-	                    <h3 class="panel-title"><i class="fa fa-fw fa-table"></i> Jogadores </h3>
+	                    <h3 class="panel-title">
+	                    	<i class="fa fa-fw fa-table"></i> Jogadores
+	                    	<a class="pull-right" href="${pageContext.request.contextPath}/jogador/page/simple?page=popup" onclick="showWindowPopup(this.href, 500, 600); return false;"><span class="text-info">Novo Jogador</span></a>	
+	                    </h3> 
 	                </div>
 	                <div class="panel-body">
-		                               
+		                                
 		                <div class="row">
 		                	<div class="col-lg-8">
 								<select class="form-control" id="id_jogadores" name="jogador.id">
@@ -45,7 +48,6 @@
 								<a href="javascript:undefined" class="btn btn-info addJogador">Adicionar Jogador</a>
 							</div>
 							<div class="col-lg-2">
-								<a href="${pageContext.request.contextPath}/jogador/page/simple?page=popup" onclick="showWindowPopup(this.href, 500, 600); return false;">Novo Jogador</a>
 							</div>							
 						</div>		
 						<br/><br/> 
@@ -53,17 +55,17 @@
 	                    <!--  Table -->                                
 						<table class="table table-striped table-hover well">
 							<thead>
-								<tr>
-									<td></td>
-									<td >Nome</td>
-									<td title="Excluir">#</td>
+								<tr class="text-success">
+									<th></th>
+									<th >Nome</th>
+									<th ></th>
 								</tr>
 							<tbody id="id_tbody">
 								<c:forEach var="j" items="${time.jogadores}">
-									<tr>
-										<td>${j.posicao.descricao}</td>
+									<tr> 
+										<td title="${j.posicao.descricao}"><img src="${pageContext.request.contextPath}/static/quartashow/img/${j.posicao.imgName }"/></td> 
 										<td>${j.nome}</td>
-										<td><a href="${pageContext.request.contextPath}/time/system/${time.id}/remove/jogador/${j.id}" class="removeJogadorTime"><span class="text-danger">excluir</span></a></td>
+										<td><a href="${pageContext.request.contextPath}/time/system/${time.id}/remove/jogador/${j.id}" class="removeJogadorTime"><span class="text-danger">Retirar do Time</span></a></td>
 									</tr>									
 								</c:forEach>
 							</tbody>								

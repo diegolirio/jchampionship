@@ -6,21 +6,21 @@
 
 		<!-- Placar Responsive -->
 		<h1 class="page-header col-lg-12 col-md-12 col-sm-12 visible-lg visible-md visible-sm"> 
-			<span class="text-center col-md-4"><a href="${pageContext.request.contextPath}/time/${jogo.timeA.id}">${jogo.timeA.nome}</a></span>
+			<span class="text-center col-md-4"><a href="${pageContext.request.contextPath}/time/${jogo.timeA.id}/edicao/${jogo.grupo.edicao.id}">${jogo.timeA.nome}</a></span>
 			<span class="text-center text-danger col-md-1" id="id_rA" >${jogo.resultadoA}</span>
 			<span class="text-center text-muted col-md-1">X</span>
 			<span class="text-center text-danger col-md-1" id="id_rB">${jogo.resultadoB}</span>
-			<span class="text-center col-md-4"><a href="${pageContext.request.contextPath}/time/${jogo.timeB.id}">${jogo.timeB.nome}</a></span>
+			<span class="text-center col-md-4"><a href="${pageContext.request.contextPath}/time/${jogo.timeB.id}/edicao/${jogo.grupo.edicao.id}">${jogo.timeB.nome}</a></span>
 		</h1>		
 		<div class="page-header col-xs-12 visible-xs text-center">
 			<table class="table">
 				<tr>
-					<td><h3 class="text-center col-md-4"><a href="${pageContext.request.contextPath}/time/${jogo.timeA.id}">${jogo.timeA.nome}</a></h3></td>
+					<td><h3 class="text-center col-md-4"><a href="${pageContext.request.contextPath}/time/${jogo.timeA.id}/edicao/${jogo.grupo.edicao.id}">${jogo.timeA.nome}</a></h3></td>
 					<td><h3 class="text-center text-danger col-md-1" id="id_rA" >${jogo.resultadoA}</h3></td>
 				</tr>
 				<tr>
 					<!-- <h3 class="text-center text-muted col-md-1">X</h3> -->
-					<td><h3 class="text-center col-md-4"><a href="${pageContext.request.contextPath}/time/${jogo.timeB.id}">${jogo.timeB.nome}</a></h3></td>
+					<td><h3 class="text-center col-md-4"><a href="${pageContext.request.contextPath}/time/${jogo.timeB.id}/edicao/${jogo.grupo.edicao.id}">${jogo.timeB.nome}</a></h3></td>
 					<td><h3 class="text-center text-danger col-md-1" id="id_rB">${jogo.resultadoB}</h3></td>
 				</tr>
 			</table>		
@@ -62,19 +62,19 @@
 		                </div>
 		                <div class="panel-body">
 									<p>
-										<img src="${pageContext.request.contextPath}/static/quartashow/img/gol.png" height="15"/> <small class="text-muted">Gol</small> &bull;
-										<img src="${pageContext.request.contextPath}/static/quartashow/img/cartao-amarelo.png" height="15"/> <small class="text-muted">Cartão Amarelo</small> &bull;
-										<img src="${pageContext.request.contextPath}/static/quartashow/img/cartao-vermelho.png" height="15"/> <small class="text-muted">Cartão Vermelho</small>
-<%-- 										<img src="${pageContext.request.contextPath}/static/quartashow/img/cartao-vermelho.png" height="15"/> <small class="text-muted">Falta</small> --%>
+										<img src="${pageContext.request.contextPath}/static/quartashow/img/gol.png" height="12"/> <small class="text-muted">Gol</small> &bull;
+										<img src="${pageContext.request.contextPath}/static/quartashow/img/cartao-amarelo.png" height="12"/> <small class="text-muted">C. Amarelo</small> &bull;
+										<img src="${pageContext.request.contextPath}/static/quartashow/img/cartao-vermelho.png" height="12"/> <small class="text-muted">C. Vermelho</small>
+<%-- 										<img src="${pageContext.request.contextPath}/static/quartashow/img/cartao-vermelho.png" height="12"/> <small class="text-muted">Falta</small> --%>
 									</p>
-		                    
+		                      
 		                    	<div class="table-responsive col-lg-6 col-md-6 col-sm-12 col-xs-12">
 									<!--  Table -->
 									<table class="table">
 										<thead class="text-warning">
 											<tr >
-												<td class="text-center" colspan="3">${escalacao.jogo.timeA.nome}</td>
-												<td></td>
+												<th class="text-center" colspan="3">${escalacao.jogo.timeA.nome}</th>
+												<th></th>
 											</tr> 
 										</thead>								
 										<tbody id="id_tbody">
@@ -116,8 +116,8 @@
 									<table class="table">
 										<thead class="text-warning">
 											<tr>
-												<td class="text-center" colspan="3">${escalacao.jogo.timeB.nome}</td>
-												<td></td>
+												<th class="text-center" colspan="3">${escalacao.jogo.timeB.nome}</th>
+												<th></th>
 											</tr> 
 										</thead>								
 										<tbody id="id_tbody">     
