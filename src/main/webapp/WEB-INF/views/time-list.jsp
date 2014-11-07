@@ -28,15 +28,11 @@
 							<c:forEach var="t" items="${times}" varStatus="status">
 									<tr>
 										<td><small>${t.id}</small></td>  
-										<td>
-											<a href="${pageContext.request.contextPath}/time/${t.id}/edicao/${edicao.id}" title="${t.nome}">
-												${t.nome}
-											</a>
-										</td>
+										<td><a href="${pageContext.request.contextPath}/time/${t.id}/edicao/${edicao.id}">${t.nome}</a></td>
 										<c:if test="${not empty usuario && not empty admin && admin}">
 											<td>
 												<small><a href="${pageContext.request.contextPath}/time/system/${t.id}?next=${requestScope['javax.servlet.forward.request_uri']}">editar</a></small> 
-												| <small><a href="${pageContext.request.contextPath}/time/system/delete/${j.id}" id="idDeleteJogador">excluir</a></small>
+												| <small><a href="${pageContext.request.contextPath}/time/system/delete/${t.id}" id="idDeleteJogador">excluir</a></small>
 											</td>
 										</c:if>
 									</tr>

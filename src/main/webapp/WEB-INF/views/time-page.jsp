@@ -14,6 +14,26 @@
    		</c:if>
 	</h1>
 	
+	<c:if test="${not empty classificacao}">
+		<div class="row">
+                <div class="col-lg-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            ${classificacao.grupo.edicao.campeonato.descricao} ${classificacao.grupo.edicao.descricao }
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="flot-chart">
+                                <div class="flot-chart-content" id="flot-pie-chart"></div>
+                            </div>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>			
+		</div>
+	</c:if>
+	
 	<div class="col-lg-10">
 		<div class="panel panel-primary">
 			<div class="panel-heading">
@@ -36,9 +56,9 @@
 									<td class="text-muted"><img alt="foto" src="${j.uriFoto}" class="img-responsive img-circle" height="30" width="30"/> </td>
 									<td><img src="${pageContext.request.contextPath}/static/quartashow/img/${j.posicao.imgName }" alt="${j.posicao.descricao}"/></td>
 									<td>
-										<h5><a href="${pageContext.request.contextPath}/jogador/${j.id} ${not empty edicao ? '/edicao/'+edicao.id : ''}"> ${j.nome} </a></h5>
+										<h5><a href="${pageContext.request.contextPath}/jogador/${j.id}/edicao/${not empty edicao ? edicao.id : 0}"> ${j.nome} </a></h5>
 									</td>
-									<td></td>
+									<td></td> 
 								</tr>
 							</c:forEach>
 							<c:if test="${fn:length(time.jogadores) <= 0 && not empty usuario && not empty admin && admin}">
