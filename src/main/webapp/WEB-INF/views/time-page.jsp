@@ -14,6 +14,70 @@
    		</c:if>
 	</h1>
 	
+	
+    <!-- Timeline CSS -->
+    <link href="${pageContext.request.contextPath}/static/sb2/css/plugins/timeline.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="${pageContext.request.contextPath}/static/sb2/css/plugins/morris.css" rel="stylesheet"> 
+    
+    
+    <!-- Flot Charts JavaScript -->
+    <script src="${pageContext.request.contextPath}/static/sb2/js/plugins/flot/jquery.flot.js"></script>
+    <script src="${pageContext.request.contextPath}/static/sb2/js/plugins/flot/jquery.flot.pie.js"></script>
+    <script src="${pageContext.request.contextPath}/static/sb2/js/plugins/flot/jquery.flot.tooltip.min.js"></script>
+	<script type="text/javascript">
+	
+		$(function() {    
+			
+			var data = [],
+			series = Math.floor(Math.random() * 6) + 3;
+		
+			for (var i = 0; i < series; i++) {
+				data[i] = {
+					label: "Series" + (i + 1),
+					data: Math.floor(Math.random() * 100) + 1
+				}
+			}	
+			
+			var placeholder = $("#placeholder");
+
+			$("#example-2").click(function() {
+
+				placeholder.unbind();
+
+				$("#title").text("Default without legend");
+				$("#description").text("The default pie chart when the legend is disabled. Since the labels would normally be outside the container, the chart is resized to fit.");
+
+				$.plot(placeholder, data, {
+					series: {
+						pie: { 
+							show: true
+						}
+					},
+					legend: {
+						show: false
+					}
+				});
+
+				setCode([
+					"$.plot('#placeholder', data, {",
+					"    series: {",
+					"        pie: {",
+					"            show: true",
+					"        }",
+					"    },",
+					"    legend: {",
+					"        show: false",
+					"    }",
+					"});"
+				]);
+			});			
+			
+		});
+	
+	</script>    	
+	 
 	<c:if test="${not empty classificacao}">
 		<div class="row">
                 <div class="col-lg-6">
@@ -21,11 +85,9 @@
                         <div class="panel-heading">
                             ${classificacao.grupo.edicao.campeonato.descricao} ${classificacao.grupo.edicao.descricao }
                         </div>
-                        <!-- /.panel-heading -->
+                        <!-- /.panel-heading --> 
                         <div class="panel-body">
-                            <div class="flot-chart">
-                                <div class="flot-chart-content" id="flot-pie-chart"></div>
-                            </div>
+							<jsp:include page="grafico_pizza_classificacao.jsp"></jsp:include>
                         </div>
                         <!-- /.panel-body -->
                     </div>

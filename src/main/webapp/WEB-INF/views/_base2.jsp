@@ -31,12 +31,6 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <!-- Timeline CSS -->
-    <link href="${pageContext.request.contextPath}/static/sb2/css/plugins/timeline.css" rel="stylesheet">
-
-    <!-- Morris Charts CSS -->
-    <link href="${pageContext.request.contextPath}/static/sb2/css/plugins/morris.css" rel="stylesheet"> 
-
     <!-- jQuery Version 1.11.0 -->
     <script src="${pageContext.request.contextPath}/static/sb2/js/jquery-1.11.0.js"></script>
 
@@ -83,14 +77,7 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="${pageContext.request.contextPath}/static/sb2/js/sb-admin-2.js"></script>
-        
-    <!-- Flot Charts JavaScript -->
-    <script src="${pageContext.request.contextPath}/static/sb2/js/plugins/flot/excanvas.min.js"></script>
-    <script src="${pageContext.request.contextPath}/static/sb2/js/plugins/flot/jquery.flot.js"></script>
-    <script src="${pageContext.request.contextPath}/static/sb2/js/plugins/flot/jquery.flot.pie.js"></script>
-    <script src="${pageContext.request.contextPath}/static/sb2/js/plugins/flot/jquery.flot.resize.js"></script>
-    <script src="${pageContext.request.contextPath}/static/sb2/js/plugins/flot/jquery.flot.tooltip.min.js"></script>
-    <script src="${pageContext.request.contextPath}/static/sb2/js/plugins/flot/flot-data.js"></script>
+    
   
 </body>
 
