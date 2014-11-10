@@ -85,13 +85,15 @@ public class JogoControllerTest {
 		jogo.setId(1l);
 		Mockito.when(this.jogoDao.get(Jogo.class, 1l)).thenReturn(jogo);
 		
+	
 		mockMvc.perform(MockMvcRequestBuilders.post("/jogo/post")
 				.param("grupo.id", "1")
 				.param("local.id", "1")
 				.param("timeA.id", "1")
 				.param("timeB.id", "2")
 				.param("harbito.id", "1")
-				.param("rodada", "1"))
+				//.param("rodada", ""+rodada)
+				)
 			.andExpect(MockMvcResultMatchers.status().isCreated());
 	}
 	

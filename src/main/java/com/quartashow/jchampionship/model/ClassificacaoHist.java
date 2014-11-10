@@ -12,7 +12,7 @@ public class ClassificacaoHist {
 	@Id @GeneratedValue
 	private long id;
 	
-	private String rodada;
+	private long rodada;
 	
 	@NotNull
 	@ManyToOne
@@ -55,11 +55,11 @@ public class ClassificacaoHist {
 		this.id = id;
 	}
 
-	public String getRodada() {
+	public long getRodada() {
 		return rodada;
 	}
 
-	public void setRodada(String rodada) {
+	public void setRodada(long rodada) {
 		this.rodada = rodada;
 	}
 

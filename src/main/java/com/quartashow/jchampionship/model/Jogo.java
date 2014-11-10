@@ -44,7 +44,7 @@ public class Jogo {
 	
 	@Size(min=1)
 	@NotNull
-	private String rodada;
+	private long rodada = 1l;
 
 	@Temporal(TemporalType.TIMESTAMP)
     private java.util.Date dataHora;
@@ -128,11 +128,11 @@ public class Jogo {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
-	public String getRodada() {
+	public long getRodada() {
 		return rodada;
 	}
 
-	public void setRodada(String rodada) {
+	public void setRodada(long rodada) {
 		this.rodada = rodada;
 	}
 

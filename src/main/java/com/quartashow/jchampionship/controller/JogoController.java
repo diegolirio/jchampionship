@@ -248,7 +248,7 @@ public class JogoController {
 			// altera o jogo para status Finalizado
 			jogo.setStatus(new Status(3));
 			this.jogoDao.update(jogo);
-			// TODO guarda historico da classificacao se todos os jogos da rodada finalizado!
+			// guarda historico da classificacao se todos os jogos da rodada finalizado!
 			this.saveClassificacaoHist(jogo.getGrupo(), jogo.getRodada());
 			HttpHeaders headers = new HttpHeaders();
 			headers.setLocation(URI.create("/edicao/"+jogo.getGrupo().getEdicao().getId()));
@@ -259,7 +259,7 @@ public class JogoController {
 		}
 	}
 	
-	private boolean saveClassificacaoHist(Grupo grupo, String rodada) {
+	private boolean saveClassificacaoHist(Grupo grupo, long rodada) {
 		List<Jogo> jogosByGrupo = jogoDao.getJogosByGrupoAndRodada(grupo, rodada);
 		// verifica se todos os jogos da rodada estado finalizados...
 		for (Jogo jogo : jogosByGrupo) {
@@ -272,7 +272,7 @@ public class JogoController {
 			if(this.classificacaoHistDao.existHist(classificacao.getTime(), classificacao.getGrupo(), rodada) == false) {
 				ClassificacaoHist hist = new ClassificacaoHist();
 				hist.setColocacao(classificacao.getColocacao());
-				hist.setDerrotas(classificacao.getDerrotas());
+				hist.setDerrotas(classificacao.getDerrotas()); 
 				hist.setEmpates(classificacao.getEmpates());
 				hist.setGolsContra(classificacao.getGolsContra());
 				hist.setGolsPro(classificacao.getGolsPro());
@@ -326,7 +326,16 @@ public class JogoController {
 		}
 		
 	}
-
+	
+	/****************************************************************************************
+	 * 
+	 * @param id
+	 * @return JSON
+	 *
+	 * Retorna Jogo de Finalizado para em andamento e retorna os calculos (classificacao, 
+	 *   jogadorInfoEdicao) e delete o historico da rodada caso o ultimo historico seje o mesmo
+	 *   sendo calculado
+	 ****************************************************************************************/	
 	@RequestMapping(value="/{id}/retornStatus", method=RequestMethod.POST, produces="application/json")
 	public ResponseEntity<String> returnCalculadoStatusFinalizadoEmAndamento(@PathVariable("id") long id) {
 		try {
@@ -368,6 +377,15 @@ public class JogoController {
 	}
 
 	private List<Classificacao> retornaCalculaClassificacao(Jogo jogo) {
+		
+		int rodadaLastHist = this.classificacaoHistDao.getNumberHistLastRodada();
+		if(rodadaLastHist == jogo.getRodada()) {
+			List<ClassificacaoHist> histLastRodada = classificacaoHistDao.getHistListByRodada(jogo.getRodada());
+			for (ClassificacaoHist hist : histLastRodada) {
+				this.classificacaoHistDao.delete(ClassificacaoHist.class, hist.getId());
+			}			
+		}
+		
 		List<Classificacao> classificacoes = this.classificacaoDao.getClassificacoesByGrupo(jogo.getGrupo());
 		char vencedor = 'E';
 		if(jogo.getResultadoA() > jogo.getResultadoB()) 
