@@ -263,6 +263,9 @@
 	                    <li>
 	                        <a href="${pageContext.request.contextPath}/jogador/by/edicao/${edicao.id}"><i class="fa fa-dashboard fa-fw"></i> Jogadores</a>
 	                    </li>
+	                    <li>
+	                        <a href="${pageContext.request.contextPath}/edicao/${edicao.id}/estatisticas"><i class="fa fa-dashboard fa-fw"></i> Estatísticas</a>
+	                    </li>	                    
                     </c:if>                    
 
 					<c:if test="${usuario.superUsuario == true}">

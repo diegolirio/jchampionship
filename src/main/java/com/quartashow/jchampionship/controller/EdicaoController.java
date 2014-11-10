@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.quartashow.jchampionship.controller.common.ValidationResponse;
 import com.quartashow.jchampionship.dao.ClassificacaoDao;
+import com.quartashow.jchampionship.dao.ClassificacaoHistDao;
 import com.quartashow.jchampionship.dao.EdicaoDao;
 import com.quartashow.jchampionship.dao.GrupoDao;
 import com.quartashow.jchampionship.dao.HarbitoDao;
@@ -58,7 +59,10 @@ public class EdicaoController {
 	private TimeDao timeDao;
 
 	@Autowired
-	private ClassificacaoDao classificacaoDao;	
+	private ClassificacaoDao classificacaoDao;
+
+	@Autowired
+	private ClassificacaoHistDao classificacaoHistDao;	
 	
 	@RequestMapping(value="/system", method=RequestMethod.GET)
 	public ModelAndView pageEdicoesPendentes() {
@@ -195,4 +199,18 @@ public class EdicaoController {
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	@RequestMapping(value="/{id}/estatisticas")
+	public ModelAndView pageEstatisticas(@PathVariable("id") long id) {
+		ModelAndView mv = new ModelAndView("_base2");
+		mv.addObject("content_import", "edicao-estatisticas");
+		Edicao edicao = this.edicaoDao.get(Edicao.class, id);
+		List<Grupo> grupos = this.grupoDao.getGruposByEdicao(edicao);
+		for (Grupo grupo : grupos) {
+			grupo.setClassificacoes(this.classificacaoHistDao.getClassificacoesHistByGrupo(grupo));
+		}
+		edicao.setGrupos(grupos);
+		mv.addObject("edicao", edicao);
+		return mv;
+	}	
 }

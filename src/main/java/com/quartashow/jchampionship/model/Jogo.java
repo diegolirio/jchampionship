@@ -7,7 +7,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @Entity
 public class Jogo {
@@ -42,9 +41,7 @@ public class Jogo {
 	@ManyToOne
 	private Status status;
 	
-	@Size(min=1)
-	@NotNull
-	private long rodada = 1l;
+	private int rodada = -1;
 
 	@Temporal(TemporalType.TIMESTAMP)
     private java.util.Date dataHora;
@@ -128,11 +125,11 @@ public class Jogo {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
-	public long getRodada() {
+	public int getRodada() {
 		return rodada;
 	}
 
-	public void setRodada(long rodada) {
+	public void setRodada(int rodada) {
 		this.rodada = rodada;
 	}
 

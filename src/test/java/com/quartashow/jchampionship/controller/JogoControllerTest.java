@@ -92,7 +92,7 @@ public class JogoControllerTest {
 				.param("timeA.id", "1")
 				.param("timeB.id", "2")
 				.param("harbito.id", "1")
-				//.param("rodada", ""+rodada)
+				.param("rodada", "1")
 				)
 			.andExpect(MockMvcResultMatchers.status().isCreated());
 	}

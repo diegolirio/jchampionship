@@ -214,4 +214,13 @@ public class EdicaoControllerTest {
 		mockMvc.perform(post("/edicao/delete/"+edicao.getId()))
 			.andExpect(status().isOk());
 	}
+	
+	@Test
+	public void testDeveRetornarEstatisticasDaEdicao() throws Exception {			
+		mockMvc.perform(get("/edicao/1/estatisticas"))
+			.andExpect(status().isOk())
+			.andExpect(view().name("_base2"))
+			.andExpect(model().attributeExists("content_import", "edicao"))
+			.andExpect(model().attribute("content_import", "edicao-estatisticas"));
+	}	
 }

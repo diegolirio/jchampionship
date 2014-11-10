@@ -136,9 +136,6 @@ public class JogoController {
 //	}
 	
 	private List<Classificacao> calculaClassificacao(Jogo jogo) {
-		if(jogo.getStatus().getId() != 2) {
-			throw new RuntimeException("Jogo nao encontra-se em andamento.");
-		}
 		List<Classificacao> classificacoes = this.classificacaoDao.getClassificacoesByGrupo(jogo.getGrupo());
 		char vencedor = 'E';
 		if(jogo.getResultadoA() > jogo.getResultadoB()) 
@@ -239,6 +236,9 @@ public class JogoController {
 	public ResponseEntity<String> finalizar(@PathVariable("id") long id) {
 		try {
 			Jogo jogo = this.jogoDao.get(Jogo.class, id);
+			if(jogo.getStatus().getId() != 2) {
+				throw new RuntimeException("Jogo nao encontra-se em andamento.");
+			}			
 			// calcula classificacao
 			this.calculaClassificacao(jogo);
 			// ordena a classificacao calculada
@@ -259,7 +259,7 @@ public class JogoController {
 		}
 	}
 	
-	private boolean saveClassificacaoHist(Grupo grupo, long rodada) {
+	private boolean saveClassificacaoHist(Grupo grupo, int rodada) {
 		List<Jogo> jogosByGrupo = jogoDao.getJogosByGrupoAndRodada(grupo, rodada);
 		// verifica se todos os jogos da rodada estado finalizados...
 		for (Jogo jogo : jogosByGrupo) {
@@ -378,9 +378,9 @@ public class JogoController {
 
 	private List<Classificacao> retornaCalculaClassificacao(Jogo jogo) {
 		
-		int rodadaLastHist = this.classificacaoHistDao.getNumberHistLastRodada();
+		int rodadaLastHist = this.classificacaoHistDao.getNumberHistLastRodada(jogo.getGrupo());
 		if(rodadaLastHist == jogo.getRodada()) {
-			List<ClassificacaoHist> histLastRodada = classificacaoHistDao.getHistListByRodada(jogo.getRodada());
+			List<ClassificacaoHist> histLastRodada = classificacaoHistDao.getHistListByRodada(jogo.getRodada(), jogo.getGrupo());
 			for (ClassificacaoHist hist : histLastRodada) {
 				this.classificacaoHistDao.delete(ClassificacaoHist.class, hist.getId());
 			}			
