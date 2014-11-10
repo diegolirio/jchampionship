@@ -97,39 +97,38 @@
 	     
 	     <br/>
 	     
-	    <div class="row">
-				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="panel panel-warning">
-                        <div class="panel-heading">
-                            Jogos 
-                        </div>
-                        <div class="panel-body">
                         	<c:forEach var="j" items="${g.jogos}">
 						        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">   
-						        	<h3 class="text-info">
+						        	
 						        		<div class="table-responsive">
 						        			<a href="${pageContext.request.contextPath}/jogo/${j.id}">
-								        		<table class="table well">
+								        		<table class="table well text-center">
 								        			<thead>
 								        				<tr>
-								        					<td colspan="5" class="text-center"><small>Rodada: ${j.rodada} - <fmt:formatDate value="${j.dataHora}" pattern="dd/MM/yyyy"/></small></td>
+								        					<td colspan="5" class="text-muted">
+								        						<small>Rodada: ${j.rodada} - <fmt:formatDate value="${j.dataHora}" pattern="dd/MM/yyyy"/></small>
+								        					</td>
 								        				</tr>
 								        			</thead>
-								        			<tbody>
+								        			<tbody >
 								        				<tr>
-								        					<td>${j.timeA.nome}</td>
+								        					<td>
+								        						<h4 class="text-info">${j.timeA.nome}</h4>
+								        					</td>
 								        					<td>
 								        						<c:if test="${j.status.id != 1}">
-								        							<span class="text-danger">${j.resultadoA}</span>
+								        							<h4 class="text-danger">${j.resultadoA}</h4>
 								        						</c:if>
 															</td>	
-															<td><span class="text-muted">X</span></td>
+															<td><h4 class="text-muted">X</h4></td>
 															<td>				
 											        			<c:if test="${j.status.id != 1}"> 
-											        				<span class="text-danger">${j.resultadoB}</span>
+											        				<h4 class="text-danger">${j.resultadoB}</h4>
 											        			</c:if>			
 											        		</td>
-											        		<td>${j.timeB.nome}</td>											        					
+											        		<td>
+											        			<h4 class="text-info">${j.timeB.nome}</h4>
+											        		</td>											        					
 								        				</tr>
 								        			</tbody>
 								        			<tfoot>
@@ -146,7 +145,6 @@
 								        </div>   
 						        		
 						        		<br/>
-						        	</h3>
 						        </div>                        	
                         	</c:forEach>
                         	<c:if test="${not empty usuario && not empty admin && admin}">
@@ -156,15 +154,8 @@
 						        		Cadastrar Novo jogo 
 						        	</a> 
 						        </div> 
-						    </c:if>                          	
-                        </div>
-                        <div class="panel-footer">
-                            ...
-                        </div>
-                    </div> 
-                    <!-- /.col-lg-4 -->
-                </div>	   
-         </div> 
+						    </c:if>    
+						                          
 	    
 	</c:forEach>
 	    
