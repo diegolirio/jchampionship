@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,10 +23,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import com.quartashow.jchampionship.dao.ClassificacaoDao;
 import com.quartashow.jchampionship.dao.EdicaoDao;
+import com.quartashow.jchampionship.dao.GrupoDao;
 import com.quartashow.jchampionship.dao.JogadorDao;
 import com.quartashow.jchampionship.dao.TimeDao;
+import com.quartashow.jchampionship.model.Classificacao;
 import com.quartashow.jchampionship.model.Edicao;
+import com.quartashow.jchampionship.model.Grupo;
 import com.quartashow.jchampionship.model.Jogador;
 import com.quartashow.jchampionship.model.Time;
 
@@ -46,7 +51,13 @@ public class TimeControllerTest {
 	private JogadorDao jogadorDao;
 
 	@Mock
-	private EdicaoDao edicaoDao;	
+	private EdicaoDao edicaoDao;
+
+	@Mock
+	private GrupoDao grupoDao;
+
+	@Mock
+	private ClassificacaoDao classificacaoDao;	
 	
 	@Before
 	public void setUp() throws Exception {
@@ -142,6 +153,17 @@ public class TimeControllerTest {
 
 		Edicao edicao = Mockito.mock(Edicao.class);
 		Mockito.when(this.edicaoDao.get(Edicao.class, 1)).thenReturn(edicao);
+		
+		List<Grupo> grupos = new ArrayList<Grupo>();
+		Grupo grupo = new Grupo(1l, edicao);
+		grupo.setDescricao("A");
+		grupos.add(grupo);
+		Mockito.when(grupoDao.getGruposByEdicao(edicao)).thenReturn(grupos);
+		
+		List<Classificacao> classificacoes = new ArrayList<Classificacao>();
+		Classificacao classificacao = new Classificacao(1l, time);
+		classificacoes.add(classificacao);		
+		Mockito.when(classificacaoDao.getClassificacoesByGrupo(grupo)).thenReturn(classificacoes);
 		
 		mockMvc.perform(get("/time/1/edicao/1"))
 			.andExpect(status().isOk())

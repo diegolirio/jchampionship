@@ -26,6 +26,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.quartashow.jchampionship.dao.ClassificacaoDao;
+import com.quartashow.jchampionship.dao.ClassificacaoHistDao;
 import com.quartashow.jchampionship.dao.EdicaoDao;
 import com.quartashow.jchampionship.dao.EscalacaoDao;
 import com.quartashow.jchampionship.dao.JogadorInfoEdicaoDao;
@@ -67,6 +68,9 @@ public class JogoControllerTest {
 
 	@Mock
 	private EdicaoDao edicaoDao;
+
+	@Mock
+	private ClassificacaoHistDao classificacaoHistDao;
 
 	@Before
 	public void setUp() throws Exception {
@@ -243,6 +247,7 @@ public class JogoControllerTest {
 		
 		Mockito.when(escalacaoDao.get(jogo)).thenReturn(escalacao);
 		
+		Mockito.when(classificacaoHistDao.existHist(classificacaoA.getTime(), classificacaoA.getGrupo(), jogo.getRodada())).thenReturn(true);
 		
 		ResultActions resultActions = 
 				mockMvc.perform(post("/jogo/finalizar/1"))

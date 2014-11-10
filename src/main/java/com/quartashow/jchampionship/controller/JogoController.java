@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.quartashow.jchampionship.controller.common.ValidationResponse;
 import com.quartashow.jchampionship.dao.ClassificacaoDao;
+import com.quartashow.jchampionship.dao.ClassificacaoHistDao;
 import com.quartashow.jchampionship.dao.EdicaoDao;
 import com.quartashow.jchampionship.dao.EscalacaoDao;
 import com.quartashow.jchampionship.dao.JogadorEscaladoDao;
@@ -29,8 +30,10 @@ import com.quartashow.jchampionship.dao.JogadorInfoEdicaoDao;
 import com.quartashow.jchampionship.dao.JogoDao;
 import com.quartashow.jchampionship.helper.ValidationResponseHelper;
 import com.quartashow.jchampionship.model.Classificacao;
+import com.quartashow.jchampionship.model.ClassificacaoHist;
 import com.quartashow.jchampionship.model.CollectionEventos;
 import com.quartashow.jchampionship.model.Escalacao;
+import com.quartashow.jchampionship.model.Grupo;
 import com.quartashow.jchampionship.model.JogadorEscalado;
 import com.quartashow.jchampionship.model.JogadorInfoEdicao;
 import com.quartashow.jchampionship.model.Jogo;
@@ -57,6 +60,9 @@ public class JogoController {
 
 	@Autowired
 	private EdicaoDao edicaoDao;
+
+	@Autowired
+	private ClassificacaoHistDao classificacaoHistDao;
 
 	@RequestMapping(value="/post", method=RequestMethod.POST, produces="application/json")
 	public ResponseEntity<String> post(@Valid Jogo jogo, BindingResult result) {
@@ -130,6 +136,9 @@ public class JogoController {
 //	}
 	
 	private List<Classificacao> calculaClassificacao(Jogo jogo) {
+		if(jogo.getStatus().getId() != 2) {
+			throw new RuntimeException("Jogo nao encontra-se em andamento.");
+		}
 		List<Classificacao> classificacoes = this.classificacaoDao.getClassificacoesByGrupo(jogo.getGrupo());
 		char vencedor = 'E';
 		if(jogo.getResultadoA() > jogo.getResultadoB()) 
@@ -218,15 +227,29 @@ public class JogoController {
 		return classificacoes;
 	}
 	
+	/****************************************************************************************
+	 * 
+	 * @param id
+	 * @return JSON
+	 *
+	 * Finaliza Jogo e gera os calculos (classificacao, jogadorInfoEdicao) e guarda 
+	 *   historico da classificacao.
+	 ****************************************************************************************/
 	@RequestMapping(value="/finalizar/{id}", method=RequestMethod.POST, produces="application/json")
 	public ResponseEntity<String> finalizar(@PathVariable("id") long id) {
 		try {
 			Jogo jogo = this.jogoDao.get(Jogo.class, id);
+			// calcula classificacao
 			this.calculaClassificacao(jogo);
+			// ordena a classificacao calculada
 			List<Classificacao> classificacoes = this.ordenaClassificacao(jogo);
+			// atualiza o jogadorInfoEdicao
 			this.atualizaJogadorinfoEdicao(jogo);
+			// altera o jogo para status Finalizado
 			jogo.setStatus(new Status(3));
-			this.jogoDao.update(jogo);		
+			this.jogoDao.update(jogo);
+			// TODO guarda historico da classificacao se todos os jogos da rodada finalizado!
+			this.saveClassificacaoHist(jogo.getGrupo(), jogo.getRodada());
 			HttpHeaders headers = new HttpHeaders();
 			headers.setLocation(URI.create("/edicao/"+jogo.getGrupo().getEdicao().getId()));
 			return new ResponseEntity<String>(new ObjectMapper().writeValueAsString(classificacoes), headers, HttpStatus.CREATED);
@@ -234,6 +257,36 @@ public class JogoController {
 			e.printStackTrace();
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+	
+	private boolean saveClassificacaoHist(Grupo grupo, String rodada) {
+		List<Jogo> jogosByGrupo = jogoDao.getJogosByGrupoAndRodada(grupo, rodada);
+		// verifica se todos os jogos da rodada estado finalizados...
+		for (Jogo jogo : jogosByGrupo) {
+			if(jogo.getStatus().getId() != 3) 
+				return false;
+		}
+		List<Classificacao> classificacoesByGrupo = classificacaoDao.getClassificacoesByGrupo(grupo);
+		for (Classificacao classificacao : classificacoesByGrupo) {
+			// se nao existe o historico guarda o mesmo!
+			if(this.classificacaoHistDao.existHist(classificacao.getTime(), classificacao.getGrupo(), rodada) == false) {
+				ClassificacaoHist hist = new ClassificacaoHist();
+				hist.setColocacao(classificacao.getColocacao());
+				hist.setDerrotas(classificacao.getDerrotas());
+				hist.setEmpates(classificacao.getEmpates());
+				hist.setGolsContra(classificacao.getGolsContra());
+				hist.setGolsPro(classificacao.getGolsPro());
+				hist.setGrupo(grupo);
+				hist.setJogos(classificacao.getJogos());
+				hist.setObservacao(classificacao.getObservacao());
+				hist.setPontos(classificacao.getPontos());
+				hist.setRodada(rodada);
+				hist.setTime(classificacao.getTime());
+				hist.setVitorias(classificacao.getVitorias());
+				this.classificacaoHistDao.save(hist);
+			}
+		}
+		return true;
 	}
 
 	private void atualizaJogadorinfoEdicao(Jogo jogo) {
