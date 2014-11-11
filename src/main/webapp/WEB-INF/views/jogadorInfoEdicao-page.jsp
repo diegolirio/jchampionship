@@ -34,9 +34,9 @@
 											</a>
 										</td>
 										<td><small>${jie.jogos}</small></td>
-										<td><small>${jie.cartaoAmarelo}</small></td>
-										<td><small>${jie.cartaoVermelho}</small></td>
-										<td>${jie.gols}</td> 
+										<td><small class="text-warning">${jie.cartaoAmarelo}</small></td>
+										<td><small class="text-danger">${jie.cartaoVermelho}</small></td>
+										<td class="text-info">${jie.gols}</td> 
 									</tr>
 <%-- 								</c:if> --%>
 							</c:forEach>

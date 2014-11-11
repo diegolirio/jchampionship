@@ -38,11 +38,10 @@ public class ClassificacaoHistDao extends AbstractGenericDAO<ClassificacaoHist> 
 		query.setParameter("rodada", rodada);
 		query.setParameter("grupoId", grupo.getId());
 		return (List<ClassificacaoHist>) query.getResultList();
-		
 	}
 
 	public List<Classificacao> getClassificacoesHistByGrupo(Grupo grupo) {
-		Query query = this.manager.createQuery("Select c from ClassificacaoHist c where c.grupo.id = :idGrupo order by c.colocacao");
+		Query query = this.manager.createQuery("Select c from ClassificacaoHist c where c.grupo.id = :idGrupo order by c.rodada, c.colocacao");
 		query.setParameter("idGrupo", grupo.getId());
 		@SuppressWarnings("unchecked")
 		List<Classificacao> list = query.getResultList();

@@ -136,12 +136,12 @@ public class JogoController {
 //	}
 	
 	private List<Classificacao> calculaClassificacao(Jogo jogo) {
-		List<Classificacao> classificacoes = this.classificacaoDao.getClassificacoesByGrupo(jogo.getGrupo());
 		char vencedor = 'E';
 		if(jogo.getResultadoA() > jogo.getResultadoB()) 
 			vencedor = 'A';
 		else if (jogo.getResultadoA() < jogo.getResultadoB())
 			vencedor = 'B';
+		List<Classificacao> classificacoes = this.classificacaoDao.getClassificacoesByGrupo(jogo.getGrupo());
 		for (Classificacao classTime : classificacoes) {
 			// calcula classificacao time A
 			if(classTime.getTime().getId() == jogo.getTimeA().getId()) {
@@ -266,6 +266,13 @@ public class JogoController {
 			if(jogo.getStatus().getId() != 3) 
 				return false;
 		}
+		
+		// verifica se tem no historico rodada maior ou igual a mesma, sim -> nao guarda historico!
+		int rodadaLastHist = this.classificacaoHistDao.getNumberHistLastRodada(grupo);
+		if(rodadaLastHist >= rodada) {
+			return false;
+		}
+		
 		List<Classificacao> classificacoesByGrupo = classificacaoDao.getClassificacoesByGrupo(grupo);
 		for (Classificacao classificacao : classificacoesByGrupo) {
 			// se nao existe o historico guarda o mesmo!
@@ -377,8 +384,9 @@ public class JogoController {
 	}
 
 	private List<Classificacao> retornaCalculaClassificacao(Jogo jogo) {
-		
+		// pega a ultima rodada guardada no historico da classificacao
 		int rodadaLastHist = this.classificacaoHistDao.getNumberHistLastRodada(jogo.getGrupo());
+		// se o ultimo hist da clasificacao for a mesma rodada do jogo cancelado, delete o historico... 
 		if(rodadaLastHist == jogo.getRodada()) {
 			List<ClassificacaoHist> histLastRodada = classificacaoHistDao.getHistListByRodada(jogo.getRodada(), jogo.getGrupo());
 			for (ClassificacaoHist hist : histLastRodada) {
@@ -386,13 +394,15 @@ public class JogoController {
 			}			
 		}
 		
-		List<Classificacao> classificacoes = this.classificacaoDao.getClassificacoesByGrupo(jogo.getGrupo());
 		char vencedor = 'E';
 		if(jogo.getResultadoA() > jogo.getResultadoB()) 
 			vencedor = 'A';
 		else if (jogo.getResultadoA() < jogo.getResultadoB())
 			vencedor = 'B';
 		
+		List<Classificacao> classificacoes = this.classificacaoDao.getClassificacoesByGrupo(jogo.getGrupo());
+		
+		// Retorna o calculo gerado da clasificacao
 		for (Classificacao classTime : classificacoes) {
 			// calcula classificacao time A
 			if(classTime.getTime().getId() == jogo.getTimeA().getId()) {
