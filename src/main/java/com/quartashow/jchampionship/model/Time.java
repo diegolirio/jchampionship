@@ -25,6 +25,7 @@ public class Time {
 
 	@JsonBackReference
 	@ManyToMany(fetch=FetchType.EAGER)
+	//@OrderBy(value="nome")
 	private List<Jogador> jogadores;
 	
 	public Time() {}

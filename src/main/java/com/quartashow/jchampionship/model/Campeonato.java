@@ -29,7 +29,7 @@ public class Campeonato {
 	@ManyToMany(fetch=FetchType.EAGER)
 	private List<Usuario> usuarios;
 	
-	//private String dono;//usuario
+	private String imgName = "/static/quartashow/img/trofeus/trophy1.png";
 	
 	public int getId() {
 		return id;
@@ -55,6 +55,12 @@ public class Campeonato {
 	}
 	public void setUsuarios(List<Usuario> usuarios) {
 		this.usuarios = usuarios;
+	}
+	public String getImgName() {
+		return imgName;
+	}
+	public void setImgName(String imgName) {
+		this.imgName = imgName;
 	}
 	@Override
 	public String toString() {

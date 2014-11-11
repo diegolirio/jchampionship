@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OrderBy;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -23,6 +24,7 @@ public class Jogador {
 	
 	@JsonBackReference
 	@ManyToMany(mappedBy="jogadores")
+	@OrderBy(value="nome")
 	private List<Time> times;
 	
 	@NotNull
