@@ -278,7 +278,8 @@
 	                    <li>
 	                        <a href="${pageContext.request.contextPath}/edicao/system"><i class="fa fa-fw fa-file"></i> Criar novo Campeonato</a>
 	                    </li>         
-                    </c:if>                                 
+                    </c:if>   
+					
                 </ul>
             </div>
             <!-- /.sidebar-collapse -->

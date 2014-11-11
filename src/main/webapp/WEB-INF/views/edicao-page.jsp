@@ -80,21 +80,6 @@
 	    </div>
 	    <!-- /.row -->
 	    
-	    <!-- publicidade -->
-	    <div class="row">
-	    	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-				<!-- Azul_Suave_728X90 -->
-				<ins class="adsbygoogle"
-				     style="display:inline-block;width:100%;height:90px"
-				     data-ad-client="ca-pub-1041989301102612"
-				     data-ad-slot="2407772281"></ins>
-				<script>
-  					(adsbygoogle = window.adsbygoogle || []).push({}); 
- 				</script>	  
-			</div>   		
-	    </div>
-	     
 	     <br/>
 	     
                         	<c:forEach var="j" items="${g.jogos}">
@@ -148,16 +133,35 @@
 						        </div>                        	
                         	</c:forEach>
                         	<c:if test="${not empty usuario && not empty admin && admin}">
-						        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">   
-						        	<br/>
-						        	<a href="${pageContext.request.contextPath}/edicao/system/${edicao.id}/jogos" class="btn btn-block btn-outline btn-success" >
-						        		Cadastrar Novo jogo 
-						        	</a> 
-						        </div> 
+                        		<div class="row">
+							        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">   
+							        	<br/>
+							        	<a href="${pageContext.request.contextPath}/edicao/system/${edicao.id}/jogos" class="btn btn-block btn-outline btn-success" >
+							        		Cadastrar Novo jogo 
+							        	</a> 
+							        </div> 
+							    </div>
 						    </c:if>    
 						                   
-							<br/><br/><br/><br/>        
-	    
+							<br/><br/> 
+							
+			        	    <!-- publicidade -->
+						    <div class="row">
+						    	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+									<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+									<!-- Azul_Suave_728X90 -->
+									<ins class="adsbygoogle"
+									     style="display:inline-block;width:100%;height:90px"
+									     data-ad-client="ca-pub-1041989301102612"
+									     data-ad-slot="2407772281"></ins>
+									<script>
+					  					(adsbygoogle = window.adsbygoogle || []).push({}); 
+					 				</script>	  
+								</div>   		
+						    </div>
+						    
+						    <br/><br/><br/><br/>
+						    
 	</c:forEach>
 	    
     <script src="${pageContext.request.contextPath}/static/quartashow/js/edicao-controller.js"></script>
