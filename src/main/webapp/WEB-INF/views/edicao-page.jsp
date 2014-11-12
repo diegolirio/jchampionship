@@ -83,7 +83,7 @@
 	     <br/>
 	     
                         	<c:forEach var="j" items="${g.jogos}">
-						        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">   
+						        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12" id="jogo${j.id}">   
 						        	
 						        		<div class="table-responsive">
 						        			<a href="${pageContext.request.contextPath}/jogo/${j.id}">
@@ -91,7 +91,15 @@
 								        			<thead>
 								        				<tr>
 								        					<td colspan="5" class="text-muted">
-								        						<small>Rodada: ${j.rodada} - <fmt:formatDate value="${j.dataHora}" pattern="dd/MM/yyyy"/></small>
+								        						<small> 
+								        							Rodada: ${j.rodada} - <fmt:formatDate value="${j.dataHora}" pattern="dd/MM/yyyy"/>
+								        						</small>
+																<c:if test="${not empty usuario && not empty admin && admin && j.status.id != 3}">
+														    		<a href="${pageContext.request.contextPath}/jogo/system/form/${j.id}">
+														   				<span class="glyphicon glyphicon-pencil text-muted pull-right pencil-edit"></span>
+														   			</a>    
+														   		</c:if>								        							
+								        						
 								        					</td>
 								        				</tr>
 								        			</thead>

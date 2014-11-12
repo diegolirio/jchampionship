@@ -1,5 +1,7 @@
 package com.quartashow.jchampionship.model;
 
+import java.text.SimpleDateFormat;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -133,6 +135,14 @@ public class Jogo {
 		this.rodada = rodada;
 	}
 
+	public String getDataHoraStrEN() {
+		return new SimpleDateFormat("yyyy/MM/dd").format(this.dataHora);
+	}
+	
+	public String getDataHoraStrBR() {
+		return new SimpleDateFormat("dd/MM/yyyy").format(this.dataHora);
+	}	
+	
 	@Override
 	public String toString() {
 		return "Jogo [id=" + id + ", grupo=" + grupo + ", timeA=" + timeA

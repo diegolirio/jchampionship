@@ -25,18 +25,25 @@ import com.quartashow.jchampionship.dao.ClassificacaoDao;
 import com.quartashow.jchampionship.dao.ClassificacaoHistDao;
 import com.quartashow.jchampionship.dao.EdicaoDao;
 import com.quartashow.jchampionship.dao.EscalacaoDao;
+import com.quartashow.jchampionship.dao.GrupoDao;
+import com.quartashow.jchampionship.dao.HarbitoDao;
 import com.quartashow.jchampionship.dao.JogadorEscaladoDao;
 import com.quartashow.jchampionship.dao.JogadorInfoEdicaoDao;
 import com.quartashow.jchampionship.dao.JogoDao;
+import com.quartashow.jchampionship.dao.LocalDao;
+import com.quartashow.jchampionship.dao.TimeDao;
 import com.quartashow.jchampionship.helper.ValidationResponseHelper;
 import com.quartashow.jchampionship.model.Classificacao;
 import com.quartashow.jchampionship.model.ClassificacaoHist;
 import com.quartashow.jchampionship.model.CollectionEventos;
+import com.quartashow.jchampionship.model.Edicao;
 import com.quartashow.jchampionship.model.Escalacao;
 import com.quartashow.jchampionship.model.Grupo;
+import com.quartashow.jchampionship.model.Harbito;
 import com.quartashow.jchampionship.model.JogadorEscalado;
 import com.quartashow.jchampionship.model.JogadorInfoEdicao;
 import com.quartashow.jchampionship.model.Jogo;
+import com.quartashow.jchampionship.model.Local;
 import com.quartashow.jchampionship.model.Status;
 
 @Controller
@@ -64,6 +71,18 @@ public class JogoController {
 	@Autowired
 	private ClassificacaoHistDao classificacaoHistDao;
 
+	@Autowired
+	private GrupoDao grupoDao;
+
+	@Autowired
+	private HarbitoDao harbitoDao;
+
+	@Autowired
+	private LocalDao localDao;
+
+	@Autowired
+	private TimeDao timeDao;
+
 	@RequestMapping(value="/post", method=RequestMethod.POST, produces="application/json")
 	public ResponseEntity<String> post(@Valid Jogo jogo, BindingResult result) {
 		HttpHeaders headers = new HttpHeaders();
@@ -76,9 +95,13 @@ public class JogoController {
 			if(jogo.getTimeA().getId() == jogo.getTimeB().getId()) {
 				throw new RuntimeException("Nao é permitido cadastrar time contra ele mesmo time!");
 			}
-			jogo.setStatus(new Status(1));
-			this.jogoDao.save(jogo);
-			jogo = this.jogoDao.get(Jogo.class, jogo.getId());
+			if(jogo.getId() == 0) {
+				jogo.setStatus(new Status(1));
+				this.jogoDao.save(jogo);
+				jogo = this.jogoDao.get(Jogo.class, jogo.getId());
+			} else {
+				this.jogoDao.update(jogo);
+			}
 			//headers.setLocation(URI.create("/jogo/get/"+jogo.getId()));
 			bodyJson = new ObjectMapper().writeValueAsString(jogo);
 		} catch (IOException e) {
@@ -123,6 +146,22 @@ public class JogoController {
 		mv.addObject("edicao", jogo.getGrupo().getEdicao());
 		return mv ;
 	}
+	
+	@RequestMapping(value="/system/form/{id}", method=RequestMethod.GET) 
+	public ModelAndView pageJogoForm(@PathVariable("id") long id) {
+		ModelAndView mv = new ModelAndView("_base");
+		mv.addObject("content_import", "jogo-form");
+		Jogo jogo = this.jogoDao.get(Jogo.class, id);
+		mv.addObject("jogo", jogo); 
+		Edicao edicao = this.edicaoDao.get(Edicao.class, jogo.getGrupo().getEdicao().getId());
+		mv.addObject("edicao", edicao);
+		//mv.addObject("jogos", this.jogoDao.getJogosByEdicao(edicao));
+		mv.addObject("grupos", this.grupoDao.getGruposByEdicao(edicao));
+		mv.addObject("harbitos", this.harbitoDao.getList(Harbito.class));
+		mv.addObject("locais", this.localDao.getList(Local.class));
+		mv.addObject("times", this.timeDao.getTimesByEdicaoClassificacao(edicao));
+		return mv;
+	}	
 	
 //	@RequestMapping(value="/system/{id}", method=RequestMethod.GET)
 //	public ModelAndView pageSystemJogo(@PathVariable("id") long id) {

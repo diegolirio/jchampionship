@@ -41,6 +41,12 @@
                     $( ".datepicker" ).datepicker({dateFormat: 'dd/mm/yy'});
             });
     </script> 
+    
+    <style type="text/css">
+    	a.pencil-edit:hover {
+ 		   color: red; 
+		}
+    </style>
 
 </head>
  
