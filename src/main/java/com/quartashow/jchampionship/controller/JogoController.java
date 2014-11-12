@@ -347,9 +347,12 @@ public class JogoController {
 	public ResponseEntity<String> returnCalculadoStatusFinalizadoEmAndamento(@PathVariable("id") long id) {
 		try {
 			Jogo jogo = this.jogoDao.get(Jogo.class, id);
+			if(jogo.getStatus().getId() != 3) { // finalizado
+				throw new RuntimeException("Jogo encontra-se com Status " + jogo.getStatus().getDescricao());
+			}
 			this.retornaCalculoJogadorInfoEdicao(jogo);
 			this.retornaCalculaClassificacao(jogo);
-			this.ordenaClassificacao(jogo);
+			this.ordenaClassificacao(jogo); 
 			jogo.setStatus(new Status(2));
 			this.jogoDao.update(jogo);
 			return new ResponseEntity<String>(HttpStatus.OK);

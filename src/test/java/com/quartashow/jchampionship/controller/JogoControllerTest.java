@@ -323,7 +323,7 @@ public class JogoControllerTest {
 		jogo.setGrupo(new Grupo(1l, edicao, classificacoes));
 		jogo.setResultadoA(3);
 		jogo.setResultadoB(1);
-		jogo.setStatus(new Status(2l, "Em andamento"));
+		jogo.setStatus(new Status(3l, "Finalizado"));
 		Mockito.when(this.jogoDao.get(Jogo.class, 1l)).thenReturn(jogo);
 		Mockito.when(this.classificacaoDao.getClassificacoesByGrupo(jogo.getGrupo())).thenReturn(classificacoes);		
 		
