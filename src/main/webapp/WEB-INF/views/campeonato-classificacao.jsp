@@ -31,7 +31,7 @@
 										<img alt="${e.id}" src="${pageContext.request.contextPath}${e.campeonato.imgName}">
 	                                </div>
 	                                <div class="col-xs-9 text-right">
-	                                    <div class="huge"><a href="${pageContext.request.contextPath}/edicao/${e.id}">${e.campeonato.descricao} <span class="text-info">${e.descricao}</span></a></div>
+	                                    <div class="huge"><a href="${pageContext.request.contextPath}/edicao/${e.id}">${e.campeonato.descricao} <br/><span class="text-info">${e.descricao}</span></a></div>
 	                                    <div>${e.status.descricao}</div>
 	                                </div>
 	                            </div>
@@ -46,6 +46,33 @@
 	                    </div>
 	                </div>
 	            </c:forEach>
+	            
+<!-- 				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 text-center"> -->
+<!-- 					Facebook -->
+<!-- 						<div id="fb-root"></div> -->
+<!-- 						<script> -->
+<!-- // 							(function(d, s, id) { -->
+<!-- // 								var js, fjs = d.getElementsByTagName(s)[0]; -->
+<!-- // 								if (d.getElementById(id)) return; -->
+<!-- // 								js = d.createElement(s); js.id = id; -->
+<!-- // 								js.src = "//connect.facebook.net/pt_BR/all.js#xfbml=1"; -->
+<!-- // 								fjs.parentNode.insertBefore(js, fjs); -->
+<!-- // 							}(document, 'script', 'facebook-jssdk')); -->
+<!-- 						</script> -->
+<!-- 					Facebook      		 -->
+<!-- 					 Facebook        -->
+<!-- 						  <div class="fb-like-box"  -->
+<!-- 							 data-href="http://www.facebook.com/asiscoweb"  -->
+<!-- 							 data-width="100%"  -->
+<!-- 							 data-height="200"  -->
+<!-- 							 data-show-faces="true"  -->
+<!-- 							 data-stream="false"  -->
+<!-- 							 data-header="true"> -->
+<!-- 						</div>               -->
+<!-- 					 Facebook  -->
+<!-- 		         </div>  	             -->
+	            
+	            
 		   		<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 text-center">
 		
 					<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -59,6 +86,7 @@
 					</script>		
 												
 			  </div>	
+			  
 			  <br/><br/><br/><br/>             
            </div>
 	           

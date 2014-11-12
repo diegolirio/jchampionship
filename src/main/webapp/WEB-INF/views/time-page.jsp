@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 		
@@ -80,14 +81,29 @@
 	 
 	<c:if test="${not empty classificacao}">
 		<div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             ${classificacao.grupo.edicao.campeonato.descricao} ${classificacao.grupo.edicao.descricao }
                         </div>
                         <!-- /.panel-heading --> 
                         <div class="panel-body">
-							<jsp:include page="grafico_pizza_classificacao.jsp"></jsp:include>
+							<div class="col-lg-5">
+								<div class="text-center">
+									<ul class="text-muted">
+										<li style="font-size: 20px;" class="text-primary">${classificacao.colocacao}º Colocado</li>
+										<li style="font-size: 20px;" class="text-primary">${classificacao.pontos} pontos</li>
+										<br/>
+										<li>${classificacao.golsPro} Gols Pró</li>
+										<li>${classificacao.golsContra} Gols Contra</li>
+										<li>${classificacao.golsPro - classificacao.golsContra} Saldo de Gols</li>
+										<li><fmt:formatNumber pattern="##0.00">${classificacao.pontos * 100 / ((classificacao.jogos == 0 ? 1 : classificacao.jogos) * 3)}</fmt:formatNumber>  % de aproveitamento</li>							
+									</ul>
+								</div>
+							</div>                           
+                        	<div class="col-lg-7">
+								<jsp:include page="grafico_pizza_classificacao.jsp"></jsp:include>
+							</div>
                         </div>
                         <!-- /.panel-body -->
                     </div>

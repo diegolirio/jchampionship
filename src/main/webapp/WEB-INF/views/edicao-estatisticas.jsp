@@ -8,16 +8,7 @@
 
     <div class="row">
         <div class="col-lg-12">
-          
-          	<c:forEach var="g" items="${edicao.grupos}">
-          		<p>${g.descricao}</p>
-          		<hr/>
-          		<c:forEach var="ch" items="${g.classificacoes}">
-          			<p>Rodada: ${ch.rodada}</p>
-          			<p><b>${ch.time.nome} - ${ch.colocacao}º</b></p> 
-          		</c:forEach>
-          	</c:forEach>
-          
+           <jsp:include page="classificacaoHist-grafico-linha.jsp"></jsp:include>
         </div>
     </div>
     <!-- /.row -->

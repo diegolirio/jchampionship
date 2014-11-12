@@ -205,12 +205,12 @@ public class EdicaoController {
 		ModelAndView mv = new ModelAndView("_base2");
 		mv.addObject("content_import", "edicao-estatisticas");
 		Edicao edicao = this.edicaoDao.get(Edicao.class, id);
-		List<Grupo> grupos = this.grupoDao.getGruposByEdicao(edicao);
-		for (Grupo grupo : grupos) {
-			grupo.setClassificacoes(this.classificacaoHistDao.getClassificacoesHistByGrupo(grupo));
-		}
-		edicao.setGrupos(grupos);
-		mv.addObject("edicao", edicao);
+		//List<Grupo> grupos = this.grupoDao.getGruposByEdicao(edicao);
+		//for (Grupo grupo : grupos) {
+		//	grupo.setClassificacoes(this.classificacaoHistDao.getClassificacoesHistByGrupo(grupo));
+		//}
+		//edicao.setGrupos(grupos);
+		mv.addObject("edicao", edicao); 
 		return mv;
 	}	
 }

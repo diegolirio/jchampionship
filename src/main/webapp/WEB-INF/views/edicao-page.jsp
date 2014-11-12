@@ -11,7 +11,6 @@
 	  fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));</script>
 
-     
 	<div class="fb-like pull-right" 
 		 data-href="${requestScope['javax.servlet.forward.request_uri']}" 
 		 data-width="20" data-height="20" 

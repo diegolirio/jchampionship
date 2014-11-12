@@ -15,14 +15,14 @@
 
 
         <ul class="nav navbar-top-links navbar-right">
-        
+        	<li><a class="btn btn-social-icon btn-facebook" href="https://www.facebook.com/quartashowpontocom"><i class="fa fa-facebook"></i>acebook</a></li>
         	<!-- 
         
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                     <i class="fa fa-envelope fa-fw"></i>  <i class="fa fa-caret-down"></i>
                 </a>
-                <ul class="dropdown-menu dropdown-messages">
+                <ul class="dropdown-menu dropdown-messages"> 
                     <li>
                         <a href="#">
                             <div>
@@ -279,7 +279,7 @@
 	                        <a href="${pageContext.request.contextPath}/edicao/system"><i class="fa fa-fw fa-file"></i> Criar novo Campeonato</a>
 	                    </li>         
                     </c:if>   
-					
+                    
                 </ul>
             </div>
             <!-- /.sidebar-collapse -->
