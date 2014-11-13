@@ -47,7 +47,7 @@ public class ClassificacaoHistControllerTest {
 	public void testDeveRetornarListaDeHistoricoDaClassificacaoPorGrupo() throws Exception {
 		Grupo grupo = new Grupo(1l, new Edicao(1l));
 		Mockito.when(grupoDao.get(Grupo.class, grupo.getId())).thenReturn(grupo);
-		mockMvc.perform(MockMvcRequestBuilders.get("/classificacaoHist/get/list/by/grupo/"+grupo .getId()))
+		mockMvc.perform(MockMvcRequestBuilders.get("/classificacaoHist/get/list/by/grupo/"+grupo .getId()+"/json"))
 			.andExpect(MockMvcResultMatchers.status().isOk()); 
 	}
 	

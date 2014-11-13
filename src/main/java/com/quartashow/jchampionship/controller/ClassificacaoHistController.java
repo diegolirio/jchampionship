@@ -27,7 +27,7 @@ public class ClassificacaoHistController {
 	@Autowired
 	private ClassificacaoHistDao classificacaoHistDao;
 
-	@RequestMapping(value="/get/list/by/grupo/{grupoId}", method=RequestMethod.GET, produces="application/json")
+	@RequestMapping(value="/get/list/by/grupo/{grupoId}/json", method=RequestMethod.GET, produces="application/json")
 	public ResponseEntity<String> getListByGrupo(@PathVariable("grupoId") long grupoId) {
 		try {
 			Grupo grupo = this.grupoDao.get(Grupo.class, grupoId); 

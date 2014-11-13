@@ -15,7 +15,7 @@
 
 
         <ul class="nav navbar-top-links navbar-right">
-        	<li><a class="btn btn-social-icon btn-facebook" href="https://www.facebook.com/quartashowpontocom"><i class="fa fa-facebook"></i>acebook</a></li>
+        	<li><a class="btn btn-social-icon btn-facebook" href="https://www.facebook.com/quartashowpontocom" target="_blank"><i class="fa fa-facebook"></i>acebook</a></li>
         	<!-- 
         
             <li class="dropdown">
@@ -263,9 +263,9 @@
 	                    <li>
 	                        <a href="${pageContext.request.contextPath}/jogador/by/edicao/${edicao.id}"><i class="fa fa-dashboard fa-fw"></i> Jogadores</a>
 	                    </li>
-<!-- 	                    <li> -->
-<%-- 	                        <a href="${pageContext.request.contextPath}/edicao/${edicao.id}/estatisticas"><i class="fa fa-dashboard fa-fw"></i> Estatísticas</a> --%>
-<!-- 	                    </li>	                     -->
+	                    <li>
+	                        <a href="${pageContext.request.contextPath}/edicao/${edicao.id}/estatisticas"><i class="fa fa-dashboard fa-fw"></i> Estatísticas</a>
+	                    </li>	                    
                     </c:if>                    
 
 					<c:if test="${usuario.superUsuario == true}">

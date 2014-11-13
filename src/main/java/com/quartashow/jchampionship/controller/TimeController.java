@@ -136,9 +136,21 @@ public class TimeController {
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	@RequestMapping(value="/get/list/by/edicao/{edicaoId}/json",  method=RequestMethod.GET, produces="application/json")
+	public ResponseEntity<String> getTimesByEdicao(@PathVariable("edicaoId") long edicaoId) {
+		try {
+			Edicao edicao = this.edicaoDao.get(Edicao.class, edicaoId);
+			List<Time> times = this.timeDao.getTimesByEdicaoClassificacao(edicao );
+			return new ResponseEntity<String>(new ObjectMapper().writeValueAsString(times ), HttpStatus.OK);
+		} catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 		
 	@RequestMapping(value="/by/edicao/{edicaoId}", method=RequestMethod.GET)
-	public ModelAndView pageTimeByEdicao(@PathVariable("edicaoId") long edicaoId) {
+	public ModelAndView pageTimesByEdicao(@PathVariable("edicaoId") long edicaoId) {
 		ModelAndView mv = new ModelAndView("_base2");
 		mv.addObject("content_import", "time-list");
 		Edicao edicao = this.edicaoDao.get(Edicao.class, edicaoId);

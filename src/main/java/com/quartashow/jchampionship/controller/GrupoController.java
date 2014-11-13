@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.google.gson.Gson;
 import com.quartashow.jchampionship.controller.common.ValidationResponse;
+import com.quartashow.jchampionship.dao.EdicaoDao;
 import com.quartashow.jchampionship.dao.GrupoDao;
 import com.quartashow.jchampionship.helper.ValidationResponseHelper;
 import com.quartashow.jchampionship.model.Edicao;
@@ -29,36 +30,48 @@ public class GrupoController {
 
 	@Autowired
 	private GrupoDao grupoDao;
-	
-	private Gson gson;
-	
-	public GrupoController() {
-		this.gson = new Gson();
-	}
 
+	@Autowired
+	private EdicaoDao edicaoDao;
+	
 	@RequestMapping(value="/post", method=RequestMethod.POST, produces="application/json")
 	public ResponseEntity<String> save(@Valid Grupo grupo, BindingResult result) {
-		if(result.hasErrors()) {
-			ValidationResponse validationResponse = new ValidationResponseHelper().fieldsErrorsToValidationResponse(result);
-			return new ResponseEntity<String>(this.gson.toJson(validationResponse), HttpStatus.UNAUTHORIZED);
+		try {
+			if(result.hasErrors()) {
+				ValidationResponse validationResponse = new ValidationResponseHelper().fieldsErrorsToValidationResponse(result);
+				return new ResponseEntity<String>(new ObjectMapper().writeValueAsString(validationResponse), HttpStatus.UNAUTHORIZED);
+			}
+			this.grupoDao.save(grupo);
+			HttpHeaders headers = new HttpHeaders();
+			headers.setLocation(URI.create("/grupo/get/"+grupo.getId()));
+			headers.set("id", String.valueOf(grupo.getId()));
+			return new ResponseEntity<String>(new ObjectMapper().writeValueAsString(grupo), headers, HttpStatus.CREATED);
+		} catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		this.grupoDao.save(grupo);
-		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(URI.create("/grupo/get/"+grupo.getId()));
-		headers.set("id", String.valueOf(grupo.getId()));
-		return new ResponseEntity<String>(this.gson.toJson(grupo), headers, HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(value="/get/{id}", method=RequestMethod.GET, produces="application/json")
 	public  ResponseEntity<String> get(@PathVariable("id") long id) {
-		Grupo grupo = this.grupoDao.get(Grupo.class, id); 
-		return new ResponseEntity<String>(this.gson.toJson(grupo), HttpStatus.OK);
+		try {
+			Grupo grupo = this.grupoDao.get(Grupo.class, id); 
+			return new ResponseEntity<String>(new ObjectMapper().writeValueAsString(grupo), HttpStatus.OK);
+		} catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 	
 	@RequestMapping(value="/get/list/by/edicao/{edicaoId}", method=RequestMethod.GET, produces="application/json")
 	public ResponseEntity<String> getGruposByEdicao(@PathVariable("edicaoId") long edicaoId) {
-		List<Grupo> list = this.grupoDao.getGruposByEdicao(new Edicao(edicaoId)); 
-		return new ResponseEntity<String>(this.gson.toJson(list), HttpStatus.OK);
+		try {
+			List<Grupo> list = this.grupoDao.getGruposByEdicao(new Edicao(edicaoId)); 
+			return new ResponseEntity<String>(new ObjectMapper().writeValueAsString(list), HttpStatus.OK);
+		} catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 	
 	@RequestMapping(value="/delete_confirm/{id}", method=RequestMethod.GET)
