@@ -20,4 +20,15 @@ public class ClassificacaoDao extends AbstractGenericDAO<Classificacao> {
 		return list;
 	}
 
+	public List<Classificacao> getLideres(Grupo grupo) {
+		Query query = manager.
+						createQuery("Select c from Classificacao c where c.grupo.id = :grupoId " +
+									" and c.pontos = (Select max(cp.pontos) from Classificacao cp where cp.grupo.id = c.grupo.id )" +
+								    " and (c.golsPro - c.golsContra) = (Select max(cs.golsPro - cs.golsContra) from Classificacao cs where cs.grupo.id = c.grupo.id )");
+		query.setParameter("grupoId", grupo.getId());
+		@SuppressWarnings("unchecked")
+		List<Classificacao> list = (List<Classificacao>) query.getResultList();
+		return list;
+	}
+
 }

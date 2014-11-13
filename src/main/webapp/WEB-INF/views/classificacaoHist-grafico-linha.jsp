@@ -5,7 +5,7 @@
 <!--     <script language="javascript" type="text/javascript" src="jquery.flot.js"></script>	 -->
     <script language="javascript" type="text/javascript" src="${pageContext.request.contextPath}/static/flot_charts/jquery.flot.js"></script>
 	
-	<h3 class="text-info">Histórico de Colocação</h3>
+	<h4 class="text-info">Histórico de Colocação</h4>
 	
 	<p id="choices"></p>
 	<br/><br/>
@@ -38,7 +38,7 @@
 		$.getJSON(  '${pageContext.request.contextPath}/time/get/list/by/edicao/${edicao.id}/json',
 					function(data) {
 						times = data;
-						console.log(JSON.stringify(times));
+						//console.log(JSON.stringify(times));
 						
 					    $.each(times, function(key, val) { 
 					        choiceContainer.append('<div class="col-md-2"><input type="checkbox" title="'+val.nome+'" name="' + val.id +
@@ -51,15 +51,15 @@
 						// pega os grupos
 						$.getJSON(  '${pageContext.request.contextPath}/grupo/get/list/by/edicao/${edicao.id}',
 									function(dataGrupos) {
-										console.log(JSON.stringify(dataGrupos));
-										console.log(dataGrupos.length);
+										//console.log(JSON.stringify(dataGrupos));
+										//console.log(dataGrupos.length);
 										$.each(dataGrupos, function(i, g) {
 											console.log(i); 
 											// a pega a classificacao de cada grupo
 											$.getJSON(  '${pageContext.request.contextPath}/classificacaoHist/get/list/by/grupo/'+g.id+'/json',
 													function(dataHist) { 
 														classhist.push(dataHist);
-														console.log(JSON.stringify(classhist));
+														//console.log(JSON.stringify(classhist));
 														if(i == dataGrupos.length-1) {
 															plotAccordingToChoices();
 														}

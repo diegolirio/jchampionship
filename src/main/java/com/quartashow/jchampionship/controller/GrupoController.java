@@ -88,4 +88,5 @@ public class GrupoController {
 		this.grupoDao.delete(Grupo.class, id);
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
+
 }

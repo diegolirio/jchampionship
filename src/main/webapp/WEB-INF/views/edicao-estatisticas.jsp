@@ -4,14 +4,37 @@
 
 <!-- http://www.flotcharts.org/flot/examples/interacting/index.html -->
 
-	<h3 class="page-header text-success">Estatisticas  <small>${edicao.campeonato.descricao} ${edicao.descricao}</small></h3>
-
     <div class="row">
         <div class="col-lg-12">
+           <h4 class="page-header text-success">Estatisticas  <small>${edicao.campeonato.descricao} ${edicao.descricao}</small></h4>
            <jsp:include page="classificacaoHist-grafico-linha.jsp"></jsp:include>
         </div>
     </div>
     <!-- /.row -->
+    <div class="row">
+    	<!-- Lider de cada Grupo | grafico de pizza v,d, e + -->
+    	<jsp:include page="classificacao-list-lider-grafico-pizza.jsp"></jsp:include>
+    </div> 
+    <hr/>
+    <div class="row">
+    	<!-- Artilheiros(lista) | media de gols por partida -->
+    </div>
+    <div class="row">
+    	<!-- Times(lista) menos vazados | media de gols contra por partida -->
+    </div>
+    <div class="row">
+    	<%-- TODO: Analisar TimeInfoEdicao para registrar qtde de faltas, cartoes,  --%>
+    	<!-- Times(lista) mais levou cartão vermelho | qtde -->
+    </div> 
+    <div class="row">
+    	<!-- Times(lista) mais levou cartão amarelo | qtde -->
+    </div>    
+<!--     <div class="row"> -->
+<!--     	Time mais fez faltas | qtde -->
+<!--     </div> -->
+    <div class="row">
+    	<!-- Quem mais levou cartão | qtde -->
+    </div>    
     
 <%--     <script src="${pageContext.request.contextPath}/static/quartashow/js/edicao-controller.js"></script> --%>
               

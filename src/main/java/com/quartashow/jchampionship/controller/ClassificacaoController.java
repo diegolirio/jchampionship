@@ -2,6 +2,7 @@ package com.quartashow.jchampionship.controller;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -20,8 +21,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.quartashow.jchampionship.controller.common.ValidationResponse;
 import com.quartashow.jchampionship.dao.ClassificacaoDao;
+import com.quartashow.jchampionship.dao.GrupoDao;
 import com.quartashow.jchampionship.helper.ValidationResponseHelper;
 import com.quartashow.jchampionship.model.Classificacao;
+import com.quartashow.jchampionship.model.Grupo;
 
 @Controller
 @RequestMapping("classificacao")
@@ -29,6 +32,8 @@ public class ClassificacaoController {
 
 	@Autowired
 	private ClassificacaoDao classficacaoDao;
+	@Autowired
+	private GrupoDao grupoDao;
 
 	@RequestMapping(value="/post", method=RequestMethod.POST, produces="application/json")
 	public ResponseEntity<String> post(@Valid Classificacao classificacao, BindingResult result) {
@@ -69,6 +74,17 @@ public class ClassificacaoController {
 		this.classficacaoDao.delete(Classificacao.class, id);
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
+	
+	@RequestMapping(value="/get/list/lider/by/grupo/{grupoId}", method=RequestMethod.GET, produces="application/json")
+	public ResponseEntity<String> getListLider(@PathVariable("grupoId") long grupoId) {
+		try {
+			Grupo grupo = this.grupoDao.get(Grupo.class, grupoId);
+			List<Classificacao> classificacoes = this.classficacaoDao.getLideres(grupo);
+			return new ResponseEntity<String>(new ObjectMapper().writeValueAsString(classificacoes), HttpStatus.OK);
+		} catch(Exception e) {
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}	
 	
 }
  
