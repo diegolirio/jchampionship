@@ -14,8 +14,8 @@
     <div class="row">
     	<!-- Lider de cada Grupo | grafico de pizza v,d, e + -->
     	<jsp:include page="classificacao-list-lider-grafico-pizza.jsp"></jsp:include>
-    </div> 
-    <hr/>
+    </div>
+    <br/><br/><hr/>
     <div class="row">
     	<!-- Artilheiros(lista) | media de gols por partida -->
     </div>

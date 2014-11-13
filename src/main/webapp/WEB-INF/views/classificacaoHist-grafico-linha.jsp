@@ -82,7 +82,7 @@
 	    $.each(times, function(key, val) {
 	        val.color = i;
 	        ++i;
-	    });
+	    });  
 	    
 	    function plotAccordingToChoices() {
 	    	//sleep(500);
@@ -126,7 +126,8 @@
 										max: times.length+1,
 									    ticks: colocacoesArray,
 										transform: function (v) { return -v; },
-										//inverseTransform: function (v) { return -v; }										   
+										//inverseTransform: function (v) { return -v; }		
+										grid: { hoverable: true },
 									},						
 								xaxis: { tickDecimals: 0,
 										 ticks: rodadasArray},
@@ -135,6 +136,7 @@
 							};
 			
 	            $.plot( $("#placeholder"), timesData, options);
+	            
 	    }
 	
 	});

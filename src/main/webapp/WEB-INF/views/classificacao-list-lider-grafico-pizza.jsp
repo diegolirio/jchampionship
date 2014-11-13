@@ -3,7 +3,7 @@
 
 	<div class="col-lg-3 col-md-3">
 		<div class="demo-container">
-			<p id="id_lider"></p>
+			<p id="id_lider" class="text-center"></p>
 			<div id="placeholder_pie" class="demo-placeholder"></div>
 		</div>
 	</div>
@@ -63,7 +63,11 @@
 										 				// Show the initial default chart
 										 				
 										 				//loadChartPie( $('#placeholder_pie #placeholder_'+lider.id) , dataGrafico);
-										 				$('#id_lider').html("Lider: " + lider.time.nome);
+										 				$('#id_lider').html("<b class='text-info'>Lider:</b> " + lider.time.nome + "<span class='text-muted'> ("+lider.grupo.descricao+")</span>");
+										 				$('#id_lider').html( $('#id_lider').html() + "<p class='text-muted'>" + 
+										 																lider.pontos+" pontos | " + 
+										 																(lider.golsPro - lider.golsContra) + " Saldo de gols | " + 
+										 																roundToTwo(lider.pontos * 100 / ((lider.jogos == 0 ? 1 : lider.jogos) * 3))+" %</p>");
 														loadChartPie(placeholder, dataGrafico);
 													});
 									});							   
@@ -72,6 +76,9 @@
  				
 			});
 
+			function roundToTwo(num) {    
+			    return +(Math.round(num + "e+2")  + "e-2");
+			}
 			
 			//function labelFormatter(label, series) {
 			//	return "<div style='font-size:8pt; text-align:center; padding:2px; color:white;'>" + label + "<br/>" + Math.round(series.percent) + "%</div>";
