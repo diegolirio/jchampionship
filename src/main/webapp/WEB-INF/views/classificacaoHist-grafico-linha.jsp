@@ -4,27 +4,25 @@
 <!--     <script language="javascript" type="text/javascript" src="jquery.js"></script> -->
 <!--     <script language="javascript" type="text/javascript" src="jquery.flot.js"></script>	 -->
     <script language="javascript" type="text/javascript" src="${pageContext.request.contextPath}/static/flot_charts/jquery.flot.js"></script>
+    <script language="javascript" type="text/javascript" src="${pageContext.request.contextPath}/static/flot_charts/jquery.flot.tooltip.min.js"></script>
 	
 	<h4 class="text-info">Histórico de Colocação</h4>
 	
 	<p id="choices"></p>
 	<br/><br/>
+	
 	<div id="placeholder" style="width:100%;height:300px;"></div>
 	
 	<script type="text/javascript">
 	
-
-
-		function sleep(milliseconds) {
-		  var start = new Date().getTime();
-		  for (var i = 0; i < 1e7; i++) {
-		    if ((new Date().getTime() - start) > milliseconds){
-		      break;
-		    }
-		  }
-		}
-	
-	
+// 		function sleep(milliseconds) {
+// 		  var start = new Date().getTime();
+// 		  for (var i = 0; i < 1e7; i++) {
+// 		    if ((new Date().getTime() - start) > milliseconds){
+// 		      break;
+// 		    }
+// 		  }
+// 		}
 	
 	$(function () {
 	    
@@ -54,7 +52,6 @@
 										//console.log(JSON.stringify(dataGrupos));
 										//console.log(dataGrupos.length);
 										$.each(dataGrupos, function(i, g) {
-											console.log(i); 
 											// a pega a classificacao de cada grupo
 											$.getJSON(  '${pageContext.request.contextPath}/classificacaoHist/get/list/by/grupo/'+g.id+'/json',
 													function(dataHist) { 
@@ -62,11 +59,10 @@
 														//console.log(JSON.stringify(classhist));
 														if(i == dataGrupos.length-1) {
 															plotAccordingToChoices();
-														}
+														} 
 													}
 											);												
 										});
-										
 										
 									}
 						);
@@ -78,11 +74,11 @@
 	
 	    // hard-code color indices to prevent them from shifting as
 	    // countries are turned on/off
-	    var i = 0;
-	    $.each(times, function(key, val) {
-	        val.color = i;
-	        ++i;
-	    });  
+// 	    var i = 0;
+// 	    $.each(times, function(key, val) {
+// 	        val.color = i;
+// 	        ++i;
+// 	    });  
 	    
 	    function plotAccordingToChoices() {
 	    	//sleep(500);
@@ -132,11 +128,28 @@
 								xaxis: { tickDecimals: 0,
 										 ticks: rodadasArray},
 								legend: {show: true},
-								lines: { show: true},
+								series: {
+					                lines: {
+					                    show: true
+					                },
+					                points: {
+					                    show: true
+					                } 
+					            },	
+					            grid: {
+					                hoverable: true //IMPORTANT! this is needed for tooltip to work
+					            },					            
+					            tooltip: true,
+					            tooltipOpts: {
+					                content: "'%s' of %x.1 is %y.4",
+					                shifts: {
+					                    x: -60,
+					                    y: 25
+					                }
+					            }					            
 							};
 			
-	            $.plot( $("#placeholder"), timesData, options);
-	            
+	            $.plot( $("#placeholder"), timesData, options);      
 	    }
 	
 	});
