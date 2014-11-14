@@ -154,6 +154,12 @@
 				Sujeito a Alterações...
 			</div>
 		</div>
+	</div>
+	
+	<div class="row">
+		<c:if test="${not empty edicao}">
+			<jsp:include page="jogo-list.jsp"></jsp:include>
+		</c:if>	
 	</div>					
 	
 	<!-- End Page Time -->

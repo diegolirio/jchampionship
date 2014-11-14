@@ -77,99 +77,38 @@
 	            </div>
 	        </div>
 	    </div>
-	    <!-- /.row -->
-	    
-	     <br/>
-	     
-                        	<c:forEach var="j" items="${g.jogos}">
-						        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12" id="jogo${j.id}">   
-						        	
-						        		<div class="table-responsive">
-						        			<a href="${pageContext.request.contextPath}/jogo/${j.id}">
-								        		<table class="table well text-center">
-								        			<thead>
-								        				<tr>
-								        					<td colspan="5" class="text-muted">
-								        						<small> 
-								        							Rodada: ${j.rodada} - <fmt:formatDate value="${j.dataHora}" pattern="dd/MM/yyyy"/>
-								        						</small>
-																<c:if test="${not empty usuario && not empty admin && admin && j.status.id != 3}">
-														    		<a href="${pageContext.request.contextPath}/jogo/system/form/${j.id}">
-														   				<span class="glyphicon glyphicon-pencil text-muted pull-right pencil-edit"></span>
-														   			</a>    
-														   		</c:if>								        							
-								        						
-								        					</td>
-								        				</tr>
-								        			</thead>
-								        			<tbody >
-								        				<tr>
-								        					<td>
-								        						<h4 class="text-info">${j.timeA.nome}</h4>
-								        					</td>
-								        					<td>
-								        						<c:if test="${j.status.id != 1}">
-								        							<h4 class="text-danger">${j.resultadoA}</h4>
-								        						</c:if>
-															</td>	
-															<td><h4 class="text-muted">X</h4></td>
-															<td>				
-											        			<c:if test="${j.status.id != 1}"> 
-											        				<h4 class="text-danger">${j.resultadoB}</h4>
-											        			</c:if>			
-											        		</td>
-											        		<td>
-											        			<h4 class="text-info">${j.timeB.nome}</h4>
-											        		</td>											        					
-								        				</tr>
-								        			</tbody>
-								        			<tfoot>
-								        				<tr>
-								        					<td colspan="3">
-								        						<small><span class=""><img src="${pageContext.request.contextPath}/static/quartashow/img/${j.status.imgName}"/> (${j.status.descricao})</span></small>
-															</td>
-															<td colspan="2">
-																<small>${j.local.descricao}</small>
-															</td>
-								        				</tr>
-								        		</table>
-								        	</a>
-								        </div>   
-						        		
-						        		<br/>
-						        </div>                        	
-                        	</c:forEach>
-                        	<c:if test="${not empty usuario && not empty admin && admin}">
-                        		<div class="row">
-							        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">   
-							        	<br/>
-							        	<a href="${pageContext.request.contextPath}/edicao/system/${edicao.id}/jogos" class="btn btn-block btn-outline btn-success" >
-							        		Cadastrar Novo jogo 
-							        	</a> 
-							        </div> 
-							    </div>
-						    </c:if>    
-						                   
-							<br/><br/> 
-							
-			        	    <!-- publicidade -->
-						    <div class="row">
-						    	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-									<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-									<!-- Azul_Suave_728X90 -->
-									<ins class="adsbygoogle"
-									     style="display:inline-block;width:100%;height:90px"
-									     data-ad-client="ca-pub-1041989301102612"
-									     data-ad-slot="2407772281"></ins>
-									<script>
-					  					(adsbygoogle = window.adsbygoogle || []).push({}); 
-					 				</script>	  
-								</div>   		
-						    </div>
-						    
-						    <br/><br/><br/><br/>
-						    
+	    <!-- /.row -->	    
+	     <br/>						    
 	</c:forEach>
+	
+	<br/><br/> 
+	
+	<jsp:include page="jogo-list.jsp"></jsp:include>
+    <c:if test="${not empty usuario && not empty admin && admin}">
+        <div class="row">
+	        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">   
+	        	<br/>
+	        	<a href="${pageContext.request.contextPath}/edicao/system/${edicao.id}/jogos" class="btn btn-block btn-outline btn-success" >
+	        		Cadastrar Novo jogo 
+	        	</a> 
+	        </div> 
+	    </div>
+    </c:if>  	
+	
+    <!-- publicidade -->
+    <div class="row">
+    	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+			<!-- Azul_Suave_728X90 -->
+			<ins class="adsbygoogle"
+			     style="display:inline-block;width:100%;height:90px"
+			     data-ad-client="ca-pub-1041989301102612"
+			     data-ad-slot="2407772281"></ins>
+			<script>
+ 					(adsbygoogle = window.adsbygoogle || []).push({}); 
+				</script>	  
+		</div>   		
+    </div>	
 	    
     <script src="${pageContext.request.contextPath}/static/quartashow/js/edicao-controller.js"></script>
               

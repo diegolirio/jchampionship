@@ -23,6 +23,7 @@ import com.quartashow.jchampionship.dao.ClassificacaoDao;
 import com.quartashow.jchampionship.dao.EdicaoDao;
 import com.quartashow.jchampionship.dao.GrupoDao;
 import com.quartashow.jchampionship.dao.JogadorDao;
+import com.quartashow.jchampionship.dao.JogoDao;
 import com.quartashow.jchampionship.dao.TimeDao;
 import com.quartashow.jchampionship.helper.ValidationResponseHelper;
 import com.quartashow.jchampionship.model.Classificacao;
@@ -49,6 +50,9 @@ public class TimeController {
 
 	@Autowired
 	private GrupoDao grupoDao;
+
+	@Autowired
+	private JogoDao jogoDao;
 
 	@RequestMapping(value="/page/simple")
 	public ModelAndView pageSimple(Time time) {
@@ -170,12 +174,13 @@ public class TimeController {
 		Edicao edicao = edicaoDao.get(Edicao.class, edicaoId);
 		mv.addObject("time", time);
 		mv.addObject("edicao", edicao);
+		edicao.setGrupos(this.grupoDao.getGruposByEdicao(edicao));
 		Classificacao classificacao = null;
-		for(Grupo g : this.grupoDao.getGruposByEdicao(edicao)) {
+		for(Grupo g : edicao.getGrupos()) {
+			edicao.getGrupos().get(edicao.getGrupos().indexOf(g)).setJogos(this.jogoDao.getJogosByGrupoAndTime(g, time));
 			for(Classificacao c : this.classificacaoDao.getClassificacoesByGrupo(g)) {
-				if(c.getTime().getId() == time.getId()) {
+				if(c.getTime().getId() == time.getId()) { 
 					classificacao = c;
-					break;
 				}
 			}
 		}
