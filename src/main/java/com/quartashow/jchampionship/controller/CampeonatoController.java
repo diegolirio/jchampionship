@@ -1,3 +1,4 @@
+
 package com.quartashow.jchampionship.controller;
 
 import java.util.ArrayList;
@@ -19,12 +20,14 @@ import com.quartashow.jchampionship.dao.EdicaoDao;
 import com.quartashow.jchampionship.dao.EventoDao;
 import com.quartashow.jchampionship.dao.PosicaoDao;
 import com.quartashow.jchampionship.dao.StatusDao;
+import com.quartashow.jchampionship.dao.TipoEdicaoDao;
 import com.quartashow.jchampionship.dao.UsuarioDao;
 import com.quartashow.jchampionship.model.Campeonato;
 import com.quartashow.jchampionship.model.Edicao;
 import com.quartashow.jchampionship.model.Evento;
 import com.quartashow.jchampionship.model.Posicao;
 import com.quartashow.jchampionship.model.Status;
+import com.quartashow.jchampionship.model.TipoEdicao;
 import com.quartashow.jchampionship.model.Usuario;
 
 @Controller
@@ -50,6 +53,9 @@ public class CampeonatoController {
 	@Autowired
 	private UsuarioDao usuarioDao;
 
+	@Autowired
+	private TipoEdicaoDao tipoEdicaoDao;
+	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView home() {
 		logger.info("");
@@ -125,8 +131,21 @@ public class CampeonatoController {
 		cv.setDescricao("Cartão Vermelho");
 		cv.setImgName("cartao-vermelho.png");
 		this.eventoDao.save(cv);
+		
+		// Tipo da Edicao...
+		TipoEdicao _grupoMataMata = new TipoEdicao(); // id=1
+		_grupoMataMata.setDescricao("1ª fase (fase de Grupo) e Mata-mata");
+		this.tipoEdicaoDao.save(_grupoMataMata);
+		
+		TipoEdicao pontosCorridos = new TipoEdicao(); // id=2
+		pontosCorridos.setDescricao("Pontos Corridos");
+		this.tipoEdicaoDao.save(pontosCorridos);
 
-		return new ResponseEntity<String>("OK", HttpStatus.OK);
+		TipoEdicao mataMata = new TipoEdicao(); // id=3
+		mataMata.setDescricao("Mata-Mata");
+		this.tipoEdicaoDao.save(mataMata);		
+		
+		return new ResponseEntity<String>("<a href='/jchampionship'>OK</a>", HttpStatus.OK);
 	}
 	
 }

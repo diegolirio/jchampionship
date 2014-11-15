@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -47,6 +48,9 @@ public class Jogo {
 
 	@Temporal(TemporalType.TIMESTAMP)
     private java.util.Date dataHora;
+	
+	@Min(1)
+	private int sequencia;
 	
 	public long getId() {
 		return id;
@@ -143,6 +147,14 @@ public class Jogo {
 		return new SimpleDateFormat("dd/MM/yyyy").format(this.dataHora);
 	}	
 	
+	public int getSequencia() {
+		return sequencia;
+	}
+
+	public void setSequencia(int sequencia) {
+		this.sequencia = sequencia;
+	}
+
 	@Override
 	public String toString() {
 		return "Jogo [id=" + id + ", grupo=" + grupo + ", timeA=" + timeA

@@ -33,6 +33,9 @@ public class Grupo {
 	@OneToMany(mappedBy="grupo")
 	private List<Jogo> jogos;
 
+	@ManyToOne
+	private Fase fase;
+	
 	public Grupo() {}
 	
 	public Grupo(long id, Edicao edicao) {
