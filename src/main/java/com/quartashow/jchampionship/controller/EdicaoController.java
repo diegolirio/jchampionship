@@ -161,7 +161,12 @@ public class EdicaoController {
     public ResponseEntity<String> setStatus(@PathVariable("edicaoId") long edicaoId, @PathVariable("statusId") long statusId) {
 		try {
 			Edicao edicao = this.edicaoDao.get(Edicao.class, edicaoId);
-			edicao.setStatus(new Status(statusId)); 
+			List<Grupo> grupos = this.grupoDao.getGruposByEdicao(edicao);
+			Status status = new Status(statusId);
+			for (Grupo grupo : grupos) {
+				grupo.setStatus(status);
+			}
+			edicao.setStatus(status); 
 			this.edicaoDao.update(edicao);
 			HttpHeaders headers = new HttpHeaders();
 			headers.setLocation(URI.create("edicao/"+edicaoId));
@@ -212,5 +217,21 @@ public class EdicaoController {
 		//edicao.setGrupos(grupos);
 		mv.addObject("edicao", edicao); 
 		return mv;
-	}	
+	}
+	
+	@RequestMapping(value="/system/${edicao.id}/finalizarPrimeiraFase", method=RequestMethod.POST, produces="application/json")
+	public ResponseEntity<String> finalizar(@PathVariable("id") long id) {
+		Edicao edicao = this.edicaoDao.get(Edicao.class, id);
+		// todos jogos finalizados...
+		// se todos os times com a mesma qtde de jogos.
+		if(edicao.getTipoEdicao().getId() ==  1) { // primeira fase
+			// finaliza grupos da fase1 e cria mata-mata, 
+			// se qtde de grupo 1 e qtde de time 3 -> Cria somente um grupo Final.
+			// se qtde de grupo 1 e qtde de time +q3 -> Cria grupo 3º Lugar e Final.
+			// se qtde de grupo 2 -> cria um grupo semi-final com 2 jogos.
+			// se qtde de grupo 4 -> cria um grupo quartas com 4 jogos.
+			// se qtde dr grupo 8 -> cria um grupo oitavas com 8 jogos.
+		}
+		return new ResponseEntity<String>(HttpStatus.OK);
+	}
 }

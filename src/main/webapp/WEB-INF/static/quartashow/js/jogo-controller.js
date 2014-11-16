@@ -46,7 +46,9 @@ $(function() {
 				  'local.id': local,
 				  'grupo.id': grupoId,
 				  'dataHora': dataHora,
-				  'rodada':   rodada}, 
+				  'rodada':   rodada,
+				  'sequencia': 9999
+				  },  
 				function(data, statusText, response) {
 					if(response.status == 201) {
 						//console.log(JSON.stringify(data));

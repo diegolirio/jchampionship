@@ -94,7 +94,7 @@
 	        </div>
 	        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">   
 	        	<br/>
-	        	<a href="${pageContext.request.contextPath}/edicao/system/${edicao.id}/finalizar" class="btn btn-block btn-outline btn-danger" >
+	        	<a href="${pageContext.request.contextPath}/edicao/system/${edicao.id}/finalizarPrimeiraFase" class="btn btn-block btn-outline btn-danger" id="idFinalizarFase">
 	        		Finalizar 
 	        	</a> 
 	        </div> 	         

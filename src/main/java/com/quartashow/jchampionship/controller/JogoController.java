@@ -88,6 +88,8 @@ public class JogoController {
 		HttpHeaders headers = new HttpHeaders();
 		String bodyJson = "{}";
 		try {
+			int sequencia = this.jogoDao.getJogosByGrupo(jogo.getGrupo()).size()+1;
+			jogo.setSequencia(sequencia);
 			if(result.hasErrors()) {
 				ValidationResponse validationResponse = new ValidationResponseHelper().fieldsErrorsToValidationResponse(result);
 				return new ResponseEntity<String>(validationResponse.toJSON(), HttpStatus.UNAUTHORIZED);

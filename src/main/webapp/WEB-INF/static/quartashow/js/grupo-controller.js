@@ -32,7 +32,9 @@ $(function() {
 		
 		$.post(	formGrupo.attr('action'),
 				{ descricao:   formGrupo.find('input[name=descricao]').val(),
-				  'edicao.id': edicao },
+				  'edicao.id': edicao,
+				  'status.id': 1,
+				  'fase.id': 1},
 				function(data, statusText, response) {
 					if(response.status == 201) {
 						addTabelaGrupo(data);					

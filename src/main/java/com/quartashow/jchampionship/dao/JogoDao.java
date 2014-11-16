@@ -44,5 +44,5 @@ public class JogoDao extends AbstractGenericDAO<Jogo> {
 		createQuery.setParameter("timeBId", time.getId());
 		return (List<Jogo>) createQuery.getResultList();  
 	}
-	
+
 }

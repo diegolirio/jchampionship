@@ -86,6 +86,20 @@ $(function() {
 			alert(JSON.stringify(data));
 		});	
 	});
+
+	$('#idFinalizarFase').click(function(e) {
+		e.preventDefault();
+		//alert($(this).attr('href')); 
+		$.post( $(this).attr('href'),
+				function(data, statusText, response) {
+					if(response.status == 200)
+						window.location.href = response.getResponseHeader('Location');
+					else
+						alert(JSON.stringify(response));
+		}).fail(function(data) {
+			alert(JSON.stringify(data));
+		});
+	});
 	
 });
 
