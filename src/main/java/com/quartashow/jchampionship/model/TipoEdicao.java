@@ -11,18 +11,24 @@ import javax.persistence.OneToMany;
 public class TipoEdicao {
 
 	@Id @GeneratedValue
-	public int id;
+	public long id;
 	
 	public String descricao;
 
 	@OneToMany(mappedBy="tipoEdicao")
 	private List<Edicao> edicoes;
 	
-	public int getId() {
+	public TipoEdicao() {}
+	
+	public TipoEdicao(long id) {
+		this.id = id;
+	}
+
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

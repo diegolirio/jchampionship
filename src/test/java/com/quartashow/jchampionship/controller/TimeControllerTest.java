@@ -27,12 +27,15 @@ import com.quartashow.jchampionship.dao.ClassificacaoDao;
 import com.quartashow.jchampionship.dao.EdicaoDao;
 import com.quartashow.jchampionship.dao.GrupoDao;
 import com.quartashow.jchampionship.dao.JogadorDao;
+import com.quartashow.jchampionship.dao.JogoDao;
 import com.quartashow.jchampionship.dao.TimeDao;
 import com.quartashow.jchampionship.model.Classificacao;
 import com.quartashow.jchampionship.model.Edicao;
 import com.quartashow.jchampionship.model.Grupo;
 import com.quartashow.jchampionship.model.Jogador;
+import com.quartashow.jchampionship.model.Jogo;
 import com.quartashow.jchampionship.model.Time;
+import com.quartashow.jchampionship.model.TipoEdicao;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -57,7 +60,10 @@ public class TimeControllerTest {
 	private GrupoDao grupoDao;
 
 	@Mock
-	private ClassificacaoDao classificacaoDao;	
+	private ClassificacaoDao classificacaoDao;
+
+	@Mock
+	private JogoDao jogoDao;	
 	
 	@Before
 	public void setUp() throws Exception {
@@ -151,7 +157,8 @@ public class TimeControllerTest {
 		Time time = Mockito.mock(Time.class);
 		Mockito.when(this.timeDao.get(Time.class, 1)).thenReturn(time);
 
-		Edicao edicao = Mockito.mock(Edicao.class);
+		Edicao edicao = new Edicao(1l);
+		edicao.setTipoEdicao(new TipoEdicao(1l));
 		Mockito.when(this.edicaoDao.get(Edicao.class, 1)).thenReturn(edicao);
 		
 		List<Grupo> grupos = new ArrayList<Grupo>();
@@ -164,6 +171,9 @@ public class TimeControllerTest {
 		Classificacao classificacao = new Classificacao(1l, time);
 		classificacoes.add(classificacao);		
 		Mockito.when(classificacaoDao.getClassificacoesByGrupo(grupo)).thenReturn(classificacoes);
+		
+		List<Jogo> jogos = new ArrayList<Jogo>();
+		Mockito.when(jogoDao.getJogosByGrupoAndTime(grupo, time)).thenReturn(jogos );
 		
 		mockMvc.perform(get("/time/1/edicao/1"))
 			.andExpect(status().isOk())

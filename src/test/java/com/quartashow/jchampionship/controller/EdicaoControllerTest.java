@@ -102,7 +102,8 @@ public class EdicaoControllerTest {
 		ResultActions resultActions = 
 			mockMvc.perform(post("/edicao/system/nova")
 					.param("descricao", "2014")
-					.param("campeonato.id", "1"))
+					.param("campeonato.id", "1")
+					.param("tipoEdicao.id", "1"))
 			 .andExpect(status().isCreated())
 			 .andExpect(content().contentType("application/json"));
 
@@ -113,7 +114,8 @@ public class EdicaoControllerTest {
 	@Test
 	public void testPostEdicaoRestDescricaoInvalido() throws Exception {		
 		mockMvc.perform(post("/edicao/system/nova")
-					.param("campeonato.id", "1"))
+					.param("campeonato.id", "1")
+					.param("tipoEdicao.id", "1"))
 			 .andExpect(status().isUnauthorized())
 			 .andExpect(content().contentType("application/json"))
 			 .andExpect(content().string("{\"status\":\"ERROR\",\"errorMessages\":{\"descricao\":\"may not be null\"}}"));
@@ -122,7 +124,8 @@ public class EdicaoControllerTest {
 	@Test
 	public void testPostEdicaoRestCampeonadoIdInvalido() throws Exception {		
 		mockMvc.perform(post("/edicao/system/nova")
-					.param("descricao", "2014"))
+					.param("descricao", "2014")
+					.param("tipoEdicao.id", "1"))
 			 .andExpect(status().isUnauthorized())
 			 .andExpect(content().contentType("application/json"))
 			 .andExpect(content().string("{\"status\":\"ERROR\",\"errorMessages\":{\"campeonato\":\"may not be null\"}}"));
