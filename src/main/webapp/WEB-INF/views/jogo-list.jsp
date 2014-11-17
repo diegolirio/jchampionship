@@ -4,6 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <c:forEach var="g" items="${edicao.grupos}">
+	<h5 class="text-muted">${g.descricao}</h5> 
 	<c:forEach var="j" items="${g.jogos}">
 	      <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12" id="jogo${j.id}">   
 	      	

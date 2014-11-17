@@ -32,6 +32,10 @@ public class Grupo {
 	@JsonBackReference
 	@OneToMany(mappedBy="grupo")
 	private List<Jogo> jogos;
+	
+	@NotNull
+	@ManyToOne
+	private Fase fase;
 
 	public Grupo() {}
 	
@@ -85,6 +89,14 @@ public class Grupo {
 
 	public void setJogos(List<Jogo> jogos) {
 		this.jogos = jogos;
+	}
+
+	public Fase getFase() {
+		return fase;
+	}
+
+	public void setFase(Fase fase) {
+		this.fase = fase;
 	}
 
 	@Override

@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.quartashow.jchampionship.dao.CampeonatoDao;
 import com.quartashow.jchampionship.dao.EdicaoDao;
 import com.quartashow.jchampionship.dao.EventoDao;
+import com.quartashow.jchampionship.dao.FaseDao;
 import com.quartashow.jchampionship.dao.PosicaoDao;
 import com.quartashow.jchampionship.dao.StatusDao;
 import com.quartashow.jchampionship.dao.TipoEdicaoDao;
@@ -24,6 +25,7 @@ import com.quartashow.jchampionship.dao.UsuarioDao;
 import com.quartashow.jchampionship.model.Campeonato;
 import com.quartashow.jchampionship.model.Edicao;
 import com.quartashow.jchampionship.model.Evento;
+import com.quartashow.jchampionship.model.Fase;
 import com.quartashow.jchampionship.model.Posicao;
 import com.quartashow.jchampionship.model.Status;
 import com.quartashow.jchampionship.model.TipoEdicao;
@@ -54,6 +56,9 @@ public class CampeonatoController {
 
 	@Autowired
 	private TipoEdicaoDao tipoEdicaoDao;
+
+	@Autowired
+	private FaseDao faseDao;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView home() {
@@ -142,7 +147,42 @@ public class CampeonatoController {
 
 		TipoEdicao mataMata = new TipoEdicao(); // id=3
 		mataMata.setDescricao("Mata-Mata");
-		this.tipoEdicaoDao.save(mataMata);			
+		this.tipoEdicaoDao.save(mataMata);		
+		
+		// Fases
+		Fase _1fase = new Fase();
+		_1fase.setDescricao("1ª fase (fase de grupos)");
+		_1fase.setSigla('G');
+		this.faseDao.save(_1fase);
+
+		Fase _final = new Fase();
+		_final.setDescricao("Final");
+		_final.setSigla('F');
+		this.faseDao.save(_final);
+		
+		Fase _3Lugar = new Fase();
+		_3Lugar.setDescricao("3º Lugar");
+		_3Lugar.setSigla('3');
+		this.faseDao.save(_3Lugar);
+		
+		Fase semiFinal = new Fase();
+		semiFinal.setDescricao("Semi-Final");
+		semiFinal.setSigla('S');
+		this.faseDao.save(semiFinal);
+		
+		Fase quartas = new Fase();
+		quartas.setDescricao("Quarta-de-Final");
+		quartas.setSigla('Q');		
+		this.faseDao.save(quartas);
+
+		Fase oitavas = new Fase();
+		oitavas.setDescricao("Oitavas-de-Final");
+		oitavas.setSigla('O');
+		this.faseDao.save(oitavas);
+		
+		//Fase pontosCorridosFase = new Fase();
+		//pontosCorridosFase.setDescricao("Pontos Corridos");
+		//pontosCorridosFase.setSigla('P');				
 		
 		return new ResponseEntity<String>("<a href='/jchampionship'>OK</a>", HttpStatus.OK);
 	}

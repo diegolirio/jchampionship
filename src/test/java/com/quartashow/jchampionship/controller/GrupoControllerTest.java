@@ -49,7 +49,8 @@ public class GrupoControllerTest {
 		ResultActions resultActions = 
 			mockMvc.perform(post("/grupo/post")
 					.param("descricao", "A")
-					.param("edicao.id", "1"))
+					.param("edicao.id", "1")
+					.param("fase.id", "1"))
 			 .andExpect(status().isCreated())
 			 .andExpect(content().contentType("application/json"));
 

@@ -109,6 +109,8 @@
 				</script>	  
 		</div>   		
     </div>	
+    
+    <br/><br/>
 	    
     <script src="${pageContext.request.contextPath}/static/quartashow/js/edicao-controller.js"></script>
               
