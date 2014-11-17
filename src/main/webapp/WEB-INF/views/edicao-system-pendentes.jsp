@@ -40,6 +40,7 @@
 											<td title="ID">ID</td>
 											<td >Descrição</td>
 											<td title="Campeonato">Campeonato</td>
+											<td title="Tipo">Tipo</td>
 											<td title="Pendente">Status</td>
 											<td title="Ações">#</td>
 										</tr>
@@ -49,6 +50,7 @@
 												<td title="ID">${e.id}</td>
 												<td >${e.descricao}</td>
 												<td >${e.campeonato.descricao}</td>
+												<td >${e.tipoEdicao.descricao}</td>
 												<td >${e.status.descricao}</td>
 												<td >
 													<a href="/jchampionship/edicao/system/${e.id}/grupos">concluir </a>

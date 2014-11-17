@@ -40,6 +40,8 @@
 						<input type="hidden" name="id" value="${grupo.id}" >
 						
 						<input type="hidden" name="edicao.id" value="${edicao.id}" >
+						
+						<input type="hidden" name="fase.id" value="${edicao.tipoEdicao.id}" > <!-- 1=faseGrupo | 2=pontosCorridos -->
 
 						<div class="form-group col-lg-6">
 							<label>Descrição <small	class="text-muted">Ex: A, B ou Serie A</small></label> <span id="id_message_descricao"></span> 

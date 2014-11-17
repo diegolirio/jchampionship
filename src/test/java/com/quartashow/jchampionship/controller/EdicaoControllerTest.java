@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
@@ -31,10 +32,12 @@ import com.quartashow.jchampionship.dao.HarbitoDao;
 import com.quartashow.jchampionship.dao.JogoDao;
 import com.quartashow.jchampionship.dao.LocalDao;
 import com.quartashow.jchampionship.dao.TimeDao;
+import com.quartashow.jchampionship.dao.TipoEdicaoDao;
 import com.quartashow.jchampionship.model.Campeonato;
 import com.quartashow.jchampionship.model.Edicao;
 import com.quartashow.jchampionship.model.Jogo;
 import com.quartashow.jchampionship.model.Status;
+import com.quartashow.jchampionship.model.TipoEdicao;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -68,6 +71,9 @@ public class EdicaoControllerTest {
 	private MockMvc mockMvc;
 
 	private Edicao edicao;
+
+	@Mock
+	private TipoEdicaoDao tipoEdicaoDao;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -89,10 +95,12 @@ public class EdicaoControllerTest {
 	
 	@Test
 	public void paginaCadastrarNovaEdicaoDeveConterViewsAtributos() throws Exception {
+		List<TipoEdicao> tiposEdicao = new ArrayList<TipoEdicao>();
+		Mockito.when(tipoEdicaoDao.getList(TipoEdicao.class)).thenReturn(tiposEdicao );
 		mockMvc.perform(get("/edicao/system/nova"))
 			.andExpect(status().is(200))
 			.andExpect(view().name("_base"))
-			.andExpect(model().attributeExists("content_import"))
+			.andExpect(model().attributeExists("content_import", "tiposEdicao"))
 			.andExpect(model().attribute("content_import", "edicao-system-form"))
 			.andExpect(model().attributeExists("edicao"));
 	}	

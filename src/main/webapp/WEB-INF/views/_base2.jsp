@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     
-    <title>Campeonato - ${edicao.campeonato.descricao}</title> 
+    <title>Campeonato  ${edicao.campeonato.descricao}</title> 
 
     <!-- Bootstrap Core CSS -->
     <link href="${pageContext.request.contextPath}/static/sb2/css/bootstrap.min.css" rel="stylesheet">

@@ -28,6 +28,7 @@ import com.quartashow.jchampionship.dao.HarbitoDao;
 import com.quartashow.jchampionship.dao.JogoDao;
 import com.quartashow.jchampionship.dao.LocalDao;
 import com.quartashow.jchampionship.dao.TimeDao;
+import com.quartashow.jchampionship.dao.TipoEdicaoDao;
 import com.quartashow.jchampionship.helper.ValidationResponseHelper;
 import com.quartashow.jchampionship.model.Edicao;
 import com.quartashow.jchampionship.model.Grupo;
@@ -35,6 +36,7 @@ import com.quartashow.jchampionship.model.Harbito;
 import com.quartashow.jchampionship.model.Local;
 import com.quartashow.jchampionship.model.Status;
 import com.quartashow.jchampionship.model.Time;
+import com.quartashow.jchampionship.model.TipoEdicao;
 
 @Controller
 @RequestMapping("/edicao")
@@ -62,7 +64,10 @@ public class EdicaoController {
 	private ClassificacaoDao classificacaoDao;
 
 	@Autowired
-	private ClassificacaoHistDao classificacaoHistDao;	
+	private ClassificacaoHistDao classificacaoHistDao;
+
+	@Autowired
+	private TipoEdicaoDao tipoEdicaoDao;	
 	
 	@RequestMapping(value="/system", method=RequestMethod.GET)
 	public ModelAndView pageEdicoesPendentes() {
@@ -77,6 +82,7 @@ public class EdicaoController {
 		ModelAndView mv = new ModelAndView("_base");
 		mv.addObject("content_import", "edicao-system-form");
 		mv.addObject("edicao", edicao);
+		mv.addObject("tiposEdicao", this.tipoEdicaoDao.getList(TipoEdicao.class));
 		System.out.println(edicao);
 		return mv;
 	}

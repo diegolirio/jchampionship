@@ -27,7 +27,7 @@ public class Grupo {
 	
 	@JsonBackReference
 	@OneToMany(mappedBy="grupo")
-	private List<Classificacao> classificacoes;
+	private List<Classificacao> classificacoes; 
 	
 	@JsonBackReference
 	@OneToMany(mappedBy="grupo")
@@ -36,6 +36,10 @@ public class Grupo {
 	@NotNull
 	@ManyToOne
 	private Fase fase;
+	
+	@NotNull
+	@ManyToOne
+	private Status status;
 
 	public Grupo() {}
 	
@@ -97,6 +101,14 @@ public class Grupo {
 
 	public void setFase(Fase fase) {
 		this.fase = fase;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 
 	@Override

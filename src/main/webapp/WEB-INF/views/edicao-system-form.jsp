@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 
@@ -50,6 +50,16 @@
 							<label>Campeonato</label> <span id="id_message_campeonatoId"></span>
 							<select class="form-control" id="id_campeonatos" name="campeonato.id">
 								<option value="">----</option>
+							</select>
+						</div>
+
+						<div class="form-group">
+							<label>Tipo</label> <span id="id_message_tipoId"></span>
+							<select class="form-control" id="id_tipos" name="tipoEdicao.id">
+								<option value="">----</option>
+								<c:forEach var="te" items="${tiposEdicao}">
+									<option value="${te.id}">${te.descricao}</option>
+								</c:forEach>
 							</select>
 						</div>
 
