@@ -9,6 +9,8 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.codehaus.jackson.annotate.JsonBackReference;
+
 @Entity
 public class TipoEdicao {
 
@@ -18,6 +20,7 @@ public class TipoEdicao {
 	@NotNull @Size(min=2)
 	public String descricao;
 
+	@JsonBackReference
 	@OneToMany(mappedBy="tipoEdicao")
 	private List<Edicao> edicoes;
 	

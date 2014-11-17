@@ -383,18 +383,42 @@ public class JogoController {
 	 *   sendo calculado
 	 ****************************************************************************************/	
 	@RequestMapping(value="/{id}/retornStatus", method=RequestMethod.POST, produces="application/json")
-	public ResponseEntity<String> returnCalculadoStatusFinalizadoEmAndamento(@PathVariable("id") long id) {
+	public ResponseEntity<String> returnStatusJogo(@PathVariable("id") long id) {
 		try {
 			Jogo jogo = this.jogoDao.get(Jogo.class, id);
-			if(jogo.getStatus().getId() != 3) { // finalizado
+			if(jogo.getStatus().getId() == 1) { // finalizado
 				throw new RuntimeException("Jogo encontra-se com Status " + jogo.getStatus().getDescricao());
+			} 
+			else if (jogo.getStatus().getId() == 3) {
+				this.retornaCalculoJogadorInfoEdicao(jogo);
+				this.retornaCalculaClassificacao(jogo);
+				this.ordenaClassificacao(jogo); 
+				jogo.setStatus(new Status(2)); // seta jogo p/ status em andamento...
+				this.jogoDao.update(jogo);
 			}
-			this.retornaCalculoJogadorInfoEdicao(jogo);
-			this.retornaCalculaClassificacao(jogo);
-			this.ordenaClassificacao(jogo); 
-			jogo.setStatus(new Status(2));
-			this.jogoDao.update(jogo);
+			else if(jogo.getStatus().getId() == 2) {
+				Escalacao escalacao = this.escalacaoDao.get(jogo);
+				List<JogadorEscalado> jogadoresEscalados = escalacao.getJogadoresEscalados();
+				// verifica se tem evento cadastrado
+				for (JogadorEscalado jogadorEscalado : jogadoresEscalados) {
+					if(jogadorEscalado.getEventos().size() > 0) {
+						throw new RuntimeException("Para voltar jogo para Status Pendente, deve excluir todos os eventos(gols, cartoes) do jogo.");
+					}
+				}
+				// exclui jogador escalado
+				for (JogadorEscalado jogadorEscalado : jogadoresEscalados) {
+					this.jogadorEscaladoDao.delete(JogadorEscalado.class, jogadorEscalado.getId());
+				}
+				// exclui escalacao
+				this.escalacaoDao.delete(Escalacao.class, escalacao.getId());
+				// set jogo status pendente
+				jogo.setStatus(new Status(1l)); 
+				jogo.setResultadoA(0);
+				jogo.setResultadoB(0); 
+				this.jogoDao.update(jogo);
+			}
 			return new ResponseEntity<String>(HttpStatus.OK);
+				
 		} catch(Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

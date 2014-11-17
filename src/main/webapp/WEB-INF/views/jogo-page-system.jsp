@@ -27,12 +27,12 @@
 		</div>
 		<!-- Fim Placar Responsive -->
 		 
-		<div class="text-muted pull-right"> 
+		<div class="text-muted pull-right">
+			<c:if test="${jogo.status.id != 1 && not empty usuario && not empty admin && admin}">
+				<p><a href="${pageContext.request.contextPath}/jogo/${jogo.id}/retornStatus" id="idVoltarStatusJogo" class="btn btn-default btn-danger btn-outline"><span class="glyphicon glyphicon-arrow-left"> Voltar p/ ${jogo.status.id == 2 ? 'Pendente' : 'Em andamento'}</span></a></p> 
+			</c:if>		
 			<p class="text-primary"> 
 				<img src="${pageContext.request.contextPath}/static/quartashow/img/${jogo.status.imgName}" /> ${jogo.status.descricao}
-				<c:if test="${jogo.status.id == 3 && not empty usuario && not empty admin && admin}">
-					<a href="${pageContext.request.contextPath}/jogo/${jogo.id}/retornStatus" class="pull-right" id="idVoltarStatusJogo"><span class="text-danger glyphicon glyphicon-arrow-left">Voltar</span></a>
-				</c:if>
 			</p>
 			<p>Rodada: ${jogo.rodada}</p>		
 			<p>Local: ${jogo.local.descricao} / Harbito: ${jogo.harbito.nome}</p>  
@@ -165,7 +165,7 @@
 			<a href="${pageContext.request.contextPath}/jogo/finalizar/${jogo.id}" class="btn btn-outline btn-success btn-lg btn-block" id="id_finalizar_jogo">Finalizar Jogo</a>
 		</c:if>		    
     
-    	
+    	<br/><br/>	
     
     <script type="text/javascript" src="${pageContext.request.contextPath}/static/quartashow/js/common/ui-common.js"></script>
     <script src="${pageContext.request.contextPath}/static/quartashow/js/jogo-controller.js"></script>

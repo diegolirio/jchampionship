@@ -9,6 +9,8 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.codehaus.jackson.annotate.JsonBackReference;
+
 @Entity
 public class Fase {
 
@@ -18,8 +20,9 @@ public class Fase {
 	@NotNull @Size(min=2)
 	private String descricao;
 	
-	private char sigla; // G=grupos, P=pontosCorridos, F=final, 2=semi, 4=quartas, 8=oitavas
+	private char sigla; // G=grupos, P=pontosCorridos, F=final, S=semi, Q=quartas, O=oitavas
 	
+	@JsonBackReference
 	@OneToMany(mappedBy="fase")
 	private List<Grupo> grupos;
 

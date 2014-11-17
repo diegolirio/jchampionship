@@ -150,7 +150,7 @@ $(function() {
 
 	$('#idVoltarStatusJogo').click(function(e) {
 		e.preventDefault();
-		var ok = confirm("Deseja voltar situação do Jogo ?\nCalculo da clasificação e artilharia será cancelado.");
+		var ok = confirm("Deseja voltar Status do Jogo ?");
 		if(ok == true) {
 			$.post( $(this).attr('href'), 
 					function(data, statusText, response) {
@@ -161,7 +161,8 @@ $(function() {
 							alert('Erro: ' + JSON.stringify(response));
 						}
 			}).fail(function(data) {
-				alert('Erro: ' + JSON.stringify(data));
+				//alert('Erro: ' + JSON.stringify(data));
+				alert(data.responseText); 
 			});
 		}
 	});
