@@ -279,7 +279,17 @@
 	                        <a href="${pageContext.request.contextPath}/edicao/system"><i class="fa fa-fw fa-file"></i> Criar novo Campeonato</a>
 	                    </li>         
                     </c:if>   
-                    
+					<div class="text-center hidden-xs">
+						<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+						<!-- 180X150 -->
+						<ins class="adsbygoogle"
+						style="display:inline-block;width:180px;height:150px"
+						data-ad-client="ca-pub-1041989301102612"
+						data-ad-slot="9501256682"></ins>
+						<script>
+						(adsbygoogle = window.adsbygoogle || []).push({});
+						</script>
+					</div>                     
                 </ul>
             </div>
             <!-- /.sidebar-collapse -->

@@ -36,6 +36,10 @@ public class Edicao {
 	@JsonBackReference
 	@OneToMany(mappedBy="edicao")
 	private List<JogadorInfoEdicao> jogadoresInfoEdicao;
+
+	@NotNull
+	@ManyToOne
+	private TipoEdicao tipoEdicao;
 	
 	public Edicao() {}
 	
@@ -79,6 +83,14 @@ public class Edicao {
 
 	public void setJogadoresInfoEdicao(List<JogadorInfoEdicao> jogadoresInfoEdicao) {
 		this.jogadoresInfoEdicao = jogadoresInfoEdicao;
+	}
+	
+	public TipoEdicao getTipoEdicao() {
+		return tipoEdicao;
+	}
+
+	public void setTipoEdicao(TipoEdicao tipoEdicao) {
+		this.tipoEdicao = tipoEdicao;
 	}
 
 	@Override
