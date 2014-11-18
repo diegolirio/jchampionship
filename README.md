@@ -44,6 +44,7 @@ e ao finalizar o jogo o calculo eh disparado.
 # Tipos de Edicao 
 - Fase de grupos e Mata-Mata
 - Pontos corridos e Mata-Mata
+- Pontos corridos
 - Mata-Mata
 
 # SubTipos de Edicao 
