@@ -7,6 +7,7 @@
 			<input type="hidden" name="id" value="${jogo.id}" >
 			<input type="hidden" name="status.id" value="${jogo.status.id}" >
 			<input type="hidden" name="grupo.edicao.id" value="${jogo.grupo.edicao.id}" >
+			<input type="hidden" name="sequencia" value="${jogo.sequencia}" >
 
 			<div class="form-group col-lg-1">
 				<label><small>Rodada</small> </label> <span id="id_message_rodada"></span>
@@ -90,6 +91,7 @@
 			<thead class="text-center">
 				<tr class="text-danger">
 					<!-- <td>ID</td> -->
+					<td >Sequencia</td>
 					<td >Rodada</td>
 					<td >Grupo</td>
 					<td >Time A</td>
@@ -106,7 +108,7 @@
 			<tbody id="id_tbody">
 				<c:forEach var="j" items="${jogos}">
 					<tr class="text-center">
-						<%-- <td><small class="text-muted">${j.id}</small></td> --%>
+						<td><small class="text-muted">${j.sequencia}</small></td>
 						<td >${j.rodada}</td>
 						<td >${j.grupo.descricao}</td>
 						<td >${j.timeA.nome}</td>

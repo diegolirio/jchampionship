@@ -97,6 +97,8 @@ public class JogoController {
 			}
 			if(jogo.getId() == 0) {
 				jogo.setStatus(new Status(1));
+				long sequencia = this.jogoDao.getCountJogosByGrupo(jogo.getGrupo())+1;
+				jogo.setSequencia((int)sequencia);
 				this.jogoDao.save(jogo);
 				jogo = this.jogoDao.get(Jogo.class, jogo.getId());
 			} else {

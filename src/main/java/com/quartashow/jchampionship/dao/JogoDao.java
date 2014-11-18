@@ -44,5 +44,11 @@ public class JogoDao extends AbstractGenericDAO<Jogo> {
 		createQuery.setParameter("timeBId", time.getId());
 		return (List<Jogo>) createQuery.getResultList();  
 	}
+
+	public long getCountJogosByGrupo(Grupo grupo) {
+		Query query = super.manager.createQuery("Select count(j) from Jogo j where j.grupo.id = :grupoId");
+		query.setParameter("grupoId", grupo.getId());
+		return (long) query.getSingleResult();
+	}
 	
 }

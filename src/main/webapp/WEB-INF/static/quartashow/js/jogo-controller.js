@@ -36,6 +36,7 @@ $(function() {
 		var grupoId = formJogo.find('select[name="grupo.id"]').val();
 		var dataHora = formJogo.find('input[name=dataHora]').val();
 		var rodada = formJogo.find('input[name=rodada]').val();
+		var sequencia = formJogo.find('input[name=sequencia]').val();
 		
 		$.post(	formJogo.attr('action'),
 				{ 'id': (id == '' ? 0 : id),
@@ -46,7 +47,8 @@ $(function() {
 				  'local.id': local,
 				  'grupo.id': grupoId,
 				  'dataHora': dataHora,
-				  'rodada':   rodada}, 
+				  'rodada':   rodada,
+				  'sequencia': sequencia }, 
 				function(data, statusText, response) {
 					if(response.status == 201) {
 						//console.log(JSON.stringify(data));

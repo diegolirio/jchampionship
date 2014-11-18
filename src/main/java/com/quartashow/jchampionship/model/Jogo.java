@@ -48,6 +48,8 @@ public class Jogo {
 	@Temporal(TemporalType.TIMESTAMP)
     private java.util.Date dataHora;
 	
+	private int sequencia;
+	
 	public long getId() {
 		return id;
 	}
@@ -143,6 +145,14 @@ public class Jogo {
 		return new SimpleDateFormat("dd/MM/yyyy").format(this.dataHora);
 	}	
 	
+	public int getSequencia() {
+		return sequencia;
+	}
+
+	public void setSequencia(int sequencia) {
+		this.sequencia = sequencia;
+	}
+
 	@Override
 	public String toString() {
 		return "Jogo [id=" + id + ", grupo=" + grupo + ", timeA=" + timeA
