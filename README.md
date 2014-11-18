@@ -42,7 +42,11 @@ e ao finalizar o jogo o calculo eh disparado.
 ...
 
 # Tipos de Edicao 
+- Fase de grupos e Mata-Mata
+- Pontos corridos e Mata-Mata
+- Mata-Mata
 
+# SubTipos de Edicao 
 - Fase de grupos(com 1 grupo) e Final/3º lugar
 - Fase de grupos(com 2 grupos) e Semi-Final
 - Fase de grupos(com 4 grupos) e Quartas-de-Final
