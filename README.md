@@ -41,3 +41,16 @@ e ao finalizar o jogo o calculo eh disparado.
 # Retorna Calculo
 ...
 
+# Tipos de Edicao 
+
+- Fase de grupos(com 1 grupo) e Final/3º lugar
+- Fase de grupos(com 2 grupos) e Semi-Final
+- Fase de grupos(com 4 grupos) e Quartas-de-Final
+- Fase de grupos(com 8 grupos) e Oitavas-de-Final
+- Pontos corridos e Mata-mata(Semi-Final)
+- Pontos corridos e Mata-mata(Quartas-de-Final)
+- Pontos corridos
+- Mata-mata (Semi-Final)
+- Mata-mata (Quartas-de-Final)
+- Mata-mata (Oitavas-de-Final)
+
