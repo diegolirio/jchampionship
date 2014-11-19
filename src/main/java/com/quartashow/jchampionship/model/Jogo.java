@@ -43,7 +43,7 @@ public class Jogo {
 	@ManyToOne
 	private Status status;
 	
-	private int rodada = -1;
+	private int rodada = 0;
 
 	@Temporal(TemporalType.TIMESTAMP)
     private java.util.Date dataHora;

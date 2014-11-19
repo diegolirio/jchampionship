@@ -135,6 +135,11 @@ public class CampeonatoController {
 		cv.setDescricao("Cartão Vermelho");
 		cv.setImgName("cartao-vermelho.png");
 		this.eventoDao.save(cv);
+		
+		Evento ft = new Evento();
+		ft.setDescricao("Falta");
+		ft.setImgName("not.png");
+		this.eventoDao.save(ft);		
 
 		// Tipo da Edicao...
 		TipoEdicao _grupoMataMata = new TipoEdicao(); // id=1
@@ -152,7 +157,7 @@ public class CampeonatoController {
 		// Fases
 		Fase _1fase = new Fase(); // id = 1
 		_1fase.setDescricao("1ª fase (fase de grupos)");
-		_1fase.setSigla('G');
+		_1fase.setSigla('2');
 		this.faseDao.save(_1fase);
 		
 		Fase pontosCorridosFase = new Fase(); // id = 2
@@ -160,30 +165,36 @@ public class CampeonatoController {
 		pontosCorridosFase.setSigla('P');
 		this.faseDao.save(pontosCorridosFase);
 
-		Fase _final = new Fase(); // id = 3
-		_final.setDescricao("Final");
-		_final.setSigla('F');
-		this.faseDao.save(_final);
+//		Fase _final = new Fase(); // id = 3
+//		_final.setDescricao("Final");
+//		_final.setSigla('F');
+//		this.faseDao.save(_final);
+//		
+//		Fase _3Lugar = new Fase(); // id = 4
+//		_3Lugar.setDescricao("3º Lugar");
+//		_3Lugar.setSigla('3');
+//		this.faseDao.save(_3Lugar);
+//		
+//		Fase semiFinal = new Fase(); // id = 5
+//		semiFinal.setDescricao("Semi-Final");
+//		semiFinal.setSigla('S');
+//		this.faseDao.save(semiFinal);
+//		
+//		Fase quartas = new Fase(); // id = 6
+//		quartas.setDescricao("Quarta-de-Final");
+//		quartas.setSigla('Q');		
+//		this.faseDao.save(quartas);
+//
+//		Fase oitavas = new Fase(); // id = 7
+//		oitavas.setDescricao("Oitavas-de-Final");
+//		oitavas.setSigla('O');
+//		this.faseDao.save(oitavas);
 		
-		Fase _3Lugar = new Fase(); // id = 4
-		_3Lugar.setDescricao("3º Lugar");
-		_3Lugar.setSigla('3');
-		this.faseDao.save(_3Lugar);
-		
-		Fase semiFinal = new Fase(); // id = 5
-		semiFinal.setDescricao("Semi-Final");
-		semiFinal.setSigla('S');
-		this.faseDao.save(semiFinal);
-		
-		Fase quartas = new Fase(); // id = 6
-		quartas.setDescricao("Quarta-de-Final");
-		quartas.setSigla('Q');		
-		this.faseDao.save(quartas);
-
-		Fase oitavas = new Fase(); // id = 7
-		oitavas.setDescricao("Oitavas-de-Final");
-		oitavas.setSigla('O');
-		this.faseDao.save(oitavas);
+		// Fases
+		Fase _2fase = new Fase(); // id = 1
+		_2fase.setDescricao("2ª fase (Mata-Mata)");
+		_2fase.setSigla('2');
+		this.faseDao.save(_2fase);		
 		
 		return new ResponseEntity<String>("<a href='/jchampionship'>OK</a>", HttpStatus.OK);
 	}

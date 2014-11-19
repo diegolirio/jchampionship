@@ -61,13 +61,26 @@ $(function() {
 						});
 	 });
 	
-	
+	// Set Em Andamento 
 	$('#id_concluir_edicao').click(function() {
 		
 		$.post( $('#id_concluir_edicao').attr('href').replace('#', ''),
 				function(data, statusText, response) {
-					alert(JSON.stringify(response));
-					window.location.href = '/jchampionship/'+response.getResponseHeader('Location');
+					if(response.status == 200) {
+						$.post('/jchampionship/grupo/system/set/status/2/by/edicao/'+data.id,
+								function(dataG, statusTextG, responseG) {
+									if(responseG.status == 200) {
+										alert("Edição concluída, alterada para Em Andamento!");
+										window.location.href = '/jchampionship/'+response.getResponseHeader('Location');
+									} else {
+										alert(JSON.stringify(data));
+									}
+						}).fail(function(data) {
+							alert('Erro ao Alterar Grupo para Em Andamento!\n\n'+JSON.stringify(data));
+						});
+					} else {
+						alert(JSON.stringify(data));
+					}
 		}).fail(function(data) {
 			alert(JSON.stringify(data));
 			return false;
@@ -88,6 +101,31 @@ $(function() {
 			alert(JSON.stringify(data));
 		});	
 	});
+	
+	$('#idVoltarStatusEdicao').click(function(e) {
+		e.preventDefault();
+		$.post( $(this).attr('href'), 
+				function(data, statusText, response) {
+					window.location.href = '/jchampionship';
+		}).fail(function(data) {
+			alert(JSON.stringify(data));
+		});	
+	});
+	
+	$('#idFinalizarFase').click(function(e) {
+		e.preventDefault();
+		//alert($(this).attr('href'));
+		$.post( $(this).attr('href'),
+				function(data, statusText, response) {
+					if(response.status == 201)
+						//window.location.href = response.getResponseHeader('Location');
+						window.location.reload();
+					else
+						alert(JSON.stringify(response));
+				}).fail(function(data) {
+					alert(JSON.stringify(data));
+				});
+	});	
 	
 });
 

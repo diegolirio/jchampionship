@@ -23,6 +23,7 @@ import com.quartashow.jchampionship.dao.GrupoDao;
 import com.quartashow.jchampionship.helper.ValidationResponseHelper;
 import com.quartashow.jchampionship.model.Edicao;
 import com.quartashow.jchampionship.model.Grupo;
+import com.quartashow.jchampionship.model.Status;
 
 @Controller
 @RequestMapping("/grupo")
@@ -88,5 +89,21 @@ public class GrupoController {
 		this.grupoDao.delete(Grupo.class, id);
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
+	
+	@RequestMapping(value="/system/set/status/{statusId}/by/edicao/{edicaoId}", method=RequestMethod.POST, produces="application/json")
+    public ResponseEntity<String> setStatus(@PathVariable("edicaoId") long edicaoId, @PathVariable("statusId") long statusId) {
+		try {
+			Edicao edicao = this.edicaoDao.get(Edicao.class, edicaoId);
+			List<Grupo> grupos = this.grupoDao.getGruposByEdicao(edicao);
+			for (Grupo grupo : grupos) {
+				grupo.setStatus(new Status(statusId));
+				this.grupoDao.update(grupo);
+			}
+			return new ResponseEntity<String>(HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	 }		
 
 }

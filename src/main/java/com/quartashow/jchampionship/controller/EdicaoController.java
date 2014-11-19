@@ -1,6 +1,7 @@
 package com.quartashow.jchampionship.controller;
 
 import java.net.URI;
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -23,6 +24,7 @@ import com.quartashow.jchampionship.controller.common.ValidationResponse;
 import com.quartashow.jchampionship.dao.ClassificacaoDao;
 import com.quartashow.jchampionship.dao.ClassificacaoHistDao;
 import com.quartashow.jchampionship.dao.EdicaoDao;
+import com.quartashow.jchampionship.dao.FaseDao;
 import com.quartashow.jchampionship.dao.GrupoDao;
 import com.quartashow.jchampionship.dao.HarbitoDao;
 import com.quartashow.jchampionship.dao.JogoDao;
@@ -30,9 +32,12 @@ import com.quartashow.jchampionship.dao.LocalDao;
 import com.quartashow.jchampionship.dao.TimeDao;
 import com.quartashow.jchampionship.dao.TipoEdicaoDao;
 import com.quartashow.jchampionship.helper.ValidationResponseHelper;
+import com.quartashow.jchampionship.model.Classificacao;
 import com.quartashow.jchampionship.model.Edicao;
+import com.quartashow.jchampionship.model.Fase;
 import com.quartashow.jchampionship.model.Grupo;
 import com.quartashow.jchampionship.model.Harbito;
+import com.quartashow.jchampionship.model.Jogo;
 import com.quartashow.jchampionship.model.Local;
 import com.quartashow.jchampionship.model.Status;
 import com.quartashow.jchampionship.model.Time;
@@ -67,7 +72,10 @@ public class EdicaoController {
 	private ClassificacaoHistDao classificacaoHistDao;
 
 	@Autowired
-	private TipoEdicaoDao tipoEdicaoDao;	
+	private TipoEdicaoDao tipoEdicaoDao;
+
+	@Autowired
+	private FaseDao faseDao;	
 	
 	@RequestMapping(value="/system", method=RequestMethod.GET)
 	public ModelAndView pageEdicoesPendentes() {
@@ -175,7 +183,6 @@ public class EdicaoController {
 			return new ResponseEntity<String>(json, headers , HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println(e.getMessage());
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	 }	
@@ -219,4 +226,66 @@ public class EdicaoController {
 		mv.addObject("edicao", edicao); 
 		return mv;
 	}	
+	
+	@RequestMapping(value="/system/{id}/finalizarPrimeiraFase", method=RequestMethod.POST, produces="application/json")
+	public ResponseEntity<String> finalizar1Fase(@PathVariable("id") long id) {
+		try {
+			Edicao edicao = this.edicaoDao.get(Edicao.class, id);
+			List<Grupo> grupos = this.grupoDao.getGruposByEdicao(edicao);
+			for (Grupo grupo : grupos) {
+				// verifica se todos os grupos são da 1a fase.
+				if(grupo.getFase().getSigla() != 'G')
+					throw new RuntimeException("Existem grupos que não são dá 1ª fase(pode já ter sido finalizados), não há possibilidades de finalizar.");
+				List<Jogo> jogos = this.jogoDao.getJogosByGrupo(grupo);
+				// verifica se exite pelo menos 1 jogo por grupo.
+				if(jogos.size() <= 0) 
+					throw new RuntimeException("Grupo " + grupo.getDescricao() + " não contem jogos.");
+				for (Jogo jogo : jogos) {
+					// verifica se todos os jogos estão finalizados.
+					if(jogo.getStatus().getId() != 3)
+						throw new RuntimeException("Existem jogos não encerrados, encerrem todos os jogos para finalizar a Fase!");
+					// verifica se todos os times tem a mesma qtde de jogos.
+				}
+				List<Classificacao> classificacoes = this.classificacaoDao.getClassificacoesByGrupo(grupo);
+				int qtdeJ = classificacoes.get(0).getJogos();
+				for (Classificacao classificacao : classificacoes) {
+					 if(qtdeJ != classificacao.getJogos()) 
+						 throw new RuntimeException("Todos os Times devem estar com a mesma quantidade de Jogos para finalizar a fase!");
+				}
+			}
+			if(grupos.size() == 1) {
+				List<Classificacao> classificacoes = this.classificacaoDao.getClassificacoesByGrupo(grupos.get(0));
+				if(classificacoes.size() <= 3) {
+					// cria final
+					Fase _final = this.faseDao.get('F');
+					Grupo grupo = new Grupo();
+					grupo.setEdicao(edicao);
+					grupo.setFase(_final);
+					grupo.setDescricao(_final.getDescricao());
+					grupo.setStatus(new Status(2));
+					grupoDao.save(grupo);
+					Jogo jogoFinal = new Jogo();
+					jogoFinal.setDataHora(new Date());
+					jogoFinal.setGrupo(grupo);
+					jogoFinal.setHarbito(new Harbito());
+					//jogoFinal.setLocal(new Lo);
+					jogoFinal.setSequencia(1);
+					// foreach ..
+					//jogoFinal.setTimeA(timeA);
+				} else if(classificacoes.size() > 3) {
+					// cria 3lugar e final
+				}
+			} else if (grupos.size() == 2) {
+				// cria semi
+			} else if (grupos.size() == 4) {
+				// cria quartas
+			} else if (grupos.size() == 8) {
+				// cria oitavas
+			}
+			return new ResponseEntity<String>(HttpStatus.CREATED);
+		} catch(Exception e) {
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
 }

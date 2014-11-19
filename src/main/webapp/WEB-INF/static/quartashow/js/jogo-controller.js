@@ -5,7 +5,7 @@ $(function() {
 	
 	var addTabelaJogos = function(jogo) {
 		var html = "<tr class='text-center'>";
-		//html += "<td>"+jogo.id+"</td>"; 
+		html += "<td>"+jogo.sequencia+"</td>"; 
 		html += "<td>"+jogo.rodada+"</td>";
 		html += "<td >"+jogo.grupo.descricao+"</td>";
 		html += "<td >"+jogo.timeA.nome+"</td>";

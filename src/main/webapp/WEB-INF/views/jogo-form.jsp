@@ -7,7 +7,7 @@
 			<input type="hidden" name="id" value="${jogo.id}" >
 			<input type="hidden" name="status.id" value="${jogo.status.id}" >
 			<input type="hidden" name="grupo.edicao.id" value="${jogo.grupo.edicao.id}" >
-			<input type="hidden" name="sequencia" value="${jogo.sequencia}" >
+			<input type="hidden" name="sequencia" value="${empty jogo.sequencia ? -1 : jogo.sequencia}" >
 
 			<div class="form-group col-lg-1">
 				<label><small>Rodada</small> </label> <span id="id_message_rodada"></span>

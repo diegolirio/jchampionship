@@ -3,6 +3,41 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
+<!--    <div class="col-lg-12"> -->
+<!--          <div class="panel panel-default"> -->
+<!--              <div class="panel-heading"> -->
+<!--                  <h5 class="text-muted">Jogos</h5>  -->
+<!--              </div> -->
+<!--              /.panel-heading -->
+<!--              <div class="panel-body"> -->
+<!-- 	                 Nav tabs -->
+<!-- 	                 <ul class="nav nav-pills"> -->
+<%-- 	                 	<c:forEach var="g" items="${edicao.grupos}"> --%>
+<%-- 	                     	<li class=""><a href="#g${g.id}" data-toggle="tab">${g.descricao}</a></li> --%>
+<%-- 	                    </c:forEach> --%>
+<!-- 	                 </ul> -->
+
+<!-- 	                 Tab panes -->
+<!-- 	                 <div class="tab-content"> -->
+<%-- 	                 	 <c:forEach var="g" items="${edicao.grupos}"> --%>
+<%-- 		                     <div class="tab-pane fade in " id="g${g.id}"> --%>
+<%-- 		                     	<c:if test="${g.fase.id == 1}"> --%>
+<%-- 			                         <h4>${g.fase.descricao}</h4> --%>
+<%-- 			                         <c:forEach var="j" items="${g.jogos}"> --%>
+<%-- 			                         	${j.timeA.nome} X ${j.timeB.nome} --%>
+<%-- 			                         </c:forEach> --%>
+<%-- 		                        </c:if> --%>
+<!-- 		                     </div> -->
+<%-- 		                </c:forEach> --%>
+<!-- 	                 </div> -->
+	             
+<!--              </div> -->
+<!--              /.panel-body -->
+<!--          </div> -->
+<!--          /.panel -->
+<!--      </div> -->
+<!--      /.col-lg-6 -->
+
 <c:forEach var="g" items="${edicao.grupos}">
 	<h5 class="text-muted">${g.descricao}</h5> 
 	<c:forEach var="j" items="${g.jogos}">
