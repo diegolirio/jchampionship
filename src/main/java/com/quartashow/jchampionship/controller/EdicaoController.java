@@ -1,7 +1,7 @@
 package com.quartashow.jchampionship.controller;
 
 import java.net.URI;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -29,6 +29,7 @@ import com.quartashow.jchampionship.dao.GrupoDao;
 import com.quartashow.jchampionship.dao.HarbitoDao;
 import com.quartashow.jchampionship.dao.JogoDao;
 import com.quartashow.jchampionship.dao.LocalDao;
+import com.quartashow.jchampionship.dao.StatusDao;
 import com.quartashow.jchampionship.dao.TimeDao;
 import com.quartashow.jchampionship.dao.TipoEdicaoDao;
 import com.quartashow.jchampionship.helper.ValidationResponseHelper;
@@ -75,7 +76,10 @@ public class EdicaoController {
 	private TipoEdicaoDao tipoEdicaoDao;
 
 	@Autowired
-	private FaseDao faseDao;	
+	private FaseDao faseDao;
+
+	@Autowired
+	private StatusDao statusDao;	
 	
 	@RequestMapping(value="/system", method=RequestMethod.GET)
 	public ModelAndView pageEdicoesPendentes() {
@@ -234,8 +238,8 @@ public class EdicaoController {
 			List<Grupo> grupos = this.grupoDao.getGruposByEdicao(edicao);
 			for (Grupo grupo : grupos) {
 				// verifica se todos os grupos são da 1a fase.
-				if(grupo.getFase().getSigla() != 'G')
-					throw new RuntimeException("Existem grupos que não são dá 1ª fase(pode já ter sido finalizados), não há possibilidades de finalizar.");
+				if(grupo.getFase().getSigla() != '1')
+					throw new RuntimeException("Existem grupos que nao sao da Primeira fase(pode ja ter sido finalizados), nao ha possibilidades de finalizar.");
 				List<Jogo> jogos = this.jogoDao.getJogosByGrupo(grupo);
 				// verifica se exite pelo menos 1 jogo por grupo.
 				if(jogos.size() <= 0) 
@@ -256,24 +260,11 @@ public class EdicaoController {
 			if(grupos.size() == 1) {
 				List<Classificacao> classificacoes = this.classificacaoDao.getClassificacoesByGrupo(grupos.get(0));
 				if(classificacoes.size() <= 3) {
-					// cria final
-					Fase _final = this.faseDao.get('F');
-					Grupo grupo = new Grupo();
-					grupo.setEdicao(edicao);
-					grupo.setFase(_final);
-					grupo.setDescricao(_final.getDescricao());
-					grupo.setStatus(new Status(2));
-					grupoDao.save(grupo);
-					Jogo jogoFinal = new Jogo();
-					jogoFinal.setDataHora(new Date());
-					jogoFinal.setGrupo(grupo);
-					jogoFinal.setHarbito(new Harbito());
-					//jogoFinal.setLocal(new Lo);
-					jogoFinal.setSequencia(1);
-					// foreach ..
-					//jogoFinal.setTimeA(timeA);
+					// Cria somente a Final
+					criarFinal1Fase1GrupoMenosQ3Times(grupos.get(0));
 				} else if(classificacoes.size() > 3) {
 					// cria 3lugar e final
+					criar3LugarFinal1Fase1GrupoMenosQ3Times(grupos.get(0));
 				}
 			} else if (grupos.size() == 2) {
 				// cria semi
@@ -284,8 +275,81 @@ public class EdicaoController {
 			}
 			return new ResponseEntity<String>(HttpStatus.CREATED);
 		} catch(Exception e) {
+			e.printStackTrace();
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+
+	private boolean criarFinal1Fase1GrupoMenosQ3Times(Grupo grupoUnicoPrimeiraFase) {
+		// cria 2 fase com final e 3 lugar
+		Fase _2fase = this.faseDao.get('2');
+		Grupo grupo = new Grupo();
+		grupo.setEdicao(grupoUnicoPrimeiraFase.getEdicao());
+		grupo.setFase(_2fase);
+		grupo.setDescricao("Segunda Fase (Mata-mata)");
+		grupo.setStatus(this.statusDao.get(Status.class, 2l));
+		grupoDao.save(grupo);
+		List<Classificacao> classificacoes = this.classificacaoDao.getClassificacoesByGrupo(grupoUnicoPrimeiraFase);
+		List<Jogo> jogos = this.jogoDao.getJogosByGrupo(grupoUnicoPrimeiraFase);
+		// Cria a Final, rodada -1
+		criaJogoMataMata(grupo, 
+						 jogos.get(0).getHarbito(), 
+						 jogos.get(0).getLocal(), 
+						 classificacoes,
+						 -1,
+						 1,
+						 2);
+		return true;
+	}
+	
+	private boolean criar3LugarFinal1Fase1GrupoMenosQ3Times(Grupo grupoUnicoPrimeiraFase) {
+		// cria 2 fase com final e 3 lugar
+		Fase _2fase = this.faseDao.get('2');
+		Grupo grupo = new Grupo();
+		grupo.setEdicao(grupoUnicoPrimeiraFase.getEdicao());
+		grupo.setFase(_2fase);
+		//grupo.setDescricao("Segunda Fase (Mata-mata)");
+		grupo.setStatus(this.statusDao.get(Status.class, 2l));
+		grupoDao.save(grupo);
+		List<Classificacao> classificacoes = this.classificacaoDao.getClassificacoesByGrupo(grupoUnicoPrimeiraFase);
+		// Cria a 3 Lugar, rodada -3
+		criaJogoMataMata(grupo, 
+					  grupoUnicoPrimeiraFase.getJogos().get(0).getHarbito(), 
+					  grupoUnicoPrimeiraFase.getJogos().get(0).getLocal(), 
+					  classificacoes,
+					  -3,
+					  3,
+					  4);		
+		// Cria a Final, rodada -1
+		criaJogoMataMata(grupo, 
+					  grupoUnicoPrimeiraFase.getJogos().get(0).getHarbito(), 
+					  grupoUnicoPrimeiraFase.getJogos().get(0).getLocal(), 
+					  classificacoes,
+					  -1,
+					  1,
+					  2);
+		return true;
+	}
+
+	private void criaJogoMataMata(Grupo grupo, Harbito harbito, Local local, List<Classificacao> classificacoes, int rodada, int colocacaoTimeA, int colocacaoTimeB) {
+		Jogo jogo = new Jogo();
+		jogo.setDataHora(Calendar.getInstance().getTime());
+		jogo.setGrupo(grupo);
+		jogo.setHarbito(harbito);
+		jogo.setLocal(local);
+		jogo.setRodada(rodada);
+		jogo.setSequencia((int)this.jogoDao.getCountJogosByGrupo(grupo)+1);
+		jogo.setStatus(new Status(1l));
+		for (Classificacao classificacao : classificacoes) {
+			boolean timeAOK = false;
+			if(classificacao.getColocacao() == colocacaoTimeA && timeAOK == false) {
+				jogo.setTimeA(classificacao.getTime());
+				timeAOK = true;
+			} else if(classificacao.getColocacao() == colocacaoTimeB || classificacao.getColocacao() == colocacaoTimeA) {
+				jogo.setTimeB(classificacao.getTime());
+			}
+		}
+		this.jogoDao.save(jogo);
+	}	
 	
 }

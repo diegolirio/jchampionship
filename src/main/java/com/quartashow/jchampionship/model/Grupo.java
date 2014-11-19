@@ -18,8 +18,8 @@ public class Grupo {
 	@Id @GeneratedValue
 	private long id;
 	
-	@NotNull @Size(min=1, max=15)
-	private String descricao;
+	@NotNull @Size(min=1, max=15) // TODO
+	private String descricao = "Nullo";
 	
 	@NotNull
 	@ManyToOne
@@ -43,6 +43,11 @@ public class Grupo {
 
 	public Grupo() {}
 	
+	
+	public Grupo(String descricao) {
+		this.descricao = descricao;
+	}
+	
 	public Grupo(long id, Edicao edicao) {
 		this.id = id;
 		this.edicao = edicao;
@@ -52,8 +57,6 @@ public class Grupo {
 		this(id, edicao);
 		this.classificacoes = classificacoes;
 	}
-	
-
 
 	public long getId() {
 		return id;

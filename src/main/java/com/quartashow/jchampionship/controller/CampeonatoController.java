@@ -157,7 +157,7 @@ public class CampeonatoController {
 		// Fases
 		Fase _1fase = new Fase(); // id = 1
 		_1fase.setDescricao("1ª fase (fase de grupos)");
-		_1fase.setSigla('2');
+		_1fase.setSigla('1');
 		this.faseDao.save(_1fase);
 		
 		Fase pontosCorridosFase = new Fase(); // id = 2
