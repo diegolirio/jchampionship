@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 	<script>(function(d, s, id) {
@@ -33,35 +34,44 @@
 	
 	<c:if test="${not empty podium}">
 	   <div class="row text-center">
-			<h1 class="text-info">Campeao: ${podium.campeaoDefinido == true ? podium.campeao.nome : ''}</h1>
-			<h2 class="text-danger">Vice Campeao: ${podium.viceCampeaoDefinido == true ? podium.viceCampeao.nome : ''}</h2>
-			<h3 class="text-muted">Terceiro: ${podium.terceiroColocadoDefinido == true ? podium.terceiroColocado.nome : ''}</h3>
+	   		<img src="${pageContext.request.contextPath}/${edicao.campeonato.imgName}"> 
+			<c:if test="${podium.campeaoDefinido == true }">
+				<h2 title="Campeão"><a href="${pageContext.request.contextPath}/time/${podium.campeao.id}/edicao/${edicao.id}"><span class="text-warning">${podium.campeao.nome}</span></a></h2>
+			</c:if>
+			<br/>
+			<c:if test="${podium.viceCampeaoDefinido == true }">
+				<h3 class="text-info"><small>Vice Campeão:</small> ${podium.viceCampeaoDefinido == true ? podium.viceCampeao.nome : ''}</h3>
+			</c:if>
+			<br/>
+			<h4 class="text-danger"><small>Terceiro:</small> ${podium.terceiroColocadoDefinido == true ? podium.terceiroColocado.nome : ''}</h4>
 	   </div>
+	   <br/>
+	   <hr/>  
 	</c:if> 
 	
 	   <c:set var="active" value="${false}"/>
 
 	   <div class="col-lg-12">
 
-				 <!-- 	                 Nav tabs -->
+				 		 <!-- Nav tabs -->
 		                 <ul class="nav nav-pills">
-		                 	<c:forEach var="g" items="${edicao.grupos}">
-		                     	<li class="${g.status.id == 2 && active == false ? 'active' : ''}"><a href="#g${g.id}" data-toggle="tab">${g.descricao}</a></li>
-	                     		<c:if test="${g.status.id == 2}">
+		                 	<c:forEach var="g" items="${edicao.grupos}" varStatus="status">  
+		                     	<li class="${ (g.status.id == 2 || fn:length(edicao.grupos) == status.count) && active == false ? 'active' : ''}"><a href="#g${g.id}" data-toggle="tab">${g.descricao}</a></li>
+	                     		<c:if test="${ g.status.id == 2 || fn:length(edicao.grupos) == status.count }">
 		                     		<c:set var="active" value="${true}"></c:set>
 		                     	</c:if>		
 		                    </c:forEach>
-		                 </ul> 
+		                 </ul>  
 		                 <c:set var="active" value="${false}"/>
 	 					 <!-- Tab panes -->
 	 					 <br/>
-		                 <div class="tab-content">
-		                 	 <c:forEach var="g" items="${edicao.grupos}">
-			                     <div class="tab-pane fade in ${g.status.id == 2 && active == false ? 'active' : ''}" id="g${g.id}">
-			                     	<c:if test="${g.status.id == 2}">
+		                 <div class="tab-content"> 
+		                 	 <c:forEach var="g" items="${edicao.grupos}" varStatus="status"> 
+			                     <div class="tab-pane fade in ${ (g.status.id == 2 || fn:length(edicao.grupos) == status.count) && active == false ? 'active' : ''}" id="g${g.id}">
+			                     	<c:if test="${ g.status.id == 2 || fn:length(edicao.grupos) == status.count }">
 			                     		<c:set var="active" value="${true}"></c:set>
 			                     	</c:if>		                 
-	
+	 
 									<c:if test="${g.fase.id == 1}">
 								 
 									    <div class="row">
