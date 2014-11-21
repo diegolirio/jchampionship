@@ -74,6 +74,9 @@ public class EdicaoControllerTest {
 
 	@Mock
 	private TipoEdicaoDao tipoEdicaoDao;
+
+	@Mock
+	private PodiumDao podiumDao;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -212,7 +215,10 @@ public class EdicaoControllerTest {
 	}
 	
 	@Test
-	public void paginaPublicaEdicao() throws Exception {			
+	public void paginaPublicaEdicao() throws Exception {	
+		
+		Mockito.when(this.podiumDao.get(edicao)).thenReturn(null);
+		
 		mockMvc.perform(get("/edicao/1"))
 			.andExpect(status().isOk())
 			.andExpect(view().name("_base2"))
