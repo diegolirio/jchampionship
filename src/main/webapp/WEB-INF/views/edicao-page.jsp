@@ -31,6 +31,14 @@
 		${edicao.campeonato.descricao} ${edicao.descricao}		     	
 	</h3>	
 	
+	<c:if test="${not empty podium}">
+	   <div class="row text-center">
+			<h1 class="text-info">Campeao: ${podium.campeaoDefinido == true ? podium.campeao.nome : ''}</h1>
+			<h2 class="text-danger">Vice Campeao: ${podium.viceCampeaoDefinido == true ? podium.viceCampeao.nome : ''}</h2>
+			<h3 class="text-muted">Terceiro: ${podium.terceiroColocadoDefinido == true ? podium.terceiroColocado.nome : ''}</h3>
+	   </div>
+	</c:if> 
+	
 	   <c:set var="active" value="${false}"/>
 
 	   <div class="col-lg-12">
@@ -165,7 +173,109 @@
 											      	<br/>
 								      			</div>
 								      		</c:forEach>
+										    <c:if test="${not empty usuario && not empty admin && admin && g.status.id == 2}">
+												 <div class="row">
+													<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+														<br/>
+														<a href="${pageContext.request.contextPath}/edicao/system/${edicao.id}/jogos" class="btn btn-block btn-outline btn-success" >
+															Cadastrar Novo jogo
+														</a>
+													</div>
+													<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+														<br/>
+														<a href="${pageContext.request.contextPath}/edicao/system/${edicao.id}/finalizarPrimeiraFase" class="btn btn-block btn-outline btn-danger" id="idFinalizarFase">
+															Finalizar Fase
+														</a>
+													</div>
+													<br/><br/>
+												</div>
+										    </c:if>  								      		
 									 </c:if>	
+									 <c:if test="${g.fase.sigla == '2'.charAt(0)}">
+									 	<div class="row">
+											<c:if test="${edicao.status.id == 2 && not empty usuario && not empty admin && admin}"> 
+												<a href="${pageContext.request.contextPath}/edicao/${edicao.id}/Voltar/primeira/fase/" id="idVoltarEdicaoPrimeirafase" class="btn btn-danger btn-outline"><span class="glyphicon glyphicon-arrow-left"> Voltar p/ 1ª Fase</span></a> 
+											</c:if>
+										</div>									 
+										<c:forEach var="j" items="${g.jogos}">											
+										 	<div class="col-lg-4 col-md-6 col-sm-12 col-xs-12" id="jogo${j.id}">   
+											      	
+											      		<div class="table-responsive">
+											      			<a href="${pageContext.request.contextPath}/jogo/${j.id}">
+											        		<table class="table well text-center">
+											        			<thead>
+											        				<tr>
+											        					<td colspan="5" class="text-muted">
+											        						<small>
+																				<c:choose>
+																				    <c:when test="${j.rodada == -1}">
+																				       Final
+																				    </c:when>
+																				    <c:when test="${j.rodada == -3}">
+																				        3º Lugar
+																				    </c:when>
+																				    <c:when test="${j.rodada == -2}">
+																				        Semi-Final
+																				    </c:when>
+																				    <c:when test="${j.rodada == -4}">
+																				        Quartas-de-Final
+																				    </c:when>			
+																				    <c:when test="${j.rodada == -8}">
+																				        Oitavas-de-Final
+																				    </c:when>																						    																			    																				    
+																				    <c:otherwise>
+																				        Mata-mata
+																				    </c:otherwise>
+																				</c:choose>
+											        							- 
+											        							<fmt:formatDate value="${j.dataHora}" pattern="dd/MM/yyyy"/>
+											        						</small>
+																			<c:if test="${not empty usuario && not empty admin && admin && j.status.id != 3}">
+																	    		<a href="${pageContext.request.contextPath}/jogo/system/form/${j.id}">
+																	   				<span class="glyphicon glyphicon-pencil text-muted pull-right pencil-edit"></span>
+																	   			</a>    
+																	   		</c:if>								        							
+											        						
+											        					</td>
+											        				</tr>
+											        			</thead>
+											        			<tbody >
+											        				<tr>
+											        					<td>
+											        						<h4 class="text-info">${j.timeA.nome}</h4>
+											        					</td>
+											        					<td>
+											        						<c:if test="${j.status.id != 1}">
+											        							<h4 class="text-danger">${j.resultadoA}</h4>
+											        						</c:if>
+																		</td>	
+																		<td><h4 class="text-muted">X</h4></td>
+																		<td>				
+														        			<c:if test="${j.status.id != 1}"> 
+														        				<h4 class="text-danger">${j.resultadoB}</h4>
+														        			</c:if>			
+														        		</td>
+														        		<td>
+														        			<h4 class="text-info">${j.timeB.nome}</h4>
+														        		</td>											        					
+											        				</tr>
+											        			</tbody>
+											        			<tfoot>
+											        				<tr>
+											        					<td colspan="3">
+											        						<small><span class=""><img src="${pageContext.request.contextPath}/static/quartashow/img/${j.status.imgName}"/> (${j.status.descricao})</span></small>
+																		</td>
+																		<td colspan="2">
+																			<small>${j.local.descricao}</small>
+																		</td>
+											        				</tr>
+											        		</table>
+											        	</a>
+											        </div>   
+											      	<br/>
+								      			</div>
+								      		</c:forEach>									 
+									 </c:if>
 				            	</div> <!-- /. tab-pane -->
 		                	</c:forEach> <!-- /. forEach grupos -->
 	                 	</div> <!-- /. tab-content  -->
@@ -173,24 +283,7 @@
 		 	</div>
 	
 	<br/><br/> 
-	
-    <c:if test="${not empty usuario && not empty admin && admin}">
-		 <div class="row">
-			<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-				<br/>
-				<a href="${pageContext.request.contextPath}/edicao/system/${edicao.id}/jogos" class="btn btn-block btn-outline btn-success" >
-					Cadastrar Novo jogo
-				</a>
-			</div>
-			<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-				<br/>
-				<a href="${pageContext.request.contextPath}/edicao/system/${edicao.id}/finalizarPrimeiraFase" class="btn btn-block btn-outline btn-danger" id="idFinalizarFase">
-					Finalizar
-				</a>
-			</div>
-			<br/><br/>
-		</div>
-    </c:if>  	
+    	
 	<br/><br/> 
     <!-- publicidade -->
     <div class="row">

@@ -123,9 +123,20 @@ $(function() {
 					else
 						alert(JSON.stringify(response));
 				}).fail(function(data) {
-					alert(JSON.stringify(data));
+					alert(data.responseText);
 				});
 	});	
+	
+	$('#idVoltarEdicaoPrimeirafase').click(function(e) {
+		e.preventDefault();
+		$.post( $(this).attr('href'), 
+				function(data, statusText, response) {
+					//window.location.href = response.getResponseHeader('Location');
+					window.location.reload();
+		}).fail(function(data) {
+			alert(data.responseText);
+		});			
+	});
 	
 });
 

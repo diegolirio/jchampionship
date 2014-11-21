@@ -19,4 +19,11 @@ public class GrupoDao extends AbstractGenericDAO<Grupo> {
 		return (List<Grupo>) createQuery.getResultList();  
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<Grupo> getGruposSegundaFaseByEdicao(Edicao edicao) {
+		Query createQuery = super.manager.createQuery("Select g from Grupo g where g.edicao.id = :edicaoId and g.fase.sigla = '2'");
+		createQuery.setParameter("edicaoId", edicao.getId());
+		return (List<Grupo>) createQuery.getResultList();  
+	}	
+	
 }

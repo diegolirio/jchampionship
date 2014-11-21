@@ -65,7 +65,7 @@ public class CampeonatoController {
 		logger.info("");
 		ModelAndView mv = new ModelAndView("_base2");
 		mv.addObject("content_import", "campeonato-classificacao");
-		List<Edicao> listByStatus = this.edicaoDao.getListByStatus(new Status(2));
+		List<Edicao> listByStatus = this.edicaoDao.getListByStatusDiferente(new Status(1));
 		mv.addObject("edicoes", listByStatus);
 		return mv;
 	}

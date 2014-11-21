@@ -79,7 +79,10 @@ public class EdicaoController {
 	private FaseDao faseDao;
 
 	@Autowired
-	private StatusDao statusDao;	
+	private StatusDao statusDao;
+
+	@Autowired
+	private PodiumDao podiumDao;	
 	
 	@RequestMapping(value="/system", method=RequestMethod.GET)
 	public ModelAndView pageEdicoesPendentes() {
@@ -201,6 +204,7 @@ public class EdicaoController {
 			edicao.getGrupos().get(edicao.getGrupos().indexOf(g)).setClassificacoes(this.classificacaoDao.getClassificacoesByGrupo(g));
 			edicao.getGrupos().get(edicao.getGrupos().indexOf(g)).setJogos(this.jogoDao.getJogosByGrupo(g));
 		}		
+		mv.addObject("podium", this.podiumDao.get(edicao)); 
 		mv.addObject("edicao", edicao);
 		return mv;
 	}
@@ -244,7 +248,7 @@ public class EdicaoController {
 				// verifica se exite pelo menos 1 jogo por grupo.
 				if(jogos.size() <= 0) 
 					throw new RuntimeException("Grupo " + grupo.getDescricao() + " não contem jogos.");
-				for (Jogo jogo : jogos) {
+				for (Jogo jogo : jogos) { 
 					// verifica se todos os jogos estão finalizados.
 					if(jogo.getStatus().getId() != 3)
 						throw new RuntimeException("Existem jogos não encerrados, encerrem todos os jogos para finalizar a Fase!");
@@ -312,22 +316,25 @@ public class EdicaoController {
 		grupo.setStatus(this.statusDao.get(Status.class, 2l));
 		grupoDao.save(grupo);
 		List<Classificacao> classificacoes = this.classificacaoDao.getClassificacoesByGrupo(grupoUnicoPrimeiraFase);
+		List<Jogo> jogos = this.jogoDao.getJogosByGrupo(grupoUnicoPrimeiraFase);
 		// Cria a 3 Lugar, rodada -3
 		criaJogoMataMata(grupo, 
-					  grupoUnicoPrimeiraFase.getJogos().get(0).getHarbito(), 
-					  grupoUnicoPrimeiraFase.getJogos().get(0).getLocal(), 
-					  classificacoes,
-					  -3,
-					  3,
-					  4);		
+					     jogos.get(0).getHarbito(), 
+					     jogos.get(0).getLocal(), 
+					     classificacoes,
+					     -3,
+					     3,
+					     4);		
 		// Cria a Final, rodada -1
 		criaJogoMataMata(grupo, 
-					  grupoUnicoPrimeiraFase.getJogos().get(0).getHarbito(), 
-					  grupoUnicoPrimeiraFase.getJogos().get(0).getLocal(), 
-					  classificacoes,
-					  -1,
-					  1,
-					  2);
+						 jogos.get(0).getHarbito(), 
+						 jogos.get(0).getLocal(), 
+						 classificacoes,
+						 -1,
+						 1,
+						 2);
+		grupoUnicoPrimeiraFase.setStatus(new Status(3l));
+		this.grupoDao.update(grupoUnicoPrimeiraFase);
 		return true;
 	}
 
@@ -350,6 +357,45 @@ public class EdicaoController {
 			}
 		}
 		this.jogoDao.save(jogo);
-	}	
+	}
 	
+	@RequestMapping(value="/{id}/Voltar/primeira/fase", method=RequestMethod.POST, produces="application/json")
+	public ResponseEntity<String> voltarParaPrimeiraFase(@PathVariable("id") long id) {
+		try {
+			Edicao edicao = this.edicaoDao.get(Edicao.class, id);
+			List<Grupo> gruposFase2 = this.grupoDao.getGruposSegundaFaseByEdicao(edicao);
+			for (Grupo grupo : gruposFase2) {
+				List<Jogo> jogos = this.jogoDao.getJogosByGrupo(grupo);
+				for (Jogo jogo : jogos) {
+					if(jogo.getStatus().getId() > 1) { // > 1, em andamento ou finalizado
+						throw new RuntimeException("2ª Fase em andamento impossivel voltar para 1ª Fase!");
+					}
+				}
+			}
+
+			// Exclui Jogos da 2ª Fase
+			for (Grupo grupo : gruposFase2) {
+				List<Jogo> jogos = this.jogoDao.getJogosByGrupo(grupo); 
+				for (Jogo jogo : jogos) {
+					if(jogo.getStatus().getId() == 1) { // > 1, em andamento ou finalizado
+						this.jogoDao.delete(Jogo.class, jogo.getId());
+					}
+				}
+				this.grupoDao.delete(Grupo.class, grupo.getId());
+			}		
+			
+			List<Grupo> grupos = this.grupoDao.getGruposByEdicao(edicao);
+			for (Grupo grupo : grupos) {
+				grupo.setStatus(new Status(2l));
+				this.grupoDao.update(grupo);
+			}			
+			//HttpHeaders headers = new HttpHeaders();
+			//headers.setLocation(URI.create("/jchampionship/"));
+			return new ResponseEntity<String>(HttpStatus.OK);
+		} catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+ 	
 }

@@ -44,6 +44,7 @@ import com.quartashow.jchampionship.model.JogadorEscalado;
 import com.quartashow.jchampionship.model.JogadorInfoEdicao;
 import com.quartashow.jchampionship.model.Jogo;
 import com.quartashow.jchampionship.model.Local;
+import com.quartashow.jchampionship.model.Podium;
 import com.quartashow.jchampionship.model.Status;
 
 @Controller
@@ -82,6 +83,9 @@ public class JogoController {
 
 	@Autowired
 	private TimeDao timeDao;
+
+	@Autowired
+	private PodiumDao podiumDao;
 
 	@RequestMapping(value="/post", method=RequestMethod.POST, produces="application/json")
 	public ResponseEntity<String> post(@Valid Jogo jogo, BindingResult result) {
@@ -175,13 +179,18 @@ public class JogoController {
 //		mv.addObject("escalacao", escalacao);
 //		return mv;
 //	}
-	
-	private List<Classificacao> calculaClassificacao(Jogo jogo) {
+
+	private char getVencedor(Jogo jogo) {
 		char vencedor = 'E';
 		if(jogo.getResultadoA() > jogo.getResultadoB()) 
 			vencedor = 'A';
 		else if (jogo.getResultadoA() < jogo.getResultadoB())
 			vencedor = 'B';
+		return vencedor;
+	}
+	
+	private List<Classificacao> calculaClassificacao(Jogo jogo) {
+		char vencedor = getVencedor(jogo);
 		List<Classificacao> classificacoes = this.classificacaoDao.getClassificacoesByGrupo(jogo.getGrupo());
 		for (Classificacao classTime : classificacoes) {
 			// calcula classificacao time A
@@ -225,37 +234,54 @@ public class JogoController {
 		int pontosAnt = -1;
 		int sg = -1;
 		int posReal = 0;
+		int vitorias = -1;
+		int gp = -1;
+		
 		for(int posicao = 0; posicao <= classificacoes.size()-1; posicao++) {
 			Classificacao cS = null;
-			// seleciona 1 ainda nao seleionado
+			// seleciona 1 ainda nao selecionado
 			for (Classificacao classificacao : classificacoes) {
 				if(!"S".equals(classificacao.getObservacao())) {
 					cS = classificacao;
 					break;
 				}
 			}
-			// Pega o com maior pontos sg 
+			// Criterios de desempate - maior pontos, sg, v, gp 
 			for (Classificacao classificacao : classificacoes) {
 				if(!"S".equals(classificacao.getObservacao())) {
-					if(classificacao.getPontos() > cS.getPontos()) {
+					if(classificacao.getPontos() > cS.getPontos()) { // 1 - pontos
 						cS = classificacao;
-					} else if(classificacao.getPontos() == cS.getPontos() && 
+					} else if(classificacao.getPontos() == cS.getPontos() && // 2 - SG
 							  classificacao.getGolsPro() - classificacao.getGolsContra() > cS.getGolsPro() - cS.getGolsContra()) {
+						cS = classificacao;
+					} else if(classificacao.getPontos() == cS.getPontos() && // 3 - V
+							  classificacao.getGolsPro() - classificacao.getGolsContra() == cS.getGolsPro() - cS.getGolsContra() &&
+							  classificacao.getVitorias() > cS.getVitorias()) {
+						cS = classificacao;
+					} else if(classificacao.getPontos() == cS.getPontos() && // 4 - GP
+							  classificacao.getGolsPro() - classificacao.getGolsContra() == cS.getGolsPro() - cS.getGolsContra() &&
+							  classificacao.getVitorias() == cS.getVitorias() &&
+							  classificacao.getGolsPro() > cS.getGolsPro()) {
 						cS = classificacao;
 					}
 				}
 			}
 			
-			// pontos anterior ou Saldo de Gols for maior que pontos do proximo aumenta 1 colocacao
-			if(pontosAnt > cS.getPontos() ||
-			   (pontosAnt == cS.getPontos() && sg > cS.getGolsPro() - cS.getGolsContra()) || 
-			   posReal == 0) {
+			// pontos anterior ou Saldo de Gols ou vitorias ou golsPro for maior que do proximo aumenta 1 colocacao
+			if(pontosAnt > cS.getPontos() || // pontos >
+			   (pontosAnt == cS.getPontos() && sg > cS.getGolsPro() - cS.getGolsContra()) || // sg > 
+			   (pontosAnt == cS.getPontos() && sg == cS.getGolsPro() - cS.getGolsContra() && vitorias > cS.getVitorias()) || // vitorias >
+			   (pontosAnt == cS.getPontos() && sg == cS.getGolsPro() - cS.getGolsContra() && vitorias == cS.getVitorias() && gp > cS.getGolsPro()) || // gp > 
+			   posReal == 0) { // posReal = 0 ==> primeira volta do loop
 					posReal = posicao+1;
 			}
 			classificacoes.get(classificacoes.indexOf(cS)).setColocacao(posReal);
 			classificacoes.get(classificacoes.indexOf(cS)).setObservacao("S");
+			// classificacao Ant...
 			pontosAnt = cS.getPontos();
 			sg = cS.getGolsPro() - cS.getGolsContra();
+			vitorias = cS.getVitorias();
+			gp = cS.getGolsPro();
 		}
 		for (Classificacao classificacao : classificacoes) {
 			classificacao.setObservacao("N");
@@ -280,17 +306,58 @@ public class JogoController {
 			if(jogo.getStatus().getId() != 2) {
 				throw new RuntimeException("Jogo nao encontra-se em andamento.");
 			}			
-			// calcula classificacao
-			this.calculaClassificacao(jogo);
-			// ordena a classificacao calculada
-			List<Classificacao> classificacoes = this.ordenaClassificacao(jogo);
-			// atualiza o jogadorInfoEdicao
-			this.atualizaJogadorinfoEdicao(jogo);
-			// altera o jogo para status Finalizado
-			jogo.setStatus(new Status(3));
-			this.jogoDao.update(jogo);
-			// guarda historico da classificacao se todos os jogos da rodada finalizado!
-			this.saveClassificacaoHist(jogo.getGrupo(), jogo.getRodada());
+			List<Classificacao> classificacoes = null;
+			if(jogo.getGrupo().getFase().getSigla() == '1')
+				classificacoes = finalizaJogoPrimeiraFase(jogo);
+			
+			if(jogo.getGrupo().getFase().getSigla() == '2') {
+				
+				char vencedor = this.getVencedor(jogo);
+				if(jogo.getRodada() == -3 || jogo.getRodada() == -1) { // rodada -> -1=Final ; -3=TerceiroLugar
+					Podium podium = null;
+					// pega o Podium da Edicao, se nao existe cria
+					podium = this.podiumDao.get(jogo.getGrupo().getEdicao());
+					if(podium == null) {
+						podium = new Podium();
+						Edicao edicao = this.edicaoDao.get(Edicao.class, jogo.getGrupo().getEdicao().getId());
+						podium.setEdicao(edicao);
+						podium.setCampeao(jogo.getTimeA());
+						podium.setViceCampeao(jogo.getTimeA());
+						podium.setTerceiroColocado(jogo.getTimeA());
+						this.podiumDao.save(podium);
+					}
+					
+					if(jogo.getRodada() == -3) {
+						// monta podium
+						podium.setTerceiroColocado(vencedor == 'A' ? jogo.getTimeA() : jogo.getTimeB());
+						podium.setTerceiroColocadoDefinido(true);
+						this.podiumDao.update(podium);
+						// finaliza jogo
+						jogo.setStatus(new Status(3l));
+						this.jogoDao.update(jogo);						
+					} else 
+						if(jogo.getRodada() == -1) {
+							// verifica se todos os jogos fora a final esta finalizado
+							// monta podium
+							podium.setCampeao(vencedor == 'A' ? jogo.getTimeA() : jogo.getTimeB());
+							podium.setViceCampeao(vencedor == 'A' ? jogo.getTimeB() : jogo.getTimeA());
+							podium.setCampeaoDefinido(true);
+							podium.setViceCampeaoDefinido(true);
+							this.podiumDao.update(podium);
+							// finaliza jogo
+							jogo.setStatus(new Status(3l));
+							this.jogoDao.update(jogo);
+							// finaliza grupo segunda fase
+							Grupo grupo = jogo.getGrupo();
+							grupo.setStatus(new Status(3l));
+							this.grupoDao.update(grupo);
+							// finaliza Edicao
+							Edicao edicao = jogo.getGrupo().getEdicao();
+							edicao.setStatus(new Status(3l));
+							this.edicaoDao.update(edicao);
+					}
+				}			
+			}
 			HttpHeaders headers = new HttpHeaders();
 			headers.setLocation(URI.create("/edicao/"+jogo.getGrupo().getEdicao().getId()));
 			return new ResponseEntity<String>(new ObjectMapper().writeValueAsString(classificacoes), headers, HttpStatus.CREATED);
@@ -298,6 +365,21 @@ public class JogoController {
 			e.printStackTrace();
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+
+	private List<Classificacao> finalizaJogoPrimeiraFase(Jogo jogo) {
+		// calcula classificacao
+		this.calculaClassificacao(jogo);
+		// ordena a classificacao calculada
+		List<Classificacao> classificacoes = this.ordenaClassificacao(jogo);
+		// atualiza o jogadorInfoEdicao
+		this.atualizaJogadorinfoEdicao(jogo);
+		// altera o jogo para status Finalizado
+		jogo.setStatus(new Status(3));
+		this.jogoDao.update(jogo);
+		// guarda historico da classificacao se todos os jogos da rodada finalizado!
+		this.saveClassificacaoHist(jogo.getGrupo(), jogo.getRodada());
+		return classificacoes;
 	}
 	
 	private boolean saveClassificacaoHist(Grupo grupo, int rodada) {

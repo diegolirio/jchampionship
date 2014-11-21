@@ -18,5 +18,12 @@ public class EdicaoDao extends AbstractGenericDAO<Edicao> {
 		createQuery.setParameter("idStatus", status.getId());
 		return (List<Edicao>) createQuery.getResultList();
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Edicao> getListByStatusDiferente(Status status) {
+		Query createQuery = super.manager.createQuery("Select e from Edicao e where e.status.id <> :idStatus");
+		createQuery.setParameter("idStatus", status.getId());
+		return (List<Edicao>) createQuery.getResultList();
+	}	
 
 }

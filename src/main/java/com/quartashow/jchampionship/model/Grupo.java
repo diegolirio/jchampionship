@@ -19,7 +19,7 @@ public class Grupo {
 	private long id;
 	
 	@NotNull @Size(min=1, max=15) // TODO
-	private String descricao = "Nullo";
+	private String descricao = "2ª Fase";
 	
 	@NotNull
 	@ManyToOne
