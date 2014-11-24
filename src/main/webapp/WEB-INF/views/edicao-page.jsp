@@ -66,7 +66,8 @@
 	 					 <!-- Tab panes -->
 	 					 <br/>
 		                 <div class="tab-content"> 
-		                 	 <c:forEach var="g" items="${edicao.grupos}" varStatus="status"> 
+		                 	 <c:forEach var="g" items="${edicao.grupos}" varStatus="status">
+		                 	 		                 	  
 			                     <div class="tab-pane fade in ${ (g.status.id == 2 || fn:length(edicao.grupos) == status.count) && active == false ? 'active' : ''}" id="g${g.id}">
 			                     	<c:if test="${ g.status.id == 2 || fn:length(edicao.grupos) == status.count }">
 			                     		<c:set var="active" value="${true}"></c:set>
@@ -124,9 +125,28 @@
 									        </div>
 									    </div>
 									    <!-- /.row -->
-									    <br/>						       
+									    <br/>				
+									    
+									    <!-- publicidade -->
+									    <div class="row">
+									    	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center"> 
+														<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+														<!-- QuartaShowPage Header 230X100 -->
+														<ins class="adsbygoogle"
+														     style="display:inline-block;width:320px;height:100px"
+														     data-ad-client="ca-pub-1041989301102612"
+														     data-ad-slot="4832115487"></ins>
+														<script>
+														(adsbygoogle = window.adsbygoogle || []).push({});
+														</script>   
+											</div>   	  		
+									    </div>										    
+										
+										<br/>
+										
 										<%-- <jsp:include page="jogo-list.jsp"></jsp:include> --%>
 										<c:forEach var="j" items="${g.jogos}">
+										
 										 	<div class="col-lg-4 col-md-6 col-sm-12 col-xs-12" id="jogo${j.id}">   
 											      	
 											      		<div class="table-responsive">
@@ -284,7 +304,23 @@
 											        </div>   
 											      	<br/>
 								      			</div>
-								      		</c:forEach>									 
+								      		</c:forEach>	
+								      		<br/>
+										    <!-- publicidade -->
+										    <div class="row">
+										    	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center"> 
+															<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+															<!-- QuartaShowPage Header 230X100 -->
+															<ins class="adsbygoogle"
+															     style="display:inline-block;width:320px;height:100px"
+															     data-ad-client="ca-pub-1041989301102612"
+															     data-ad-slot="4832115487"></ins>
+															<script>
+															(adsbygoogle = window.adsbygoogle || []).push({});
+															</script>   
+												</div>   	  		
+										    </div>		
+										    <br/><br/>							      										 
 									 </c:if>
 				            	</div> <!-- /. tab-pane -->
 		                	</c:forEach> <!-- /. forEach grupos -->
@@ -295,20 +331,6 @@
 	<br/><br/> 
     	
 	<br/><br/> 
-    <!-- publicidade -->
-    <div class="row">
-    	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center"> 
-					<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-					<!-- QuartaShowPage Header 230X100 -->
-					<ins class="adsbygoogle"
-					     style="display:inline-block;width:320px;height:100px"
-					     data-ad-client="ca-pub-1041989301102612"
-					     data-ad-slot="4832115487"></ins>
-					<script>
-					(adsbygoogle = window.adsbygoogle || []).push({});
-					</script>   
-		</div>   	  		
-    </div>	
     
     <br/><br/>
 	    
