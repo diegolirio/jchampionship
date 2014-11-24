@@ -58,6 +58,11 @@ public class Grupo {
 		this.classificacoes = classificacoes;
 	}
 
+	public Grupo(long id, Edicao edicao, List<Classificacao> classificacoes, Fase fase) {
+		this(id, edicao, classificacoes);
+		this.fase = fase;
+	}
+
 	public long getId() {
 		return id;
 	}

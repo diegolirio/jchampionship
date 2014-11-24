@@ -36,6 +36,7 @@ import com.quartashow.jchampionship.model.CollectionEventos;
 import com.quartashow.jchampionship.model.Edicao;
 import com.quartashow.jchampionship.model.Escalacao;
 import com.quartashow.jchampionship.model.Evento;
+import com.quartashow.jchampionship.model.Fase;
 import com.quartashow.jchampionship.model.Grupo;
 import com.quartashow.jchampionship.model.Jogador;
 import com.quartashow.jchampionship.model.JogadorEscalado;
@@ -151,12 +152,16 @@ public class JogoControllerTest {
 		Classificacao classificacaoB = new Classificacao(2, timeB);
 		classificacoes.add(classificacaoA);
 		classificacoes.add(classificacaoB);
+
+		Fase fase = new Fase();
+		fase.setId(1l);
+		fase.setSigla('1');
 		
 		Jogo jogo = new Jogo();
 		jogo.setId(1l);
 		jogo.setTimeA(timeA);
 		jogo.setTimeB(timeB);
-		jogo.setGrupo(new Grupo(1l, edicao, classificacoes));
+		jogo.setGrupo(new Grupo(1l, edicao, classificacoes, fase));
 		jogo.setResultadoA(3);
 		jogo.setResultadoB(1);
 		jogo.setStatus(new Status(2l, "Em andamento"));
