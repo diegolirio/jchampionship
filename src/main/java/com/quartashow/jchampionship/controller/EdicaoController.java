@@ -235,32 +235,14 @@ public class EdicaoController {
 		return mv;
 	}	
 	
+	
+	
 	@RequestMapping(value="/system/{id}/finalizarPrimeiraFase", method=RequestMethod.POST, produces="application/json")
 	public ResponseEntity<String> finalizar1Fase(@PathVariable("id") long id) {
 		try {
 			Edicao edicao = this.edicaoDao.get(Edicao.class, id);
 			List<Grupo> grupos = this.grupoDao.getGruposByEdicao(edicao);
-			for (Grupo grupo : grupos) {
-				// verifica se todos os grupos são da 1a fase.
-				if(grupo.getFase().getSigla() != '1')
-					throw new RuntimeException("Existem grupos que nao sao da Primeira fase(pode ja ter sido finalizados), nao ha possibilidades de finalizar.");
-				List<Jogo> jogos = this.jogoDao.getJogosByGrupo(grupo);
-				// verifica se exite pelo menos 1 jogo por grupo.
-				if(jogos.size() <= 0) 
-					throw new RuntimeException("Grupo " + grupo.getDescricao() + " não contem jogos.");
-				for (Jogo jogo : jogos) { 
-					// verifica se todos os jogos estão finalizados.
-					if(jogo.getStatus().getId() != 3)
-						throw new RuntimeException("Existem jogos não encerrados, encerrem todos os jogos para finalizar a Fase!");
-					// verifica se todos os times tem a mesma qtde de jogos.
-				}
-				List<Classificacao> classificacoes = this.classificacaoDao.getClassificacoesByGrupo(grupo);
-				int qtdeJ = classificacoes.get(0).getJogos();
-				for (Classificacao classificacao : classificacoes) {
-					 if(qtdeJ != classificacao.getJogos()) 
-						 throw new RuntimeException("Todos os Times devem estar com a mesma quantidade de Jogos para finalizar a fase!");
-				}
-			}
+			validaFinalizacaoFase(grupos);
 			if(grupos.size() == 1) {
 				List<Classificacao> classificacoes = this.classificacaoDao.getClassificacoesByGrupo(grupos.get(0));
 				if(classificacoes.size() <= 3) {
@@ -282,6 +264,31 @@ public class EdicaoController {
 			e.printStackTrace();
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+
+	private boolean validaFinalizacaoFase(List<Grupo> grupos) {
+		for (Grupo grupo : grupos) {
+			// verifica se todos os grupos são da 1a fase.
+			if(grupo.getFase().getSigla() != '1')
+				throw new RuntimeException("Existem grupos que nao sao da Primeira fase(pode ja ter sido finalizados), nao ha possibilidades de finalizar.");
+			List<Jogo> jogos = this.jogoDao.getJogosByGrupo(grupo);
+			// verifica se exite pelo menos 1 jogo por grupo.
+			if(jogos.size() <= 0) 
+				throw new RuntimeException("Grupo " + grupo.getDescricao() + " não contem jogos.");
+			for (Jogo jogo : jogos) { 
+				// verifica se todos os jogos estão finalizados.
+				if(jogo.getStatus().getId() != 3)
+					throw new RuntimeException("Existem jogos não encerrados, encerrem todos os jogos para finalizar a Fase!");
+				// verifica se todos os times tem a mesma qtde de jogos.
+			}
+			List<Classificacao> classificacoes = this.classificacaoDao.getClassificacoesByGrupo(grupo);
+			int qtdeJ = classificacoes.get(0).getJogos();
+			for (Classificacao classificacao : classificacoes) {
+				 if(qtdeJ != classificacao.getJogos()) 
+					 throw new RuntimeException("Todos os Times devem estar com a mesma quantidade de Jogos para finalizar a fase!");
+			}
+		}
+		return true;
 	}
 
 	private boolean criarFinal1Fase1GrupoMenosQ3Times(Grupo grupoUnicoPrimeiraFase) {
@@ -347,8 +354,8 @@ public class EdicaoController {
 		jogo.setRodada(rodada);
 		jogo.setSequencia((int)this.jogoDao.getCountJogosByGrupo(grupo)+1);
 		jogo.setStatus(new Status(1l));
+		boolean timeAOK = false;
 		for (Classificacao classificacao : classificacoes) {
-			boolean timeAOK = false;
 			if(classificacao.getColocacao() == colocacaoTimeA && timeAOK == false) {
 				jogo.setTimeA(classificacao.getTime());
 				timeAOK = true;
