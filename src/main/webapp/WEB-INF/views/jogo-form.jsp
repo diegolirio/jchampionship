@@ -4,7 +4,7 @@
    <div class="col-lg-12">
 		<form id="id_form_jogo" method="POST" action="${pageContext.request.contextPath}/jogo/post">
 
-			<input type="hidden" name="id" value="${jogo.id}" >
+			<input type="hidden" name="id" value="${jogo.id}" > 
 			<input type="hidden" name="status.id" value="${jogo.status.id}" >
 			<input type="hidden" name="grupo.edicao.id" value="${jogo.grupo.edicao.id}" >
 			<input type="hidden" name="sequencia" value="${jogo.sequencia}" >
@@ -73,7 +73,7 @@
 				</select>
 			</div>																														
 			
-			<br/>
+			<br/> 
 			
 			<a href="${pageContext.request.contextPath}/jogo/delete_confirm/${jogo.id}" onclick="showWindowPopup(this.href); return false;" class="btn btn-danger pull-right">Excluir</a>			
 			<input type="submit" class="btn btn-success pull-right" value="${not empty jogo ? 'Salvar' : 'Adicionar Jogo'}" >

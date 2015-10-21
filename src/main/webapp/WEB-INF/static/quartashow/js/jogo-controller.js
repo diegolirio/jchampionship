@@ -38,8 +38,7 @@ $(function() {
 		var rodada = formJogo.find('input[name=rodada]').val();
 		var sequencia = formJogo.find('input[name=sequencia]').val();
 		
-		$.post(	formJogo.attr('action'),
-				{ 'id': (id == '' ? 0 : id),
+		var jogoJSON = { 'id': (id == '' ? 0 : id),
 				  'status.id': (statusId == '' ? 1 : statusId),
 				  'timeA.id': timeA,
 				  'timeB.id': timeB,
@@ -48,18 +47,19 @@ $(function() {
 				  'grupo.id': grupoId,
 				  'dataHora': dataHora,
 				  'rodada':   rodada,
-				  'sequencia': sequencia }, 
-				function(data, statusText, response) {
-					if(response.status == 201) {
-						//console.log(JSON.stringify(data));
-						if(id > 0)
-							window.location.href = '/jchampionship/edicao/'+formJogo.find('input[name="grupo.edicao.id"]').val()+"#jogo"+id;
-						else
-							addTabelaJogos(data);					
-					} else {
-						alert("OK ===> status: " + response.status + "\n\n" + JSON.stringify(response));
-					}
-				}
+				  'sequencia': (sequencia == '' ? 1 : sequencia) };
+		console.log(jogoJSON);
+		$.post(	formJogo.attr('action'), jogoJSON, function(data, statusText, response) {
+														if(response.status == 201) {
+															//console.log(JSON.stringify(data));
+															if(id > 0)
+																window.location.href = '/jchampionship/edicao/'+formJogo.find('input[name="grupo.edicao.id"]').val()+"#jogo"+id;
+															else
+																addTabelaJogos(data);					
+														} else {
+															alert("OK ===> status: " + response.status + "\n\n" + JSON.stringify(response));
+														}
+													}
 		).fail(function(data) {
 			if(data.status == 401) {
 				console.log(JSON.stringify(data));
